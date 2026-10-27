@@ -14,7 +14,16 @@ from ..agents.thermal_agent import BangBangThermal, ThermalAgent, predict_temper
 from ..environment.battery_env import BatteryEnv, Scenario
 from ..estimation.soc_estimator import OCVCurve, make_soc_estimator
 
-METHODS = ["conventional", "independent", "independent_health_cap", "independent_static_health_cap", "independent_adaptive_health"]
+METHODS = [
+    "conventional",
+    "independent",
+    "independent_health_cap",
+    "independent_static_health_cap",
+    "independent_adaptive_health",
+    "adaptive_no_resistance",
+    "adaptive_no_deadline_feedback",
+    "adaptive_no_degradation_prediction",
+]
 
 
 def run_episode(cfg: Dict[str, Any], scenario: Scenario, method: str, seed: int, safety_enabled: bool = True,
@@ -48,8 +57,13 @@ def run_episode(cfg: Dict[str, Any], scenario: Scenario, method: str, seed: int,
         elif method == "conventional":
             i_p = charger.propose(est, task).current_a; cool_p = thermal.command(est.temp_meas)
         else:
-            use_h = method in ("independent_health_cap", "independent_static_health_cap", "independent_adaptive_health") and not options.get("no_health", False)
-            h_mode = "static" if method == "independent_static_health_cap" else options.get("health_mode", "adaptive")
+            use_h = (method not in ("conventional", "independent")) and not options.get("no_health", False)
+            if method == "independent_static_health_cap":
+                h_mode = "static"
+            elif method in ("adaptive_no_resistance", "adaptive_no_deadline_feedback", "adaptive_no_degradation_prediction"):
+                h_mode = method
+            else:
+                h_mode = options.get("health_mode", "adaptive")
             hp = health.propose(est, task, mode=h_mode)
             cp = charger.propose(est, task, v_cv=hp.v_cv if use_h else None, max_c_rate=hp.max_c_rate if use_h else None)
             i_p = cp.current_a; cool_p = thermal.propose(est).cool_cmd

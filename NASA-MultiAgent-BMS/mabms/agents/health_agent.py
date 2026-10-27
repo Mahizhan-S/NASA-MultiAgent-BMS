@@ -157,15 +157,20 @@ class HealthAgent:
         soh_norm = float(np.clip((soh_conservative - self.soh_eol) / max(1.0 - self.soh_eol, 1e-3), 0.0, 1.0))
         f_soh = 0.6 + 0.4 * soh_norm
 
-        # (c) Resistance factor
-        f_rho = 1.0 / np.sqrt(r0_scale)
+        # (c) Resistance factor (ablation: disable if mode == 'adaptive_no_resistance')
+        if use_mode == "adaptive_no_resistance":
+            f_rho = 1.0
+        else:
+            f_rho = 1.0 / np.sqrt(r0_scale)
 
-        # (d) Temperature factor
+        # (d) Temperature factor (ablation: disable if mode == 'adaptive_no_degradation_prediction')
         t_soft = float(c.get("t_soft_c", 38.0))
-        f_temp = float(np.exp(-0.08 * (temp_smooth - t_soft))) if temp_smooth > t_soft else 1.0
-
-        # (e) High-SOC stress factor
-        f_soc = 1.0 - 0.35 * (((est.soc - 0.8) / 0.2) ** 2) if est.soc > 0.8 else 1.0
+        if use_mode == "adaptive_no_degradation_prediction":
+            f_temp = 1.0
+            f_soc = 1.0
+        else:
+            f_temp = float(np.exp(-0.08 * (temp_smooth - t_soft))) if temp_smooth > t_soft else 1.0
+            f_soc = 1.0 - 0.35 * (((est.soc - 0.8) / 0.2) ** 2) if est.soc > 0.8 else 1.0
 
         # Health degradation ceiling (maximum current consistent with gentle aging)
         c_health_max = float(c["base_c_max"] * f_soh * f_rho * f_temp * f_soc)
@@ -181,7 +186,11 @@ class HealthAgent:
         # (f) Deadline-Health Reconciliation with Hardware Limits
         # If deadline is urgent (deadline_c > c_health_max), expand towards deadline floor
         # up to physical hardware limits; otherwise enforce gentle health ceiling.
-        c_target = max(c_health_max, deadline_c)
+        # (ablation: disable deadline expansion if mode == 'adaptive_no_deadline_feedback')
+        if use_mode == "adaptive_no_deadline_feedback":
+            c_target = c_health_max
+        else:
+            c_target = max(c_health_max, deadline_c)
         c_bounded = float(np.clip(c_target, min_c, max_c_hard))
 
         # (g) Bounded Current Slew-Rate Limiter
