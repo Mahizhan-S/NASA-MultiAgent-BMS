@@ -45,13 +45,31 @@ def run_episode(cfg: Dict[str, Any], scenario: Scenario, method: str, seed: int,
         charger = ChargingAgent(cfg); thermal = ThermalAgent(cfg)
     health = HealthAgent(cfg); thermal.reset()
     task = Task(obs["target_soc"], obs["deadline_s"])
+    h_est_module = options.get("health_estimator")
+    if h_est_module is not None:
+        h_est = h_est_module.reset(obs["soh_est"], getattr(ekf, "r0_scale", 1.0))
+    else:
+        h_est = None
+
     soc_err: List[float] = []; done = False; i_prev = 0.0; trace = []
+    info: Dict[str, Any] = {}
     while not done:
-        ekf.set_capacity(s["q0_ah"] * obs["soh_est"])
+        if h_est_module is not None:
+            gt_info = {"soh": info.get("true", {}).get("soh", obs["soh_est"]), "r0_scale": getattr(ekf, "r0_scale", 1.0)}
+            h_est = h_est_module.step(obs["voltage_v"], obs["current_a"], obs["temp_c"], obs["time_s"], s["dt_s"], ground_truth=gt_info)
+            soh_val = h_est.soh
+            soh_sigma_val = h_est.soh_sigma
+            r0_scale_val = h_est.r0_scale
+        else:
+            soh_val = obs["soh_est"]
+            soh_sigma_val = cfg["noise"].get("soh_sigma", 0.01)
+            r0_scale_val = getattr(ekf, "r0_scale", 1.0)
+
+        ekf.set_capacity(s["q0_ah"] * soh_val)
         ekf.step(obs["current_a"] if obs["time_s"] > 0 else 0.0, obs["voltage_v"], s["dt_s"]) if obs["time_s"] > 0 else None
         t_pred = predict_temperature(obs["temp_c"], obs["current_a"], nm, scenario.t_amb_c, 0.0, s["dt_s"])
-        est = StateEstimate(soc=ekf.soc, soh=obs["soh_est"], v1=ekf.v1, v_meas=obs["voltage_v"], i_meas=obs["current_a"],
-                            temp_meas=obs["temp_c"], temp_pred=t_pred, time_s=obs["time_s"], q_nom_ah=s["q0_ah"], r0_scale=getattr(ekf, "r0_scale", 1.0))
+        est = StateEstimate(soc=ekf.soc, soh=soh_val, soh_sigma=soh_sigma_val, v1=ekf.v1, v_meas=obs["voltage_v"], i_meas=obs["current_a"],
+                            temp_meas=obs["temp_c"], temp_pred=t_pred, time_s=obs["time_s"], q_nom_ah=s["q0_ah"], r0_scale=r0_scale_val)
         if method == "single_agent":
             i_p, cool_p = single.act(est, task)
         elif method == "conventional":
