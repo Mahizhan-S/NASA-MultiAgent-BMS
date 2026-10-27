@@ -43,6 +43,8 @@ def run_episode(cfg: Dict[str, Any], scenario: Scenario, method: str, seed: int,
         charger = ChargingAgent(cfg, c_rate=cfg["agents"]["conventional"]["c_rate"], deadline_aware=False); thermal = BangBangThermal(cfg)
     else:
         charger = ChargingAgent(cfg); thermal = ThermalAgent(cfg)
+    if charger is not None:
+        charger.reset()
     health = HealthAgent(cfg); thermal.reset()
     task = Task(obs["target_soc"], obs["deadline_s"])
     h_est_module = options.get("health_estimator")

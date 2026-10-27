@@ -55,7 +55,12 @@ class ThermalProposal:
 
 @dataclass
 class ChargingProposal:
-    current_a: float; mode: str
+    current_a: float
+    mode: str
+    is_fallback: bool = False
+    is_valid: bool = True
+    required_c: float = 0.0
+
 
 
 @dataclass

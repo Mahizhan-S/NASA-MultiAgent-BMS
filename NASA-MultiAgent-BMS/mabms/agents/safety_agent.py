@@ -68,7 +68,8 @@ class SafetyAgent:
 
     @staticmethod
     def _valid(est: StateEstimate) -> bool:
-        return (est.finite() and 2.0 < est.v_meas < 5.0 and -20 < est.temp_meas < 100 and -0.1 < est.soc < 1.1
+        return (est.finite() and getattr(est, "is_valid", True)
+                and 2.0 < est.v_meas < 5.0 and -20 < est.temp_meas < 100 and -0.1 < est.soc < 1.1
                 and 0.0 < est.soh <= 1.3)
 
     def _monitor(self, est: StateEstimate) -> Tuple[float, float, bool, List[str]]:

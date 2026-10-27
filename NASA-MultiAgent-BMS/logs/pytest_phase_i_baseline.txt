@@ -1,0 +1,25 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.5, pytest-9.1.1, pluggy-1.5.0
+rootdir: /Users/mahizhan/Documents/Final_project/NASA-MultiAgent-BMS
+plugins: anyio-4.12.1, langsmith-0.10.11
+collected 62 items
+
+tests/test_calibration.py .....                                          [  8%]
+tests/test_charge_checks.py ..                                           [ 11%]
+tests/test_coordinator.py ....                                           [ 17%]
+tests/test_env_agents.py .........                                       [ 32%]
+tests/test_estimation_data.py .......                                    [ 43%]
+tests/test_health_agent_final_acceptance.py ...............              [ 67%]
+tests/test_limits_adaptive.py .......                                    [ 79%]
+tests/test_mode_audit.py .                                               [ 80%]
+tests/test_safety_hardening.py ....                                      [ 87%]
+tests/test_stress.py ...                                                 [ 91%]
+tests/test_v6.py .....                                                   [100%]
+
+=============================== warnings summary ===============================
+tests/test_estimation_data.py: 10 warnings
+  /Users/mahizhan/Documents/Final_project/NASA-MultiAgent-BMS/mabms/data/segments.py:69: UserWarning: reference filter requested but no mission_type column: SOH labels are load-confounded
+    warnings.warn("reference filter requested but no mission_type column: SOH labels are load-confounded")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 62 passed, 10 warnings in 11.77s =======================
