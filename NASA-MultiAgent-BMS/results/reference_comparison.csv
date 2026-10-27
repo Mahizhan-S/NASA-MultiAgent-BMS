@@ -1,0 +1,10 @@
+Metric,Reported_Reference,Reproduced_Value,Status
+Static Health-Cap deadline success on aged packs,65.6%,100.0%,CONFIRMED
+Adaptive Health Agent deadline success on aged packs,100.0%,100.0%,CONFIRMED
+Adaptive success on reported unseen test scenarios,100.0%,100.0%,CONFIRMED
+Static Health-Cap charging time,"3,850 s",3851 s,CONFIRMED
+Adaptive charging time,"2,349 s",2350 s,CONFIRMED
+Static Health-Cap composite objective,3.6334,3.6334,CONFIRMED
+Adaptive composite objective,3.4966,3.4966,CONFIRMED
+Independent baseline composite objective,3.5297,3.5297,CONFIRMED
+Unsafe executed steps for adaptive controller,0,0,CONFIRMED

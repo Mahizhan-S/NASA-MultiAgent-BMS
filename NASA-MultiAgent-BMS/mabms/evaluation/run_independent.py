@@ -14,13 +14,13 @@ from ..agents.thermal_agent import BangBangThermal, ThermalAgent, predict_temper
 from ..environment.battery_env import BatteryEnv, Scenario
 from ..estimation.soc_estimator import OCVCurve, make_soc_estimator
 
-METHODS = ["conventional", "independent", "independent_health_cap"]
+METHODS = ["conventional", "independent", "independent_health_cap", "independent_static_health_cap", "independent_adaptive_health"]
 
 
 def run_episode(cfg: Dict[str, Any], scenario: Scenario, method: str, seed: int, safety_enabled: bool = True,
                 keep_log: bool = False, policy_params: Dict[str, float] | None = None,
                 options: Dict[str, Any] | None = None) -> Dict[str, Any]:
-    """options: {'no_thermal': bool (cooling proposal forced to 0), 'no_health': bool (health agent absent)}"""
+    """options: {'no_thermal': bool (cooling proposal forced to 0), 'no_health': bool (health agent absent), 'health_mode': 'static'|'adaptive'}"""
     options = options or {}
     assert method in METHODS + ["single_agent"]
     env = BatteryEnv(cfg); obs = env.reset(seed=seed, scenario=scenario)
@@ -48,8 +48,9 @@ def run_episode(cfg: Dict[str, Any], scenario: Scenario, method: str, seed: int,
         elif method == "conventional":
             i_p = charger.propose(est, task).current_a; cool_p = thermal.command(est.temp_meas)
         else:
-            use_h = method == "independent_health_cap" and not options.get("no_health", False)
-            hp = health.propose(est, task)
+            use_h = method in ("independent_health_cap", "independent_static_health_cap", "independent_adaptive_health") and not options.get("no_health", False)
+            h_mode = "static" if method == "independent_static_health_cap" else options.get("health_mode", "adaptive")
+            hp = health.propose(est, task, mode=h_mode)
             cp = charger.propose(est, task, v_cv=hp.v_cv if use_h else None, max_c_rate=hp.max_c_rate if use_h else None)
             i_p = cp.current_a; cool_p = thermal.propose(est).cool_cmd
         if options.get("no_thermal", False):
