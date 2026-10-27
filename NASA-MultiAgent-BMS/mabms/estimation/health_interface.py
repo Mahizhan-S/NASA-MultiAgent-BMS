@@ -102,9 +102,7 @@ class CalibratedOnlineHealthEstimator(BaseHealthEstimator):
 
     def step(self, voltage_v: float, current_a: float, temp_c: float,
              time_s: float, dt_s: float, ground_truth: Optional[Dict[str, float]] = None) -> HealthEstimate:
-        # R0 scale can be updated from an EKF observer or ground truth
-        if ground_truth and "r0_scale" in ground_truth:
-            self._r0_scale = float(ground_truth["r0_scale"])
+        # Strictly ground-truth independent: only uses internal state and measurements
         return HealthEstimate(soh=self._soh_est, soh_sigma=self.soh_sigma,
                               r0_scale=self._r0_scale, r0_sigma=self.r0_sigma)
 
@@ -129,10 +127,7 @@ class PerturbedHealthEstimator(BaseHealthEstimator):
 
     def step(self, voltage_v: float, current_a: float, temp_c: float,
              time_s: float, dt_s: float, ground_truth: Optional[Dict[str, float]] = None) -> HealthEstimate:
-        if ground_truth and "soh" in ground_truth:
-            self._base_soh = float(ground_truth["soh"])
-        if ground_truth and "r0_scale" in ground_truth:
-            self._base_r0 = float(ground_truth["r0_scale"])
+        # Strictly ground-truth independent: ground_truth argument is ignored
         return self._generate_estimate()
 
     def _generate_estimate(self) -> HealthEstimate:

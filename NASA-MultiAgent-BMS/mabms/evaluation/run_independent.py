@@ -55,7 +55,8 @@ def run_episode(cfg: Dict[str, Any], scenario: Scenario, method: str, seed: int,
     info: Dict[str, Any] = {}
     while not done:
         if h_est_module is not None:
-            gt_info = {"soh": info.get("true", {}).get("soh", obs["soh_est"]), "r0_scale": getattr(ekf, "r0_scale", 1.0)}
+            from ..estimation.health_interface import OracleHealthEstimator
+            gt_info = {"soh": info.get("true", {}).get("soh", obs["soh_est"]), "r0_scale": getattr(ekf, "r0_scale", 1.0)} if isinstance(h_est_module, OracleHealthEstimator) else None
             h_est = h_est_module.step(obs["voltage_v"], obs["current_a"], obs["temp_c"], obs["time_s"], s["dt_s"], ground_truth=gt_info)
             soh_val = h_est.soh
             soh_sigma_val = h_est.soh_sigma

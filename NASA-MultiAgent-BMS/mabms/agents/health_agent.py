@@ -29,6 +29,9 @@ class HealthAgent:
         self.slew_rate_c_per_s = float(self.c.get("slew_rate_c_per_s", 0.5))
         self.ema_alpha_r0 = float(self.c.get("ema_alpha_r0", 0.20))
         self.ema_alpha_temp = float(self.c.get("ema_alpha_temp", 0.20))
+        self.min_c = float(self.c.get("min_c", 0.3))
+        self.i_fallback = float(self.c.get("i_fallback", self.min_c * self.q0_ah))
+        self.v_cv_nom = float(self.lim.get("v_max", 4.20) - self.c.get("dv_health", 0.05))
 
         # Filter states
         self._r0_filtered: Optional[float] = None
@@ -47,9 +50,13 @@ class HealthAgent:
         """Check for NaN/Inf, physical domain boundaries, and valid task parameters."""
         if not est.finite():
             return False
+        if not getattr(est, "is_valid", True):
+            return False
+        if getattr(est, "soh_sigma", 0.01) > float(self.c.get("soh_sigma_max", 0.15)):
+            return False
         if not (-0.1 <= est.soc <= 1.2):
             return False
-        if not (0.0 < est.soh <= 1.5):
+        if not (0.2 < est.soh <= 1.5):
             return False
         if not (1.0 <= est.v_meas <= 5.5):
             return False
@@ -73,20 +80,21 @@ class HealthAgent:
     def propose(self, est: StateEstimate, task: Task, mode: Optional[str] = None) -> HealthProposal:
         use_mode = mode or self.default_mode
         c = self.c
-        min_c = float(c.get("min_c", 0.3))
+        min_c = self.min_c
         max_c_hard = float(self.lim.get("i_max_c", 2.45))
 
         # 1. Deterministic Fallback on Invalid Inputs
         if not self._validate_inputs(est, task):
-            v_cv_fallback = float(self.lim["v_max"] - 0.10)
             return HealthProposal(
                 max_c_rate=min_c,
-                v_cv=v_cv_fallback,
+                v_cv=self.v_cv_nom,
                 note="fallback:invalid_state_or_task",
                 feasibility_status="INFEASIBLE",
                 predicted_dloss=0.0,
                 i_required_a=0.0,
-                is_fallback=True
+                is_fallback=True,
+                is_valid=False,
+                timestamp_s=float(getattr(est, "time_s", 0.0))
             )
 
         # 2. Timing and Charge Demand
@@ -132,7 +140,9 @@ class HealthAgent:
                 feasibility_status=feasibility_status,
                 predicted_dloss=dloss_pred,
                 i_required_a=float(np.nan_to_num(i_required, posinf=self.i_abs_max)),
-                is_fallback=False
+                is_fallback=False,
+                is_valid=True,
+                timestamp_s=float(est.time_s)
             )
 
         # 4. Phase B Adaptive Health Mode
@@ -221,5 +231,7 @@ class HealthAgent:
             feasibility_status=feasibility_status,
             predicted_dloss=dloss_pred,
             i_required_a=float(np.nan_to_num(i_required, posinf=self.i_abs_max)),
-            is_fallback=False
+            is_fallback=False,
+            is_valid=True,
+            timestamp_s=float(est.time_s)
         )
