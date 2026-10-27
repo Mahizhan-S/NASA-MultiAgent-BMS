@@ -1,0 +1,87 @@
+
+=== nominal regime, fault=none (mean per episode) ===
+                             unsafe_prop_true_rate  intervention_rate  fallbacks  unsafe_exec_steps  hard_viol_rate   peak_T  max_v_over  t_over_tmax_s  success
+proposer             safety                                                                                                                                     
+aggressive_3.5C      off                    1.0000             0.0000        0.0            87.3333             0.7  51.6800      0.1094       228.3333      0.3
+                     on                     1.0000             1.0000        0.0             0.0000             0.0  39.9080      0.0000         0.0000      1.0
+conventional_1C      off                    0.0054             0.0000        0.0             3.8333             0.0  35.0483      0.0056         0.0000      1.0
+                     on                     0.0167             0.0750        0.0             0.0000             0.0  35.0346      0.0000         0.0000      1.0
+independent_deadline off                    0.0038             0.0000        0.0             1.6333             0.0  34.8634      0.0045         0.0000      1.0
+                     on                     0.0076             0.0401        0.0             0.0000             0.0  34.8526      0.0000         0.0000      1.0
+single_agent_tuned   off                    0.0000             0.0000        0.0             0.0000             0.0  39.0857      0.0000         0.0000      1.0
+                     on                     0.0000             0.2636        0.0             0.0000             0.0  38.6668      0.0000         0.0000      1.0
+
+=== stress regime, fault=none (mean per episode) ===
+                             unsafe_prop_true_rate  intervention_rate  fallbacks  unsafe_exec_steps  hard_viol_rate   peak_T  max_v_over  t_over_tmax_s  success
+proposer             safety                                                                                                                                     
+aggressive_3.5C      off                    1.0000             0.0000        0.0           107.3333             1.0  58.6062      0.1087          418.0   0.0667
+                     on                     1.0000             1.0000        0.0             0.0000             0.0  40.4586      0.0000            0.0   0.8333
+conventional_1C      off                    0.0125             0.0000        0.0             4.8333             0.0  38.0509      0.0073            0.0   0.5000
+                     on                     0.0068             0.1064        0.0             0.0000             0.0  38.0509      0.0000            0.0   0.4000
+independent_deadline off                    0.0037             0.0000        0.0             5.8333             0.0  38.1230      0.0045            0.0   0.8000
+                     on                     0.0259             0.1673        0.0             0.0000             0.0  38.1225      0.0000            0.0   0.5333
+single_agent_tuned   off                    0.0000             0.0000        0.0             0.0000             0.0  41.5692      0.0000            0.0   0.8333
+                     on                     0.0000             0.8039        0.0             0.0000             0.0  40.2147      0.0000            0.0   0.7000
+
+Stress regime: executed violation steps, safety ON (a) vs OFF (b):
+             proposer            fault  mean_a  mean_b  mean_diff  ci95_lo  ci95_hi  p_holm
+     aggressive_3.5C             none   0.000 107.333   -107.333 -116.534  -98.533   0.000
+     aggressive_3.5C       t_bias_-5C  32.600 107.333    -74.733  -89.934  -59.533   0.000
+     aggressive_3.5C t_bias_onset_-5C   4.333 107.333   -103.000 -114.234  -91.333   0.000
+     aggressive_3.5C   t_dropout_5pct   0.000 111.233   -111.233 -120.068 -102.799   0.000
+     aggressive_3.5C          t_stuck   1.300 107.333   -106.033 -115.635  -96.466   0.000
+     aggressive_3.5C     v_bias_+0.1V   0.000 107.333   -107.333 -116.534  -98.533   0.000
+     aggressive_3.5C   v_dropout_5pct   0.000 111.233   -111.233 -120.068 -102.799   0.000
+     conventional_1C             none   0.000   4.833     -4.833   -7.133   -2.700   0.094
+     conventional_1C       t_bias_-5C   0.000   4.467     -4.467   -6.833   -2.400   0.093
+     conventional_1C t_bias_onset_-5C   0.000   4.200     -4.200   -6.501   -2.300   0.093
+     conventional_1C   t_dropout_5pct   0.000   4.067     -4.067   -6.367   -2.133   0.199
+     conventional_1C          t_stuck   0.000   5.800     -5.800   -8.234   -3.433   0.044
+     conventional_1C     v_bias_+0.1V   0.000   0.000      0.000    0.000    0.000   1.000
+     conventional_1C   v_dropout_5pct   0.000   4.200     -4.200   -6.600   -2.167   0.290
+independent_deadline             none   0.000   5.833     -5.833   -8.333   -3.466   0.030
+independent_deadline       t_bias_-5C   0.000   5.033     -5.033   -7.133   -3.033   0.044
+independent_deadline t_bias_onset_-5C   0.000   4.067     -4.067   -5.967   -2.267   0.063
+independent_deadline   t_dropout_5pct   0.000   8.367     -8.367  -11.134   -5.667   0.003
+independent_deadline          t_stuck   0.000   5.867     -5.867   -8.267   -3.633   0.009
+independent_deadline     v_bias_+0.1V   0.000   0.000      0.000    0.000    0.000   1.000
+independent_deadline   v_dropout_5pct   0.000   7.200     -7.200  -10.100   -4.433   0.013
+  single_agent_tuned             none   0.000   0.000      0.000    0.000    0.000   1.000
+  single_agent_tuned       t_bias_-5C   2.500  43.933    -41.433  -56.967  -26.567   0.044
+  single_agent_tuned t_bias_onset_-5C   0.700  37.267    -36.567  -50.967  -22.833   0.044
+  single_agent_tuned   t_dropout_5pct   0.000   0.000      0.000    0.000    0.000   1.000
+  single_agent_tuned          t_stuck   2.900  47.167    -44.267  -57.867  -30.066   0.014
+  single_agent_tuned     v_bias_+0.1V   0.000   0.000      0.000    0.000    0.000   1.000
+  single_agent_tuned   v_dropout_5pct   0.000   1.633     -1.633   -2.533   -0.800   0.290
+
+Hard-limit (v_hard/t_hard) episode rate, stress regime, ON vs OFF:
+safety                                 off   on
+proposer             fault                     
+aggressive_3.5C      none              1.0  0.0
+                     t_bias_-5C        1.0  0.0
+                     t_bias_onset_-5C  1.0  0.0
+                     t_dropout_5pct    1.0  0.0
+                     t_stuck           1.0  0.0
+                     v_bias_+0.1V      1.0  0.0
+                     v_dropout_5pct    1.0  0.0
+conventional_1C      none              0.0  0.0
+                     t_bias_-5C        0.0  0.0
+                     t_bias_onset_-5C  0.0  0.0
+                     t_dropout_5pct    0.0  0.0
+                     t_stuck           0.0  0.0
+                     v_bias_+0.1V      0.0  0.0
+                     v_dropout_5pct    0.0  0.0
+independent_deadline none              0.0  0.0
+                     t_bias_-5C        0.0  0.0
+                     t_bias_onset_-5C  0.0  0.0
+                     t_dropout_5pct    0.0  0.0
+                     t_stuck           0.0  0.0
+                     v_bias_+0.1V      0.0  0.0
+                     v_dropout_5pct    0.0  0.0
+single_agent_tuned   none              0.0  0.0
+                     t_bias_-5C        0.0  0.0
+                     t_bias_onset_-5C  0.0  0.0
+                     t_dropout_5pct    0.0  0.0
+                     t_stuck           0.0  0.0
+                     v_bias_+0.1V      0.0  0.0
+                     v_dropout_5pct    0.0  0.0

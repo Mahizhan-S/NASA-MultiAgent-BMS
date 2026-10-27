@@ -1,0 +1,7 @@
+,J,J,time_to_target_penalized_s,time_to_target_penalized_s,target_reached,target_reached,shortfall,shortfall,capacity_loss,capacity_loss,peak_temp_c,peak_temp_c,temp_track_mae_c,temp_track_mae_c,cooling_energy_wh,cooling_energy_wh,unsafe_executed_steps,unsafe_executed_steps,unsafe_proposed_rate,unsafe_proposed_rate,intervention_rate,intervention_rate,max_v_overshoot_v,max_v_overshoot_v,soc_est_mae,soc_est_mae
+,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std
+method,,,,,,,,,,,,,,,,,,,,,,,,,,
+conventional,1.77199,0.68391,2097.0,375.68649,1.0,0.0,0.00395,0.00082,1e-05,0.0,31.3029,2.45271,4.54296,2.37475,0.00378,0.01111,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.00945,0.00615
+independent,1.63049,0.43944,2094.0,373.03432,1.0,0.0,0.00386,0.00083,1e-05,0.0,31.32611,2.48091,4.46317,2.47469,0.00084,0.00361,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.00955,0.00617
+independent_health_cap,1.4087,0.2447,3850.44444,739.67638,1.0,0.0,0.00444,0.00037,1e-05,0.0,29.67902,2.37008,5.5289,2.37914,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0047,0.00343
+single_agent,1.32932,0.33377,3032.88889,495.53794,1.0,0.0,0.00403,0.00052,1e-05,0.0,30.06785,2.42789,5.24378,2.41913,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.00601,0.00399

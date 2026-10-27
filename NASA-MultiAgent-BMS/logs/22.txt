@@ -1,0 +1,77 @@
+kept 9458/9820 blocks; dropped 362 (rest blocks, glitches, truncated)
+dropped per pack:
+ pack_id
+battery01    55
+battery24    38
+battery11    31
+battery03    29
+battery25    24
+battery41    24
+battery22    22
+battery51    22
+battery23    16
+battery00    15
+all packs      : median A=6.35 IQR=[5.15,7.85] n=9458
+excl. tau<400 (b54): median A=6.25 IQR=[5.10,7.65] n=9104
+first 30 blocks/pack (early life): median A=4.53 IQR=[3.98,5.62] n=778
+last 30 blocks/pack (late life): median A=7.55 IQR=[6.22,8.86] n=778
+pred I^2R0/h = 5.48 C (R0=0.04138, h=0.06798, I=3 A)
+
+A growth late/early (R0 growth proxy):
+   pack_id   n  A_early  A_late  A_growth_ratio
+battery00 163     5.60    6.38            1.14
+battery01 850     4.46   10.02            2.24
+battery02 409     4.29    6.94            1.62
+battery03 413     3.52    7.80            2.22
+battery10 144     5.62    6.64            1.18
+battery11 855     4.58    8.09            1.77
+battery12 618     4.11    8.61            2.10
+battery13 316     6.70    9.28            1.39
+battery20  28     4.57    5.32            1.17
+battery21  80     3.86    5.37            1.39
+battery22 434     4.00    7.86            1.96
+battery23 239     3.89    5.92            1.52
+battery24 620     3.28    6.60            2.01
+battery25 415     4.33    8.23            1.90
+battery30  77     4.06    5.02            1.24
+battery31 546     3.75    7.10            1.89
+battery32 350     3.26    6.29            1.93
+battery33 470     4.53    6.62            1.46
+battery36 698     7.43   12.67            1.70
+battery40 103     4.26    6.12            1.44
+battery41 404     5.37    6.94            1.29
+battery50 127     7.53    9.91            1.32
+battery51 288     4.46    8.29            1.86
+battery52 254     4.59    8.11            1.77
+battery53 203     4.61    5.81            1.26
+battery54 354    10.79   14.36            1.33
+median growth ratio: 1.57
+
+charge-duration retention over last 5 CV-limited blocks (cap_rel):
+ pack_id
+battery00    0.813
+battery01    0.772
+battery02    0.768
+battery03    0.770
+battery10    0.821
+battery11    0.779
+battery12    0.780
+battery13    0.917
+battery20    0.957
+battery21    0.885
+battery22    0.801
+battery23    0.819
+battery24    0.762
+battery25    0.780
+battery30    0.864
+battery31    0.764
+battery32    0.770
+battery33    0.754
+battery36    0.811
+battery40    0.838
+battery41    0.746
+battery50    1.010
+battery51    0.878
+battery52    0.883
+battery53    0.881
+battery54    0.951

@@ -1,0 +1,35 @@
+objective scales: {'d_scale': 0.00012295810530225937, 'e_scale': 0.01}
+=== ablations (test_unseen) ===
+                             J          capacity_loss          peak_temp_c          unsafe_executed_steps      target_reached         
+                         mean      std          mean      std        mean      std                  mean  std           mean      std
+method                                                                                                                               
+full                  3.28408  2.01880       0.00014  0.00003    33.33988  2.28230                   0.0  0.0           0.90  0.30382
+no_health_agent       3.12487  2.00264       0.00015  0.00003    34.48750  1.68012                   0.0  0.0           1.00  0.00000
+no_thermal_agent      2.32037  0.43646       0.00015  0.00003    33.73815  2.86730                   0.0  0.0           0.85  0.36162
+safety_off(sim-only)  3.28408  2.01880       0.00014  0.00003    33.33988  2.28230                   0.0  0.0           0.90  0.30382
+
+Paired vs full (J):
+                    a  mean_diff  ci95_lo  ci95_hi  wilcoxon_p  p_holm
+     no_health_agent    -0.1592  -0.4540   0.1359      0.2305  1.0000
+    no_thermal_agent    -0.9637  -1.8178  -0.2570      0.0277  0.6373
+safety_off(sim-only)     0.0000   0.0000   0.0000      1.0000  1.0000
+
+=== noise robustness ===
+                                          J  unsafe_executed_steps  soc_est_mae  target_reached  max_v_overshoot_v
+method                 noise_scale                                                                               
+conventional           0.0          3.8262                    0.0       0.0107           1.000                0.0
+                       1.0          3.8558                    0.0       0.0106           1.000                0.0
+                       2.0          3.9219                    0.0       0.0112           1.000                0.0
+                       4.0          4.1831                    0.0       0.0133           1.000                0.0
+independent            0.0          3.1179                    0.0       0.0105           1.000                0.0
+                       1.0          3.1293                    0.0       0.0104           1.000                0.0
+                       2.0          3.1669                    0.0       0.0111           1.000                0.0
+                       4.0          3.3185                    0.0       0.0133           1.000                0.0
+independent_health_cap 0.0          3.2790                    0.0       0.0065           0.900                0.0
+                       1.0          3.3095                    0.0       0.0065           0.875                0.0
+                       2.0          3.3928                    0.0       0.0069           0.825                0.0
+                       4.0          3.5771                    0.0       0.0089           0.800                0.0
+single_agent           0.0          2.2752                    0.0       0.0132           1.000                0.0
+                       1.0          2.3106                    0.0       0.0134           1.000                0.0
+                       2.0          2.3389                    0.0       0.0139           1.000                0.0
+                       4.0          2.4057                    0.0       0.0171           1.000                0.0

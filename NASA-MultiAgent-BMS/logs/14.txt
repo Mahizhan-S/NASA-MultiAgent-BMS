@@ -1,0 +1,41 @@
+[battery02] clean_signals dropped 572 samples
+[battery03] clean_signals dropped 405 samples
+[battery12] clean_signals dropped 770 samples
+[battery24] clean_signals dropped 1251 samples
+[battery25] clean_signals dropped 987 samples
+[battery32] clean_signals dropped 376 samples
+[battery33] clean_signals dropped 586 samples
+[battery53] clean_signals dropped 260 samples
+[battery00] clean_signals dropped 161 samples
+[battery01] clean_signals dropped 863 samples
+[battery10] clean_signals dropped 138 samples
+[battery11] clean_signals dropped 1032 samples
+[battery20] clean_signals dropped 27 samples
+[battery21] clean_signals dropped 79 samples
+[battery22] clean_signals dropped 938 samples
+[battery23] clean_signals dropped 233 samples
+[battery30] clean_signals dropped 77 samples
+[battery31] clean_signals dropped 826 samples
+[battery40] clean_signals dropped 85 samples
+[battery41] clean_signals dropped 533 samples
+[battery50] clean_signals dropped 121 samples
+[battery51] clean_signals dropped 547 samples
+[battery52] clean_signals dropped 326 samples
+[battery13] clean_signals dropped 702 samples
+[battery36] clean_signals dropped 707 samples
+[battery54] clean_signals dropped 337 samples
+packs with >=4 reference checks: train=15 val=3
+            variant       k         ea   a    b  val_mae_soh  val_rmse_soh  val_end_err
+             k_only 0.00067    0.00000 0.0  0.0      0.05422       0.07792      0.11101
+                k_T 0.00017 4914.75632 0.0  0.0      0.03164       0.03737      0.05904
+              k_T_C 0.00001 2862.94000 5.0  0.0      0.02668       0.03036      0.03630
+            k_T_C_S 0.00001 4112.16591 5.0 20.0      0.01559       0.02151      0.02323
+ASSUMED_placeholder 0.00018 4963.70000 0.0  0.0      0.03296       0.03873      0.05884
+
+selected on VAL: k_T_C_S
+pack-bootstrap 95% CI:
+              k          ea        a         b
+0.025  0.00001  3192.66492  1.57641  17.17821
+0.500  0.00001  4067.73282  5.00000  20.00000
+0.975  0.00002  4513.72376  5.00000  20.00000
+Wrote configs/degradation_patch.yaml (merge into configs/calibrated.yaml under simulator.degradation)

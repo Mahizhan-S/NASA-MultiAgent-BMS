@@ -1,0 +1,36 @@
+dev packs: 21 cycles: 386
+SOH mean {'mae': 0.06110032138432312, 'rmse': 0.07347178106015152, 'r2': -0.012955090500801791, 'n': 386}
+SOH ridge {'mae': 0.039577165779869465, 'rmse': 0.05838968214287689, 'r2': 0.36023382080632804, 'n': 386}
+SOH hgb {'mae': 0.03035718685090282, 'rmse': 0.05067079743060081, 'r2': 0.5182025094920439, 'n': 386}
+[battery02] clean_signals dropped 572 samples
+[battery03] clean_signals dropped 405 samples
+[battery12] clean_signals dropped 770 samples
+[battery24] clean_signals dropped 1251 samples
+[battery25] clean_signals dropped 987 samples
+[battery32] clean_signals dropped 376 samples
+[battery33] clean_signals dropped 586 samples
+[battery53] clean_signals dropped 260 samples
+[battery00] clean_signals dropped 161 samples
+[battery01] clean_signals dropped 863 samples
+[battery10] clean_signals dropped 138 samples
+[battery11] clean_signals dropped 1032 samples
+[battery20] clean_signals dropped 27 samples
+[battery21] clean_signals dropped 79 samples
+[battery22] clean_signals dropped 938 samples
+[battery23] clean_signals dropped 233 samples
+[battery30] clean_signals dropped 77 samples
+[battery31] clean_signals dropped 826 samples
+[battery40] clean_signals dropped 85 samples
+[battery41] clean_signals dropped 533 samples
+[battery50] clean_signals dropped 121 samples
+[battery51] clean_signals dropped 547 samples
+[battery52] clean_signals dropped 326 samples
+[battery13] clean_signals dropped 702 samples
+[battery36] clean_signals dropped 707 samples
+[battery54] clean_signals dropped 337 samples
+TEMP persistence {'mae': 0.5133687435902803, 'rmse': 0.7108671459092001, 'r2': 0.9974908130787045, 'n': 1194475}
+TEMP ridge {'mae': 0.170501478783156, 'rmse': 0.32782792617562306, 'r2': 0.9994663604342506, 'n': 1194475}
+TEMP hgb {'mae': 0.1593332824165555, 'rmse': 0.3229240403650827, 'r2': 0.9994822061538808, 'n': 1194475}
+RUL: 8 packs reach EOL (SOH<=0.8); censored: 13
+RUL ridge {'mae': 2.400556786449904, 'rmse': 3.0906356472913195, 'r2': 0.8102531074756397, 'n': 148}
+RUL hgb {'mae': 2.4557161094354156, 'rmse': 3.513522863381822, 'r2': 0.7547750688706156, 'n': 148}

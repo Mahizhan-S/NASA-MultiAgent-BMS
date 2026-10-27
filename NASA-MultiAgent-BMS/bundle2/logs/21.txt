@@ -1,0 +1,90 @@
+done battery02
+done battery03
+done battery12
+done battery24
+done battery25
+done battery32
+done battery33
+done battery53
+done battery00
+done battery01
+done battery10
+done battery11
+done battery20
+done battery21
+done battery22
+done battery23
+done battery30
+done battery31
+done battery40
+done battery41
+done battery50
+done battery51
+done battery52
+done battery13
+done battery36
+done battery54
+
+(A,B) per-pack charge-phase heating amplitude A (C), observed dT over the block (C), voltage_charger plateau fraction, vc_max (V):
+              n  A_median  dT_obs  plateau  vc_max
+pack_id                                          
+battery00  178      5.76  -19.75     0.03    8.63
+battery01  905      7.04   -7.76     0.03    8.63
+battery02  417      5.63  -11.35     0.03    8.63
+battery03  442      6.16   -4.35     0.04    8.63
+battery10  149      5.81  -19.29     0.03    8.63
+battery11  886      6.30   -5.97     0.04    8.63
+battery12  624      6.27   -7.67     0.04    8.63
+battery13  319      7.99   -6.39     0.06    8.63
+battery20   32      5.03  -23.59     0.02    8.63
+battery21   81      4.94  -10.84     0.03    8.63
+battery22  456      6.00  -11.16     0.03    8.63
+battery23  255      4.75  -12.57     0.03    8.63
+battery24  658      6.57   -8.40     0.04    8.63
+battery25  439      7.02   -6.07     0.04    8.63
+battery30   80      4.58  -20.08     0.03    8.63
+battery31  556      5.74  -10.49     0.04    8.63
+battery32  355      5.06  -11.93     0.03    8.63
+battery33  478      5.51   -9.92     0.04    8.63
+battery36  701     10.50   -2.50     0.06    8.63
+battery40  104      4.80  -22.20     0.02    8.63
+battery41  428      5.93  -12.03     0.03    8.63
+battery50  133      8.39  -20.35     0.04    8.63
+battery51  310      6.45  -15.29     0.04    8.63
+battery52  265      6.65  -17.84     0.04    8.63
+battery53  208      5.25  -15.47     0.04    8.63
+battery54  361     12.14   -0.17     0.08    8.63
+
+Overall: A median 6.26 C (IQR 5.02..7.78);  plateau fraction median 0.04
+prediction to compare: A = I^2*R0/h = 3.0^2 * 0.04138119405602487 / 0.06798230206452074 = 5.48 C (per-cell-equivalent model)
+
+(C) end of data per pack (rel_dur = last discharge duration / median of the 30 before; v_min = lowest pack voltage in the last discharge):
+   pack_id  baseline_dur_s  last_rel_dur  min_rel_dur_last6  v_first_last  v_min_last  v_min_min_last6  last_charge_rel_dur
+battery02         489.034         0.143              0.143         8.469      -0.026           -0.026                0.000
+battery03         895.103         1.152              0.992         8.657      -0.026           -0.026                0.974
+battery12         669.227         0.993              0.993         8.462      -0.026           -0.026                0.995
+battery24         647.943         0.924              0.924         8.459      -0.026           -0.026                0.000
+battery25         461.960         0.981              0.981         8.404      -0.026           -0.026                0.000
+battery32         445.184         0.005              0.005        -0.026      -0.026           -0.027                0.000
+battery33         474.460         0.908              0.908         8.456      -0.026           -0.026                0.993
+battery53         441.556         0.950              0.950         8.613      -0.026           -0.026                0.000
+battery00         432.377         0.568              0.568         8.427      -0.026           -0.026                0.000
+battery01         666.950         0.895              0.895         8.477      -0.026           -0.026                0.000
+battery10         438.661         0.465              0.465         8.486      -0.026           -0.026                0.000
+battery11         671.226         0.003              0.003        -0.026      -0.026           -0.026                0.000
+battery20         436.679         0.888              0.888         8.569      -0.026           -0.026                0.000
+battery21         405.017         0.060              0.060         8.516      -0.026           -0.026                0.000
+battery22         510.524         0.123              0.123         8.454      -0.026           -0.026                0.000
+battery23         483.736         0.982              0.959         8.474      -0.026           -0.026                0.432
+battery30         395.787         0.418              0.418         8.504      -0.026           -0.026                0.000
+battery31         485.107         0.920              0.920         8.452      -0.026           -0.026                0.000
+battery40         417.991         0.979              0.975         8.484      -0.026           -0.026                0.976
+battery41         419.559         0.578              0.578         8.443      -0.026           -0.026                0.000
+battery50         419.611         0.007              0.007         8.635      -0.026           -0.026                0.000
+battery51         463.386         0.355              0.355         8.599      -0.026           -0.026                0.000
+battery52         484.477         0.177              0.177         8.606      -0.026           -0.026                0.000
+battery13         616.307         0.003              0.003         0.802      -0.026           -0.026                0.000
+battery36         742.339         0.003              0.003        -0.026      -0.026           -0.026                0.000
+battery54        1229.135         0.988              0.002         8.507      -0.026           -0.026                0.000
+
+Packs whose last discharge is abnormal (rel_dur < 0.7 or v_min < 4.0 V): ['battery02', 'battery03', 'battery12', 'battery24', 'battery25', 'battery32', 'battery33', 'battery53', 'battery00', 'battery01', 'battery10', 'battery11', 'battery20', 'battery21', 'battery22', 'battery23', 'battery30', 'battery31', 'battery40', 'battery41', 'battery50', 'battery51', 'battery52', 'battery13', 'battery36', 'battery54']

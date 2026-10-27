@@ -1,0 +1,240 @@
+\label{chap.5}
+
+\section{Overview of the MA-BMS Architecture}
+
+The Multi-Agent Battery Management System (MA-BMS) decomposes the
+charging control problem into a set of specialised cooperative
+agents, each responsible for a single functional objective.  The
+architecture consists of:
+
+\begin{enumerate}
+  \item \textbf{Charging Speed Proposer}: Suggests a current
+  $I_{\mathrm{charge}}$ that minimises time-to-target SOC subject
+  to a soft deadline constraint.
+
+  \item \textbf{Thermal Regulation Agent}: Monitors cell temperature
+  and proposes a current derating factor to prevent the temperature
+  from exceeding a setpoint of $T_{\mathrm{set}} =
+  35\,^\circ\mathrm{C}$.
+
+  \item \textbf{Health / Degradation Proposer}: Caps peak current
+  to reduce high-current Arrhenius degradation and high-SOC
+  stress exposure.
+
+  \item \textbf{Deterministic Analytical Safety Supervisor}: A
+  non-learning, rule-based component that computes the maximum
+  safe current from first principles and projects the aggregated
+  proposal onto the safe manifold.  It is the final authority:
+  its output cannot be overridden.
+\end{enumerate}
+
+The architecture is illustrated conceptually in
+Figure~\ref{fig:mabms_arch}.
+
+\begin{figure}[htbp]
+  \centering
+  \resizebox{0.95\columnwidth}{!}{%
+  \begin{tikzpicture}[
+    box/.style={draw, rounded corners=3pt, thick, align=center, fill=blue!5, font=\small},
+    agent/.style={draw, rounded corners=3pt, thick, align=center, fill=orange!10, font=\small},
+    supervisor/.style={draw=red!70!black, rounded corners=3pt, very thick, align=center, fill=red!10, font=\small\bfseries},
+    plant/.style={draw=green!60!black, rounded corners=3pt, very thick, align=center, fill=green!10, font=\small\bfseries},
+    arrow/.style={-{Stealth[scale=1.0]}, thick},
+    dasharrow/.style={-{Stealth[scale=1.0]}, thick, dashed, gray!70!black}
+  ]
+    % Plant
+    \node[plant, minimum width=2.6cm, minimum height=3.6cm] (plant) at (10.5, 0) {Battery Pack\\Plant\\(2S 18650)\\[4pt]\footnotesize $V_{\max}=8.4\,\text{V}$\\\footnotesize $I_{\max}=3.5\text{C}$};
+
+    % Estimator
+    \node[box, fill=purple!10, draw=purple!80!black, minimum width=3.0cm, minimum height=1.6cm] (ekf) at (0, -2.4) {\textbf{4-State Adaptive EKF}\\[2pt]\footnotesize States: $[\mathrm{SOC}, V_1, b, \rho]^\top$\\\footnotesize $\rho_0 = 1 + 3.0(1 - \mathrm{SOH}_0)$};
+
+    % Proposers
+    \node[agent, minimum width=2.8cm, minimum height=0.9cm] (p1) at (0, 1.6) {Charging Speed\\Proposer ($I_{\mathrm{speed}}$)};
+    \node[agent, minimum width=2.8cm, minimum height=0.9cm] (p2) at (0, 0.3) {Thermal Regulation\\Proposer ($I_{\mathrm{thermal}}$)};
+    \node[agent, minimum width=2.8cm, minimum height=0.9cm] (p3) at (0, -1.0) {Health / Degradation\\Proposer ($I_{\mathrm{health}}$)};
+
+    % Group box around proposers
+    \begin{scope}[on background layer]
+      \node[draw=orange!80!black, dashed, rounded corners=5pt, fit=(p1) (p2) (p3), fill=orange!3, label={[orange!80!black]above:\textbf{Decoupled Proposer Agents}}] (prop_box) {};
+    \end{scope}
+
+    % Aggregator
+    \node[box, fill=yellow!15, minimum width=2.0cm, minimum height=1.8cm] (agg) at (4.0, 0.3) {Proposal\\Aggregation\\Layer\\[2pt]\footnotesize $\min(I_i)$ or\\Dirichlet};
+
+    % Safety Supervisor
+    \node[supervisor, minimum width=3.0cm, minimum height=2.2cm] (sup) at (7.3, 0.3) {Deterministic\\Safety Supervisor\\[3pt]\footnotesize $I_{\mathrm{safe}} = \frac{V_{\max}-\hat{V}_{\mathrm{OCV}}-\Delta V_{\mathrm{margin}}}{\hat{\rho} R_0 + R_{\mathrm{cable}}}$\\[3pt]\footnotesize Thermal Monitor ($|r_T| \le 3^\circ\text{C}$)};
+
+    % Forward Arrows
+    \draw[arrow] (p1.east) -- ++(0.5, 0) |- ([yshift=8pt]agg.west);
+    \draw[arrow] (p2.east) -- (agg.west);
+    \draw[arrow] (p3.east) -- ++(0.5, 0) |- ([yshift=-8pt]agg.west);
+
+    \draw[arrow] (agg) -- node[above, font=\footnotesize] {$I_{\mathrm{prop}}$} (sup);
+    \draw[arrow, red!70!black] (sup) -- node[above, font=\footnotesize\bfseries] {$I_{\mathrm{exec}}$} (plant);
+
+    % Estimator arrows
+    \draw[arrow] (ekf.north) -- (prop_box.south);
+    \draw[arrow] (ekf.east) -| node[pos=0.25, below, font=\footnotesize] {$\hat{\rho}, \hat{V}_{\mathrm{OCV}}$} ([xshift=-10pt]sup.south);
+
+    % Feedback arrow
+    \draw[dasharrow] (plant.south) -- ++(0, -1.2) -| node[pos=0.25, above, font=\footnotesize] {Measured Telemetry: $V_t, I, T_{\mathrm{meas}}$} (ekf.south);
+
+  \end{tikzpicture}%
+  }
+  \caption[Architecture block diagram of the Multi-Agent Battery Management System]{Architecture block diagram of the Multi-Agent Battery Management System (MA-BMS).
+  Three decoupled proposer agents suggest operational currents to optimise charging duration,
+  thermal rise, and cycle health. The deterministic analytical safety supervisor computes the
+  closed-form electrochemical boundary $I_{\mathrm{safe}}$ using real-time adaptive resistance
+  estimates from the 4-state EKF and projects the executed action onto the provably safe manifold.}
+  \label{fig:mabms_arch}
+\end{figure}
+
+\section{Four-State Adaptive Extended Kalman Filter}
+
+\subsection{State Vector and System Model}
+
+The onboard state estimator is a four-state Extended Kalman Filter
+(EKF) with state vector:
+\begin{equation}
+  \mathbf{x} = \begin{bmatrix} \mathrm{SOC} & V_1 & b & \rho
+  \end{bmatrix}^\top,
+\end{equation}
+where $b = Q_{\mathrm{nom}} / Q_{\mathrm{actual}}$ is the inverse
+capacity scaling factor, and $\rho = R_{0,\mathrm{actual}} /
+R_{0,\mathrm{nominal}}$ is the resistance scaling factor.  The
+process model is:
+
+\begin{align}
+  \mathrm{SOC}_{k+1} &= \mathrm{SOC}_k - \frac{I_k \Delta t}
+    {Q_{\mathrm{nom}} / b_k}, \\
+  V_{1,k+1} &= V_{1,k} e^{-\Delta t/\tau_1}
+    + I_k R_1 (1 - e^{-\Delta t/\tau_1}), \\
+  b_{k+1} &= b_k + w_b, \qquad w_b \sim \mathcal{N}(0, \sigma_b^2), \\
+  \rho_{k+1} &= \rho_k + w_\rho, \qquad
+    w_\rho \sim \mathcal{N}(0, \sigma_\rho^2).
+\end{align}
+
+The observation model is:
+\begin{equation}
+  V_{k} = V_{\mathrm{OCV}}(\mathrm{SOC}_k)
+  - I_k \rho_k R_0 - V_{1,k} + \nu_k,
+  \quad \nu_k \sim \mathcal{N}(0, \sigma_V^2).
+\end{equation}
+
+\subsection{Ageing-Aware Initialisation}
+
+A key innovation is the initialisation of the resistance scaling state:
+\begin{equation}
+  \rho_0 = r_0\text{\_scale}(\widehat{\mathrm{SOH}}_0)
+  = 1 + k_{R_0}^{\mathrm{est}} \cdot (1 - \widehat{\mathrm{SOH}}_0),
+\end{equation}
+where $\widehat{\mathrm{SOH}}_0$ is the SOH estimate provided to
+the estimator at episode start and $k_{R_0}^{\mathrm{est}} = 3.0$
+(median value).  This eliminates the systematic underprediction of
+terminal voltage that arises when an aged cell is initialised with
+$\rho_0 = 1.0$.
+
+\subsection{Adaptive EKF vs.\ Fixed EKF Ablation}
+
+Table~\ref{tab:ekf_ablation} reports the estimator ablation results
+across all four controller variants.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Estimator ablation: adaptive 4-state EKF vs.\
+  fixed-parameter 2-state EKF.}
+  \label{tab:ekf_ablation}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{llccccc}
+    \toprule
+    \textbf{Controller} & \textbf{EKF} & \textbf{Success} &
+    \textbf{Shortfall} & \textbf{SOC MAE} &
+    \textbf{Time (s)} & \textbf{Unsafe Steps} \\
+    \midrule
+    Conventional & Adaptive & 0.878 & 0.0048 & 0.0188 & 2391 & 0.178 \\
+    Conventional & Fixed    & 0.700 & 0.0071 & 0.0228 & 2483 & 0.167 \\
+    Independent  & Adaptive & 0.933 & 0.0038 & 0.0189 & 2371 & 0.144 \\
+    Independent  & Fixed    & 0.722 & 0.0063 & 0.0228 & 2471 & 0.133 \\
+    Health Cap   & Adaptive & 0.700 & 0.0136 & 0.0112 & 3952 & 0.000 \\
+    Health Cap   & Fixed    & 0.633 & 0.0157 & 0.0164 & 3868 & 0.000 \\
+    Single Agent & Adaptive & 1.000 & 0.0034 & 0.0338 & 1398 & 0.000 \\
+    Single Agent & Fixed    & 0.900 & 0.0043 & 0.0339 & 1777 & 0.122 \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+The adaptive EKF consistently reduces unsafe executed steps and
+improves deadline success rate.  The most dramatic improvement is
+for the single-agent tuned policy: adaptive EKF raises success from
+0.90 to \textbf{1.000} and eliminates all 0.122 unsafe steps/episode.
+
+\section{Deterministic Safety Supervisor}
+
+\subsection{Voltage Safety Margin}
+
+The supervisor computes the maximum safe charge current at each
+time step:
+\begin{equation}
+  I_{\mathrm{safe}} = \frac{V_{\mathrm{max}} - \hat{V}_{\mathrm{OCV}}
+  - \Delta V_{\mathrm{margin}}}
+  {\hat{\rho} \, R_0 + R_{\mathrm{cable}}},
+  \label{eq:i_safe}
+\end{equation}
+where $\Delta V_{\mathrm{margin}} = I_{\mathrm{nominal}} \cdot
+R_0 \cdot (\gamma_{R_0} - 1)$ buffers against unmodelled resistance
+spikes and $\hat{\rho}$ is the current EKF estimate of the resistance
+scaling factor.  Any proposed current exceeding $I_{\mathrm{safe}}$
+is clipped to $I_{\mathrm{safe}}$.
+
+\subsection{Thermal Plausibility Monitor}
+
+A thermal plausibility monitor evaluates the residual between the
+simulated temperature prediction $\hat{T}(t)$ and the measured
+temperature $T_{\mathrm{meas}}(t)$:
+\begin{equation}
+  r_T(t) = T_{\mathrm{meas}}(t) - \hat{T}(t).
+\end{equation}
+If $|r_T(t)| > \Delta T_{\mathrm{thresh}}$ for a sustained window,
+the monitor triggers a fallback to a conservative safe current level,
+preventing runaway under stuck or biased temperature sensors.
+
+Under a constant temperature bias of $-5\,^\circ\mathrm{C}$
+(sensor reads 5 degrees cooler than true temperature), the monitor
+cannot detect the bias because the residual is bounded by the
+magnitude of the systematic error; this limitation is acknowledged
+and motivates future work on multi-sensor redundancy.
+
+\section{Agent Implementations}
+
+\subsection{Single-Agent Tuned Policy}
+
+The single-agent variant uses a tuned analytical current-stepping
+policy with parameters optimised by a Bayesian hyperparameter search
+(Script \texttt{06\_tune\_single\_agent.py}) over 100 trials.  The
+best parameters are stored in
+\texttt{results/single\_agent\_best\_params.json}:
+current step size, SOC setpoint lookahead, thermal derating slope,
+and degradation penalty coefficient.
+
+\subsection{Independent-Deadline Baseline}
+
+The independent-deadline controller computes a time-optimal current
+schedule from the initial SOC to the target SOC, subject only to
+the voltage safety supervisor.  It serves as the primary baseline
+for RQ1 and RQ3.
+
+\subsection{Health-Cap Controller}
+
+The health-cap controller additionally imposes a current limit
+$I_{\mathrm{health}} = k_{\mathrm{cap}} \cdot C_{\mathrm{nominal}}$,
+where $k_{\mathrm{cap}} < 1$ is tuned to minimise Arrhenius
+degradation at the cost of longer charging time.
+
+\subsection{Conventional CC-CV Baseline}
+
+The conventional CC-CV baseline applies a constant charge current
+of $I_{\mathrm{cc}} = 3.0\,\mathrm{A}$ until
+$V_t = V_{\mathrm{max}}$, then holds $V_t = V_{\mathrm{max}}$ until
+the current decays to a cutoff of $0.3\,\mathrm{A}$.  This directly
+replicates the laboratory protocol of the NASA dataset.

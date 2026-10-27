@@ -1,0 +1,16 @@
+basis=abs thr=0.8
+                 n  crossers  failures
+cohort                                
+original        23        12        13
+recommissioned   3         3         2
+failures that happened BEFORE SOH threshold: 8 of 15
+flags -> low_trajectory: ['battery10', 'battery20', 'battery21', 'battery30', 'battery40', 'battery50'] | noisy: ['battery36', 'battery51', 'battery54'] | truncated_last: ['battery22']
+regression set: ['battery01', 'battery02', 'battery03', 'battery11', 'battery12', 'battery22', 'battery24', 'battery25', 'battery31', 'battery32', 'battery33', 'battery41']
+basis=rel thr=0.8
+                 n  crossers  failures
+cohort                                
+original        23        11        13
+recommissioned   3         0         2
+failures that happened BEFORE SOH threshold: 13 of 15
+flags -> low_trajectory: ['battery10', 'battery20', 'battery21', 'battery30', 'battery40', 'battery50'] | noisy: ['battery13', 'battery36', 'battery51', 'battery54'] | truncated_last: ['battery22']
+regression set: ['battery01', 'battery02', 'battery03', 'battery11', 'battery12', 'battery22', 'battery24', 'battery31', 'battery32', 'battery33', 'battery41']

@@ -1,0 +1,6 @@
+simulator:
+  degradation:
+    c_rate_coeff: 4.999999999999046
+    ea_over_r_k: 4177.942709954742
+    k_per_eq_cycle: 5.828927969324222e-06
+    soc_stress_coeff: 19.999999999999996

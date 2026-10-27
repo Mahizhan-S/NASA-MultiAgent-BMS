@@ -1,0 +1,239 @@
+\label{chap.2}
+
+\section{Introduction}
+
+Battery management for lithium-ion cells sits at the convergence of
+electrochemical modelling, control theory, state estimation, and
+machine learning.  This chapter surveys the four principal paradigms
+in chronological and thematic order, identifies the key gaps that
+motivate the present work, and maps each contribution of this thesis
+to the gap it addresses.
+
+\section{Classical Charging Protocols}
+
+The industry-standard CC-CV protocol applies a constant current
+until the terminal voltage reaches the cut-off threshold, then holds
+the voltage constant while the current decays to a minimum cut-off
+\cite{bloom2001accelerated}.  Variants such as multi-stage constant
+current (MCC) and pulse charging have been proposed to reduce
+polarisation losses and thermal excursions
+\cite{purushothaman2006multistage}.
+
+The fundamental limitation of all classical protocols is their
+open-loop, parameter-agnostic nature.  They do not adapt to
+cell-to-cell variability in internal resistance, ambient temperature,
+or the degradation state of the cell.  As the series resistance
+$R_0$ grows with ageing, a fixed-current protocol produces
+increasingly large voltage drops, causing the CV transition to occur
+at progressively lower SOC values, effectively truncating each charge
+cycle.
+
+\section{Model Predictive Control for Battery Charging}
+
+MPC-based fast charging formulates a finite-horizon constrained
+optimisation problem over an electrochemical or equivalent circuit
+model of the battery \cite{torchio2016lionsimba}.  The Single
+Particle Model (SPM) or Doyle-Fuller-Newman (DFN/P2D) model provides
+physics-based state equations; the MPC minimises charging time
+subject to internal potential and temperature constraints.
+
+Torchio et al.~\cite{torchio2016lionsimba} demonstrated that
+NMPC with a P2D model can reduce charging time by 20--30\% relative
+to CC-CV while respecting lithium plating and temperature limits.
+However, two critical limitations apply: (1) P2D numerical
+integration carries prohibitive real-time computational cost, and
+(2) the model parameters ($R_0$, diffusion coefficients, heat
+generation) are assumed fixed.  As the cell ages, the growing
+$R_0$ causes the MPC to underestimate voltage and overshoot
+current, causing unmodelled plating at high SOC.
+
+\section{Single-Agent Deep Reinforcement Learning}
+
+Deep Reinforcement Learning (DRL) has been applied to battery fast
+charging as a way to learn current policies directly from
+simulator interactions, sidestepping the need for explicit
+electrochemical models \cite{park2020fastcharging, wu2021dqn}.
+Park et al.~\cite{park2020fastcharging} used a Deep Deterministic
+Policy Gradient (DDPG) agent to discover optimal multi-step
+current profiles in an equivalent circuit model, reporting an
+improvement in charging time over MCC protocols.
+
+The primary weakness of single-agent DRL is the \emph{objective
+entanglement} problem.  The scalar reward
+$R_t = -(w_t \cdot \Delta t + w_d \cdot D_t + w_e \cdot E_t + w_v
+\cdot V_{\mathrm{pen},t})$ aggregates charging time, degradation,
+energy cost, and voltage violations with fixed weights.  The resulting
+policy is acutely sensitive to these weight ratios: small
+perturbations cause the learned policy to either sacrifice cell
+health or miss charging deadlines entirely.  Wu et al.~\cite{wu2021dqn}
+introduced a DQN with heuristic thermal throttling, adding a rule-based
+override on top of the neural policy.  While this reduces thermal
+violations, it introduces chattering instability near the threshold.
+
+\section{Multi-Agent Reinforcement Learning in Battery Systems}
+
+Multi-Agent Reinforcement Learning (MARL) has been applied
+predominantly to multi-cell balancing in battery packs and energy
+market trading for large-scale battery energy storage systems (BESS)
+\cite{cao2020marl_energy, li2022marl_grid, zhang2022maddpg}.  In
+these formulations, each spatial entity (cell, inverter, generator)
+is assigned a dedicated agent, and agents learn cooperative or
+competitive policies.
+
+The present work differs fundamentally: rather than assigning agents
+to spatial entities, we assign agents to \emph{functional control
+objectives} of a single pack.  This \emph{functional decomposition}
+paradigm preserves the modularity advantages of multi-agent systems
+while eliminating inter-cell coupling complexity.
+
+\section{Safe Reinforcement Learning}
+
+Safe RL addresses the critical failure mode of neural policies: their
+inability to \emph{guarantee} constraint satisfaction.  Achiam et
+al.~\cite{achiam2017cpo} proposed Constrained Policy Optimisation
+(CPO), adding a Lagrangian constraint on cumulative cost.  Zou et
+al.~\cite{zou2023cbf} combined DDPG with a Control Barrier Function
+(CBF) safety filter, projecting unsafe actions onto the safe manifold
+via a real-time quadratic program.
+
+Both approaches share a fundamental vulnerability: the safety
+guarantee depends on accurate state observation.  When a temperature
+sensor is stuck or biased low by $-5\,^\circ\mathrm{C}$, the observed
+state appears safe while the true cell is overheating.  The CBF
+constraint is then satisfied on a false observation, permitting
+thermal runaway.  Our deterministic analytical supervisor addresses
+this by incorporating $R_0$ margins and a thermal plausibility
+residual monitor operating on model predictions, not sensor readings
+alone.
+
+\section{State and Parameter Estimation Under Ageing}
+
+Accurate state-of-charge (SOC) and state-of-health (SOH) estimation
+is essential for all BMS paradigms.  The Extended Kalman Filter (EKF)
+is the canonical approach \cite{plett2004ekf}, with extensions to dual
+EKF (simultaneous estimation of SOC and $R_0$) and sigma-point
+variants \cite{hu2012ekf}.  Wang et al.~\cite{wang2017dual_ekf}
+proposed a joint EKF for SOC--SOH estimation, improving accuracy under
+degradation.
+
+The key gap in existing literature is \emph{initialisation under
+aged conditions}: estimators that initialise $\rho_0 = 1.0$ (fresh
+cell assumption) for an aged cell with $R_0 \approx 1.5\times$ the
+nominal value will systematically under-predict terminal voltage,
+causing premature current derating and missed deadlines.  Our 4-state
+EKF initialises $\rho_0 = r_0\text{\_scale}(\widehat{\mathrm{SOH}})$,
+which eliminates this bias.
+
+\section{Empirical Grounding and RUL Evaluation}
+
+Rigorous experimental validation is the weakest link in battery
+control literature.  Most DRL charging papers use synthetic ECM
+simulators fitted to fresh cells, without auditing the raw
+dataset for logging artefacts or charge-phase telemetry
+completeness.  Studies using the NASA PCoE dataset
+\cite{saha2008battery, fricke2023nasa} frequently misinterpret
+the logging definitions, misclassify relay-open transient collapses
+as internal short circuits, and assume all 26 packs experienced
+classical capacity-fade EOL.
+
+RUL evaluation is equally fragile: treating RUL as a standard
+regression target over a small sample of fewer than 15 failures
+without accounting for right-censored packs leads to severely
+optimistic error estimates \cite{saxena2015remaining}.
+
+\section{Comparative Synthesis of Related Works}
+
+To establish a clear structural overview of where existing approaches fall
+short, Table~\ref{tab:lit_comparison} evaluates representative battery
+charging, management, and prognostics literature across six foundational
+axes: control paradigm, multi-objective formulation, aging awareness,
+safety guarantees, fault robustness, and empirical validation grounding.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Systematic comparison of related battery management literature against the proposed MA-BMS framework.}
+  \label{tab:lit_comparison}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{lp{2.8cm}p{3.2cm}cccp{3.5cm}}
+    \toprule
+    \textbf{Study / Reference} & \textbf{Control Paradigm} & \textbf{Objective Formulation} &
+    \textbf{Aging ($R_0$)} & \textbf{Hard Safety} & \textbf{Fault Robust} &
+    \textbf{Empirical Grounding} \\
+    \midrule
+    Bloom et al.~\cite{bloom2001accelerated} &
+      Classical CC-CV & Single objective (time) & Static & No (heuristic) & No &
+      Laboratory cycler \\
+    Torchio et al.~\cite{torchio2016lionsimba} &
+      Electrochemical NMPC & Constrained min-time & Static (fresh) & Partial (model-brittle) & No &
+      Synthetic P2D simulation \\
+    Park et al.~\cite{park2020fastcharging} &
+      Single-Agent DDPG & Entangled scalar reward & Static fixed & No (soft penalty) & No &
+      Synthetic ECM \\
+    Wu et al.~\cite{wu2021dqn} &
+      DQN + Heuristic Rule & Scalar reward + override & Static fixed & Partial (rule derating) & No &
+      Synthetic ECM \\
+    Zou et al.~\cite{zou2023cbf} &
+      Safe DRL via CBF & Scalar reward + QP filter & Static fresh & Partial (bias-vulnerable) & No &
+      Simulation only \\
+    Zhang et al.~\cite{zhang2022maddpg} &
+      Spatial MADDPG & Spatial cell balancing & Static & No (soft penalty) & No &
+      Synthetic multi-cell \\
+    Wang et al.~\cite{wang2017dual_ekf} &
+      Joint Dual EKF & State estimation only & Dynamic tracking & N/A (observer only) & Partial &
+      Pulsed cell tests \\
+    \midrule
+    \textbf{Proposed MA-BMS} &
+      \textbf{Functional Multi-Agent} & \textbf{Decoupled Proposers} &
+      \textbf{Adaptive $R_0(\mathrm{SOH})$} & \textbf{Yes (Analytical $I_{\mathrm{safe}}$)} &
+      \textbf{Yes (Monitor)} & \textbf{NASA ALT (4.9M rows, validated} \\
+    \textbf{(This Thesis)} &
+      \textbf{+ Safety Supervisor} & \textbf{+ Dirichlet Tuning} &
+      \textbf{$k_{R_0} \sim \mathcal{U}(1.5, 4.5)$} & \textbf{0\% hard violations} &
+      \textbf{7 fault types} & \textbf{thermal cooling \& OCV)} \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+\section{Summary of Gaps and Thesis Positioning}
+
+Table~\ref{tab:lit_gaps} summarises the key gaps and their
+correspondence to contributions in this thesis.
+
+\begin{longtable}{>{\raggedright}p{4cm}
+                  >{\raggedright}p{4.5cm}
+                  >{\raggedright\arraybackslash}p{4cm}}
+\caption{Summary of literature gaps and corresponding contributions.}
+\label{tab:lit_gaps}\\
+\toprule
+\textbf{Gap} & \textbf{Limitation in Literature} &
+\textbf{Contribution in This Thesis} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{c}{\tablename\ \thetable\ -- \textit{Continued}}\\
+\toprule
+\textbf{Gap} & \textbf{Limitation in Literature} &
+\textbf{Contribution in This Thesis} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Static $R_0$ in controllers &
+MPC and DRL controllers calibrated on fresh cells fail under aged
+resistance ($1.57\times$ growth) &
+Aging-dependent $R_0(\mathrm{SOH})$ in simulator; adaptive EKF
+initialisation \\[4pt]
+Objective entanglement &
+Single scalar reward collapses under weight perturbation &
+Functional agent decomposition + Dirichlet weight sensitivity analysis
+\\[4pt]
+No deterministic safety guarantee &
+Neural policies violate hard limits under sensor faults &
+Analytical safety supervisor: 0 violations across 7 fault types \\[4pt]
+Dataset audit gaps &
+Misclassified EOL events; unverified charge telemetry &
+Full mode audit; CC-only charging confirmed; corrected EOL labels \\[4pt]
+Na\"{\i}ve RUL evaluation &
+Standard regression ignores censoring and small sample &
+Interval-censored Kaplan-Meier + LOPO Ridge regression \\
+\end{longtable}

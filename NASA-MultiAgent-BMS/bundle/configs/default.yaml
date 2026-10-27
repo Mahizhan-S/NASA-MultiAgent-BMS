@@ -1,0 +1,125 @@
+seed: 42
+
+data:
+  download_url: https://data.nasa.gov/docs/legacy/battery_alt_dataset.zip   # from NASA catalog metadata
+  raw_dir: data/raw
+  processed_dir: data/processed
+  manifest_dir: data/manifests
+  # ---- AUDITED SETTINGS (from NASA battery_alt_dataset audit) ----
+  columns:                      # canonical name -> candidate raw column names (first match wins)
+    time:        [time, relative_time, Time, time_s]
+    voltage:     [voltage_load, voltage, Voltage_measured, voltage_battery]
+    current:     [current_load, current, Current_measured]
+    temperature: [temperature_battery, temperature, Temperature_measured]
+    mode:        [mode]
+    mission_type: [mission_type]
+  time_scale_to_s: 1.0          # raw time is in seconds
+  voltage_scale: 0.5            # 2S pack (2 series 18650 cells): per-cell equivalent voltage = pack_voltage / 2
+  discharge_current_sign: 1     # raw current_load > 0 is discharge
+  pack_id_regex: "(battery\\d+)" # 26 packs named battery00..battery54
+  cleaning: {spike_dv_cell: 0.1, v_cell_hard_max: 4.6, temp_invalid_values: [0.0], temp_max_valid_c: 150.0}
+  reference: {use_mission_type: true, mission_type_value: 0}
+  segmentation:
+    i_threshold_a: 1.0          # >1.0A for active discharge (cleanly excludes relay-closing transients)
+    max_gap_s: 60
+  full_discharge:               # per-cell-equivalent voltage window
+    min_duration_s: 300
+    v_start_min: 3.5            # under 7.5A-19A load, initial terminal voltage is ~3.55-3.75 V (4.15V at 2.5A)
+    v_end_max: 3.4              # discharge cut-off is ~2.45 V per cell
+    n_reference_cycles: 3       # SOH reference = median capacity of first N full discharges
+  split:
+    test_fraction: 0.2
+    val_fraction: 0.2
+    n_cv_folds: 4
+
+rul:
+  soh_eol: 0.8                  # end-of-life criterion: SOH <= 0.8 (explicit, documented)
+  min_cycles_per_pack: 10
+
+temperature:
+  horizon_steps: 10
+  horizons: [60, 300]          # samples (~seconds at 1 Hz)
+  lags: 5
+  stride: 5
+
+# ---- Simulator: PER-CELL-EQUIVALENT surrogate calibrated against NASA discharge data ----
+simulator:
+  dt_s: 10.0
+  q0_ah: 2.45                  # measured fresh-cell capacity (~2.42-2.48 Ah)
+  target_tolerance: 0.005      # success = final SOC >= target - 0.005 (shortfall is also logged)
+  coulombic_eff: 0.995
+  r0_ohm: 0.0251165             # fitted from scripts/04_validate_sim.py (with q0_ah=2.45)
+  r1_ohm: 0.0097498             # fitted
+  c1_f: 1873.33                 # fitted (tau = 18.26 s)
+  r_ea_k: 2000.0                # Arrhenius-like resistance temperature dependence [K]
+  t_ref_c: 25.0
+  thermal:
+    c_th_j_per_k: 44.0611       # fitted
+    h_w_per_k: 0.05380          # fitted
+    cool_max_w: 1.0
+    cool_elec_w: 0.5            # electrical power drawn at cool_cmd = 1
+  degradation:                  # SURROGATE (not validated): loss per equivalent full cycle ~ k
+    k_per_eq_cycle: 2.0e-4
+    ea_over_r_k: 4000.0
+    c_rate_coeff: 0.5
+    soc_stress_coeff: 1.0
+  ocv_soc: [0.0, 0.1, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0]
+  ocv_v:   [3.20, 3.45, 3.58, 3.68, 3.82, 4.00, 4.10, 4.20]
+  terminate_on_hard_violation: true
+  t_target_c: 35.0
+
+limits:                          # per cell
+  v_max: 4.20
+  v_hard: 4.30
+  v_min: 3.00
+  t_max_c: 45.0
+  t_derate_start_c: 40.0
+  t_hard_c: 60.0
+  soc_max: 1.0
+  i_max_c: 2.0                   # C-rate hardware/limit
+  i_max_a: 4.9                   # ABSOLUTE cell current limit [A] (= 2 C x 2.45 Ah nominal). If omitted: i_max_c x simulator.q0_ah.
+
+estimator:
+  adaptive_capacity: true # capacity-adaptive EKF (set false to reproduce the old fixed-capacity EKF)
+  p0_b: 0.0225            # prior variance of the capacity ratio b = Q_nom / Q_actual
+  q_b: 1.0e-8             # random-walk noise of b per step
+
+safety:
+  v_margin: 0.02                 # guard band [V] below v_max used by the projection (covers SOC/R0 estimation error)
+
+noise:
+  v_sigma: 0.003
+  i_sigma: 0.01
+  t_sigma: 0.2
+  soh_sigma: 0.01                # PLACEHOLDER SOH estimate noise in simulation
+
+agents:
+  conventional: {c_rate: 1.0, cool_on_c: 35.0, cool_off_c: 32.0}
+  charging: {c_rate: 1.0, deadline_margin: 1.1}
+  thermal: {kp: 0.25, ki: 0.002, setpoint_c: 35.0}
+  health: {base_c_max: 1.5, min_c: 0.3, deadline_margin: 1.15, dv_health: 0.05, t_soft_c: 38.0}
+  nominal_model:                 # calibrated nominal model for state estimation (EKF)
+    r0_ohm: 0.0251165
+    r1_ohm: 0.0097498
+    tau_s: 18.265
+    c_th_j_per_k: 44.0611
+    h_w_per_k: 0.05380
+    cool_max_w: 1.0
+
+# ---- Shared objective J = w_t*T + w_d*D + w_c*E + w_v*V (normalised, DESIGN CHOICE not a validated physical model) ----
+objective:
+  w_t: 1.0          # T = time_to_target / deadline (failure => 1 + fail_penalty)
+  w_d: 1.0          # D = capacity_loss / d_scale
+  w_c: 0.5          # E = cooling_energy_wh / e_scale
+  w_v: 2.0          # V = unsafe_executed_steps / v_scale
+  d_scale: auto
+  e_scale: auto
+  v_scale: 10.0
+  fail_penalty: 1.0
+
+compare:
+  tune_samples: 60          # random-search samples for the single-agent baseline
+  tune_scenarios: 12
+  n_eval_scenarios: 30
+  n_seeds: 3                # noise seeds per scenario
+  alpha: 0.05

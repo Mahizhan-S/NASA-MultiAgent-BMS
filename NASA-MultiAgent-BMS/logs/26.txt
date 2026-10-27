@@ -1,0 +1,16 @@
+RAW METRICS (report these, not J alone):
+                                tt      dd      ee      ss
+method                                                   
+conventional            1796.3333  0.0001  0.0807  1.0000
+independent             2117.7778  0.0002  0.0498  1.0000
+independent_health_cap  3869.7497  0.0001  0.0442  0.9333
+single_agent            1435.2222  0.0002  0.0199  1.0000
+
+Share of 5000 random weightings where each method is best:
+ method
+conventional              0.066
+independent               0.032
+independent_health_cap    0.054
+single_agent              0.848
+Median Kendall tau of ranking vs equal weights: 0.67
+Pareto-nondominated methods (T,D,E all minimised): ['conventional', 'independent', 'independent_health_cap', 'single_agent']

@@ -1,0 +1,8 @@
+..........................                                               [100%]
+=============================== warnings summary ===============================
+tests/test_estimation_data.py: 10 warnings
+  /Users/mahizhan/Documents/Final_project/NASA-MultiAgent-BMS/mabms/data/segments.py:69: UserWarning: reference filter requested but no mission_type column: SOH labels are load-confounded
+    warnings.warn("reference filter requested but no mission_type column: SOH labels are load-confounded")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+26 passed, 10 warnings in 6.88s

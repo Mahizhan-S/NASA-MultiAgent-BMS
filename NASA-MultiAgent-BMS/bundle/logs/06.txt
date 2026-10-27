@@ -1,0 +1,36 @@
+objective scales: {'d_scale': 1.4110479964614397e-05, 'e_scale': 0.01}
+tuned single-agent params (train/val only): {'c_rate': 0.64, 'v_cv_offset': 0.001, 'kp': 0.798, 'setpoint_c': 35.978, 'deadline_gain': 1.294}
+
+=== train: n_scenarios=30, seeds=3 ===
+                             J time_to_target_penalized_s capacity_loss unsafe_executed_steps target_reached
+                          mean                       mean          mean                  mean           mean
+method                                                                                                      
+conventional            1.7720                  2097.0000           0.0                   0.0            1.0
+independent             1.6305                  2094.0000           0.0                   0.0            1.0
+independent_health_cap  1.4087                  3850.4444           0.0                   0.0            1.0
+single_agent            1.3293                  3032.8889           0.0                   0.0            1.0
+
+Paired tests on J (a - b; negative => a better):
+                     a            b  mean_diff  ci95_lo  ci95_hi  cohens_dz  wilcoxon_p  p_holm
+          single_agent conventional    -0.4427  -0.6686  -0.2675    -0.7706      0.0000  0.0000
+           independent conventional    -0.1415  -0.2821  -0.0326    -0.3890      0.0630  1.0000
+independent_health_cap conventional    -0.3633  -0.6004  -0.1773    -0.5980      0.0002  0.0048
+           independent single_agent     0.3012   0.2191   0.4025     1.1606      0.0000  0.0000
+independent_health_cap single_agent     0.0794   0.0395   0.1222     0.6642      0.0008  0.0112
+
+=== test_unseen: n_scenarios=30, seeds=3 ===
+                             J time_to_target_penalized_s capacity_loss unsafe_executed_steps target_reached
+                          mean                       mean          mean                  mean           mean
+method                                                                                                      
+conventional            4.2976                  2375.7167           0.0                0.1444         0.9000
+independent             3.4694                  2357.8387           0.0                0.1667         0.9333
+independent_health_cap  2.9926                  3952.0884           0.0                0.0000         0.7000
+single_agent            2.3932                  3109.2887           0.0                0.0000         0.8000
+
+Paired tests on J (a - b; negative => a better):
+                     a            b  mean_diff  ci95_lo  ci95_hi  cohens_dz  wilcoxon_p  p_holm
+          single_agent conventional    -1.9044  -2.5684  -1.2580    -1.0219      0.0000  0.0000
+           independent conventional    -0.8282  -1.1267  -0.5394    -0.9828      0.0002  0.0059
+independent_health_cap conventional    -1.3050  -1.9163  -0.7094    -0.7513      0.0005  0.0115
+           independent single_agent     1.0762   0.6836   1.4745     0.9436      0.0000  0.0001
+independent_health_cap single_agent     0.5994   0.2732   0.9888     0.5746      0.0006  0.0078

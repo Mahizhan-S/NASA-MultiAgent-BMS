@@ -1,0 +1,367 @@
+%-----------------------------------------------------------------------
+%  AMRITA VISHWA VIDYAPEETHAM
+%  B.Tech (AI & DS) Final Year Thesis  --  October 2026
+%  Multi-Agent Battery Management System for Predictive Health
+%  Estimation, Thermal Regulation, and Safe Charging Control
+%-----------------------------------------------------------------------
+\documentclass[a4paper, 12pt]{report}
+
+%---- Packages ---------------------------------------------------------
+\usepackage[top=30mm,bottom=30mm,left=35mm,right=25mm]{geometry}
+\usepackage{bold-extra}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage[english]{babel}
+\usepackage[autostyle,english=american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{titletoc}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{siunitx}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,fit,backgrounds}
+
+%---- Theorem-like environments ----------------------------------------
+\theoremstyle{definition}
+\newtheorem{Definition}{Definition}[section]
+
+%---- Header / footer --------------------------------------------------
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\small\leftmark}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+%=======================================================================
+\begin{document}
+
+%-----------------------------------------------------------------------
+%  TITLE PAGE
+%-----------------------------------------------------------------------
+\pagenumbering{gobble}
+\thispagestyle{empty}
+\begin{large}
+  \begin{center}
+    {\Large\bfseries MULTI-AGENT BATTERY MANAGEMENT SYSTEM FOR
+    PREDICTIVE HEALTH ESTIMATION, THERMAL REGULATION,\\
+    AND SAFE CHARGING CONTROL}\\[1.3cm]
+    A Thesis\\[0.1cm]
+    Submitted in partial fulfilment for the Degree of\\[0.1cm]
+    \textbf{BACHELOR OF TECHNOLOGY}\\[0.1cm]
+    in\\[0.1cm]
+    \textbf{ARTIFICIAL INTELLIGENCE AND DATA SCIENCE}\\[1.0cm]
+    by\\[0.2cm]
+    {\Large\bfseries WRITE STUDENT NAME (ROLL NUMBER)}\\[0.1cm]
+    {\Large\bfseries WRITE STUDENT NAME (ROLL NUMBER)}\\[0.1cm]
+    {\Large\bfseries WRITE STUDENT NAME (ROLL NUMBER)}\\[0.1cm]
+    {\Large\bfseries WRITE STUDENT NAME (ROLL NUMBER)}\\[3.0cm]
+    \includegraphics[scale=0.8]{univA.png}\\
+    \vfill
+    DEPARTMENT OF ARTIFICIAL INTELLIGENCE\\
+    {\Large\textbf{AMRITA VISHWA VIDYAPEETHAM}}\\
+    {\large COIMBATORE CAMPUS (INDIA)}\\[0.3cm]
+    October 2026
+  \end{center}
+\end{large}
+
+%-----------------------------------------------------------------------
+%  BONAFIDE CERTIFICATE
+%-----------------------------------------------------------------------
+\newpage
+\begin{center}
+  {\large DEPARTMENT OF ARTIFICIAL INTELLIGENCE}\\
+  {\Large\textbf{AMRITA VISHWA VIDYAPEETHAM}}\\
+  {\large COIMBATORE CAMPUS}\\[2.2cm]
+  \includegraphics[scale=0.8]{univA.png}\\[1.5cm]
+  {\Large\textbf{BONAFIDE CERTIFICATE}}
+\end{center}
+\vspace{0.8cm}
+\noindent This is to certify that the thesis entitled
+\enquote{\textbf{Multi-Agent Battery Management System for Predictive
+Health Estimation, Thermal Regulation, and Safe Charging Control}}
+submitted by \textbf{Student Name, Roll No:\ldots\ldots},
+\textbf{Student Name, Roll No:\ldots\ldots},
+\textbf{Student Name, Roll No:\ldots\ldots} and
+\textbf{Student Name, Roll No:\ldots\ldots}
+for the award of the \textbf{Degree of Bachelor of Technology} under
+the \textbf{Faculty of Engineering} is a bonafide record of the work
+carried out by them under our guidance and supervision at
+"Department of Artificial Intelligence", Amrita Vishwa Vidyapeetham,
+Coimbatore Campus.\\
+
+\vfill
+Submitted for the examination held on \ldots\ldots\ldots\ldots
+\vfill
+\textbf{INTERNAL EXAMINER} \hspace{5cm} \textbf{EXTERNAL EXAMINER}
+\vfill
+\begin{center}
+  \textbf{Dr.~[Thesis Advisor Name]}\\
+  Thesis Advisor,\\
+  Assistant / Associate Professor,\\
+  Department of Artificial Intelligence,\\
+  Amrita Vishwa Vidyapeetham,\\
+  Coimbatore Campus, India.
+\end{center}
+
+%-----------------------------------------------------------------------
+%  DECLARATION
+%-----------------------------------------------------------------------
+\newpage
+\begin{center}
+  {\large DEPARTMENT OF ARTIFICIAL INTELLIGENCE}\\
+  {\Large\textbf{AMRITA VISHWA VIDYAPEETHAM}}\\
+  {\large COIMBATORE CAMPUS}\\[2.5cm]
+  {\large\textbf{DECLARATION}}\\[0.3cm]
+\end{center}
+\noindent We, \textbf{Student Name}, Reg.~No:\ldots\ldots,
+\textbf{Student Name}, Reg.~No:\ldots\ldots,
+\textbf{Student Name}, Reg.~No:\ldots\ldots\ and
+\textbf{Student Name}, Reg.~No:\ldots\ldots\ hereby declare that
+this thesis entitled
+\enquote{\textbf{Multi-Agent Battery Management System for Predictive
+Health Estimation, Thermal Regulation, and Safe Charging Control}}
+is the record of the original work done by us under the guidance of
+\textbf{Dr.~[Advisor Name]}, his/her designation, Department of
+Artificial Intelligence, Amrita Vishwa Vidyapeetham, Coimbatore
+Campus. To the best of our knowledge, this work has not formed the
+basis for the award of any degree/diploma/associateship/fellowship or
+a similar award to any candidate in any University.\\\\
+
+\vspace{1cm}
+\noindent{\bf Place: Coimbatore \hfill Signature of the Students}\\
+\noindent{\bf Date:\hspace{2.5cm}}
+\vfill
+\begin{center}
+  \large{COUNTERSIGNED}\\
+\end{center}
+\vspace{0.6in}
+\begin{center}
+  \textbf{Dr.~K.P.~Soman}\\
+  Professor and Dean,\\
+  Department of Artificial Intelligence,\\
+  Amrita Vishwa Vidyapeetham,\\
+  Coimbatore Campus, India.
+\end{center}
+
+%-----------------------------------------------------------------------
+%  FRONT MATTER
+%-----------------------------------------------------------------------
+\clearpage
+\pagenumbering{roman}
+\tableofcontents
+
+%---- Acknowledgements -------------------------------------------------
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+We express our heartfelt gratitude to our thesis advisor,
+\textbf{Dr.~[Advisor Name]}, whose constant guidance, insightful
+critiques, and patience throughout the research process made this work
+possible. We thank the Department of Artificial Intelligence, Amrita
+Vishwa Vidyapeetham, for providing the computational resources and an
+intellectually stimulating environment.
+
+We are deeply indebted to the \textbf{NASA Prognostics Center of
+Excellence (PCoE)} for publicly releasing the Accelerated Life Testing
+battery dataset, which served as the empirical backbone of this thesis.
+
+We also thank our families and friends for their unwavering
+encouragement throughout this journey.
+
+\vspace{1cm}
+\begin{flushright}
+  THE AUTHORS
+\end{flushright}
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+%---- Abbreviations ----------------------------------------------------
+\newpage
+\section*{{\huge Abbreviations}\hfill}
+\addcontentsline{toc}{chapter}{\textbf{Abbreviations}}
+\vspace{1.2cm}
+\begin{tabular}{lll}
+ALT  & -- & Accelerated Life Testing \\
+BMS  & -- & Battery Management System \\
+CBF  & -- & Control Barrier Function \\
+CC   & -- & Constant Current \\
+CV   & -- & Constant Voltage \\
+DRL  & -- & Deep Reinforcement Learning \\
+ECM  & -- & Equivalent Circuit Model \\
+EKF  & -- & Extended Kalman Filter \\
+EOL  & -- & End of Life \\
+EV   & -- & Electric Vehicle \\
+HEV  & -- & Hybrid Electric Vehicle \\
+KM   & -- & Kaplan--Meier \\
+LOPO & -- & Leave-One-Pack-Out \\
+MA-BMS & -- & Multi-Agent Battery Management System \\
+MAE  & -- & Mean Absolute Error \\
+MARL & -- & Multi-Agent Reinforcement Learning \\
+MPC  & -- & Model Predictive Control \\
+NASA PCoE & -- & NASA Prognostics Center of Excellence \\
+OCV  & -- & Open-Circuit Voltage \\
+PID  & -- & Proportional-Integral-Derivative \\
+PPO  & -- & Proximal Policy Optimisation \\
+RMSE & -- & Root Mean Square Error \\
+RL   & -- & Reinforcement Learning \\
+RUL  & -- & Remaining Useful Life \\
+SAC  & -- & Soft Actor-Critic \\
+SOC  & -- & State of Charge \\
+SOH  & -- & State of Health \\
+SPM  & -- & Single Particle Model \\
+\end{tabular}
+
+%---- Symbols ----------------------------------------------------------
+\newpage
+\section*{{\huge List of Symbols}\hfill}
+\addcontentsline{toc}{chapter}{\textbf{List of Symbols}}
+\vspace{1.2cm}
+\begin{tabular}{lll}
+$Q_{\mathrm{nom}}$   & -- & Nominal cell capacity (\SI{2.45}{Ah}) \\
+$R_0$                & -- & Series (ohmic) internal resistance \\
+$R_0^{\mathrm{new}}$ & -- & Fresh-cell series resistance (\SI{0.034}{\ohm}) \\
+$k_{R_0}$            & -- & Resistance growth coefficient per SOH unit lost \\
+$C_{\mathrm{th}}$    & -- & Thermal capacitance (\SI{54.5}{J/K}) \\
+$h$                  & -- & Heat transfer coefficient (\SI{0.069}{W/K}) \\
+$\tau_{\mathrm{th}}$ & -- & Thermal time constant $= C_{\mathrm{th}}/h$ (\SI{791}{s}) \\
+$k_T$                & -- & Temperature degradation coefficient \\
+$E_a$                & -- & Activation energy (Arrhenius, \SI{4068}{K}) \\
+$J$                  & -- & Composite scalar reward / objective \\
+$w_t, w_d, w_e$      & -- & Dirichlet weighting of time, degradation, energy \\
+SOC                  & -- & State of Charge (0--1) \\
+SOH$_{\mathrm{abs}}$ & -- & Absolute State of Health $= Q/Q_{\mathrm{nom}}$ \\
+$\rho$               & -- & Resistance scaling state in EKF \\
+$b$                  & -- & Capacity scaling state in EKF \\
+$T$                  & -- & Cell surface / electrode temperature (\si{\degreeCelsius}) \\
+$T_{\mathrm{amb}}$   & -- & Ambient temperature (\si{\degreeCelsius}) \\
+$I$                  & -- & Applied current (\si{A}, positive = discharge) \\
+$V$                  & -- & Terminal voltage (\si{V}) \\
+$V_{\mathrm{max}}$   & -- & Maximum allowable voltage (\SI{8.4}{V} for 2S pack) \\
+$\Delta V_{\mathrm{margin}}$ & -- & Voltage safety margin \\
+\end{tabular}
+
+%---- Abstract ---------------------------------------------------------
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Lithium-ion battery packs operating under variable loading regimes
+face competing operational demands: minimising charging duration,
+limiting thermal excursion, preventing accelerated capacity fade, and
+enforcing strict electrochemical safety boundaries. This thesis
+investigates a modular \textbf{Multi-Agent Battery Management System
+(MA-BMS)} evaluated against the NASA Prognostics Center of Excellence
+Accelerated Life Testing (ALT) dataset comprising 26 two-cell
+in-series (2S) Samsung INR18650-25R packs operating at up to 3.5C
+discharge rates at ambient temperatures of 25--\SI{60}{\degreeCelsius}.
+
+A rigorous dataset audit, spanning 4{,}918{,}193 raw telemetry
+rows, establishes the empirical basis: the charging protocol is pure
+CC at \SI{3.0}{A} (1.2C) with a negligible constant-voltage taper
+fraction ($\leq 4\%$). The audit classifies 9 hard collapses, 5
+probable protection shutoffs, 3 recommissioned packs, and 10
+right-censored survivors -- finding that 10 of the 15 failure events
+occur \emph{above} 0.80 SOH, which invalidates capacity-fade-only
+prognostic models as early warning systems.
+
+The simulator is calibrated from the dataset: series resistance
+$R_0 = \SI{0.034}{\ohm}$ (fresh), thermal capacitance
+$C_{\mathrm{th}} = \SI{54.5}{J/K}$, heat transfer coefficient
+$h = \SI{0.069}{W/K}$ (thermal time constant $\tau_{\mathrm{th}} =
+\SI{791}{s}$), and resistance growth $R_0(\mathrm{SOH}) = R_0^{\mathrm{new}}
+(1 + k_{R_0}(1-\mathrm{SOH}))$ with $k_{R_0} \sim \mathcal{U}(1.5,
+4.5)$. Thermal response during rest cooling is validated on 5{,}479
+physical blocks.
+
+The MA-BMS architecture separates charging from thermal and health
+concerns via three cooperative proposer agents and a deterministic
+analytical safety supervisor. A tuned single-agent policy achieves
+the best composite score under 10{,}000-sample Dirichlet
+weight sensitivity ($84.78\%$ best-weight share), reduces
+time-to-target by $20.1\%$ versus conventional CC-CV, and incurs
+zero unsafe executed steps under four-times sensor noise. The
+deterministic supervisor eliminates all hard voltage and temperature
+violations across seven injected fault regimes.
+
+An interval-censored Kaplan-Meier survival analysis (endpoints A, B,
+C) yields a median throughput of $630$--$833$~Ah across endpoint
+definitions. A Leave-One-Pack-Out Ridge regression for RUL achieves
+MAE $= 122.4$~Ah (RMSE $= 153.9$~Ah, $R^2 = 0.787$), outperforming
+linear and population baselines. The study formally downgrade RQ1:
+the health-cap controller does not demonstrate statistically
+significant capacity-fade reduction relative to the independent
+baseline, as its $R_0$-induced thermal throttling under aged packs
+reduces deadline success from 93.3\% to 65.6\%.
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%-----------------------------------------------------------------------
+%  CHAPTERS
+%-----------------------------------------------------------------------
+\chapter{Introduction}
+\input{chapters/introduction}
+
+\chapter{Literature Review}
+\input{chapters/chapter2}
+
+\chapter{Dataset Audit and Empirical Characterisation}
+\input{chapters/chapter3}
+
+\chapter{Simulator Calibration and Validation}
+\input{chapters/chapter4}
+
+\chapter{Multi-Agent BMS Architecture and State Estimation}
+\input{chapters/chapter5}
+
+\chapter{Controller Benchmarking and Robustness Analysis}
+\input{chapters/chapter6}
+
+\chapter{Survival Analysis and Remaining Useful Life Prediction}
+\input{chapters/chapter7}
+
+\chapter{Conclusion and Scope for Further Research}
+\input{chapters/conclusion}
+
+%---- Appendix ---------------------------------------------------------
+\appendix
+\chapter{Script Inventory and Reproducibility Guide}
+\input{chapters/appendix}
+
+%---- References -------------------------------------------------------
+\newpage
+\renewcommand{\bibname}{References}
+\bibliographystyle{ieeetr}
+\addcontentsline{toc}{chapter}{References}
+\bibliography{mybib}
+
+%---- Publications -----------------------------------------------------
+\chapter*{List of Publications\\{\large (Based on the Research Work)}}
+\addcontentsline{toc}{chapter}{List of Publications Based on the Research Work}
+\textbf{\Large Papers Communicated}
+\begin{enumerate}
+  \item [Student Names], ``Multi-Agent Battery Management System for
+  Predictive Health Estimation, Thermal Regulation, and Safe Charging
+  Control using the NASA PCoE ALT Dataset,'' \emph{communicated to
+  [Target Journal/Conference]}, October 2026.
+\end{enumerate}
+
+\end{document}

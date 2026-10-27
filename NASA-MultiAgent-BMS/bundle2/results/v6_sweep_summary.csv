@@ -1,0 +1,17 @@
+method,variant,success,shortfall,abs_final_err,err_bias,unsafe_exec,max_v_over,time_pen_s
+conventional,A_baseline,0.9083,0.0044,0.0144,-0.0112,0.1083,0.0097,2324.4879
+conventional,B_adapt_R0,0.9833,0.0041,0.0045,-0.0037,0.0,0.0,2110.689
+conventional,C_stop_latch_0.02,0.6917,0.0076,0.0143,-0.0113,0.0667,0.0078,2610.0675
+conventional,D_latch+margin_0.01,0.7917,0.0061,0.0151,-0.0105,0.0,0.0,2381.4796
+conventional,E_safety_r0_margin_1.5,0.9,0.0047,0.0144,-0.0109,0.0,0.0,2322.3919
+conventional,F_R0+r0margin_1.3,0.9833,0.0042,0.0043,-0.0036,0.0,0.0,2115.939
+conventional,G_R0+r0margin_1.3+stop_margin_0.005,0.9833,0.0042,0.0045,-0.0032,0.0,0.0,2115.0223
+conventional,H_R0+latch+r0margin_1.3,0.8917,0.0047,0.0041,-0.0037,0.0,0.0,2260.0212
+independent,A_baseline,0.9333,0.0039,0.0148,-0.0118,0.0833,0.009,2300.887
+independent,B_adapt_R0,1.0,0.0035,0.0043,-0.0036,0.0,0.0,2107.75
+independent,C_stop_latch_0.02,0.725,0.0069,0.0146,-0.0119,0.0667,0.0081,2589.5658
+independent,D_latch+margin_0.01,0.825,0.0052,0.0155,-0.0111,0.0,0.0,2356.5178
+independent,E_safety_r0_margin_1.5,0.925,0.0042,0.0148,-0.0115,0.0,0.0,2306.4199
+independent,F_R0+r0margin_1.3,1.0,0.0037,0.0041,-0.0034,0.0,0.0,2113.0
+independent,G_R0+r0margin_1.3+stop_margin_0.005,1.0,0.0037,0.0043,-0.0032,0.0,0.0,2111.6667
+independent,H_R0+latch+r0margin_1.3,0.925,0.004,0.004,-0.0035,0.0,0.0,2240.0084

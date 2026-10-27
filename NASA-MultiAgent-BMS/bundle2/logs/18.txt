@@ -1,0 +1,53 @@
+done battery02
+done battery03
+done battery12
+done battery24
+done battery25
+done battery32
+done battery33
+done battery53
+done battery00
+done battery01
+done battery10
+done battery11
+done battery20
+done battery21
+done battery22
+done battery23
+done battery30
+done battery31
+done battery40
+done battery41
+done battery50
+done battery51
+done battery52
+done battery13
+done battery36
+done battery54
+
+Mean NaN fraction of each column, by mode (0 = always populated, 1 = never):
+      nan_mission_type  nan_voltage_load  nan_current_load  nan_voltage_charger  nan_temperature_battery  nan_temperature_mosfet  nan_temperature_resistor  share
+mode                                                                                                                                                             
+-1.0               0.0               0.0               0.0                  0.0                      0.0                     0.0                       0.0  0.126
+ 0.0               1.0               1.0               1.0                  0.0                      0.0                     1.0                       1.0  0.383
+ 1.0               1.0               1.0               1.0                  0.0                      0.0                     1.0                       1.0  0.491
+
+Block durations by mode (median over packs):
+      n_blocks  median_dur_s  p10_dur_s  p90_dur_s  median_dT
+mode                                                         
+-1.0     359.0         535.5      475.6      593.8        0.0
+ 0.0     735.5         599.7      599.1     1504.2        0.0
+ 1.0     376.0        2632.3     2374.6     2972.1      -12.2
+
+Rest-block cooling fits: 5479 blocks from 26 packs; tau_s median 746  IQR [690, 815]
+per-pack median tau_s:
+ count     26.0
+mean     746.0
+std      117.0
+min      300.0
+25%      719.0
+50%      760.0
+75%      810.0
+max      914.0
+
+Compare with the calibrated model: tau = C_th / h = 792 s

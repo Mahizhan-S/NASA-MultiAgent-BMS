@@ -1,0 +1,200 @@
+seed: 42
+data:
+  download_url: https://data.nasa.gov/docs/legacy/battery_alt_dataset.zip
+  raw_dir: data/raw
+  processed_dir: data/processed
+  manifest_dir: data/manifests
+  columns:
+    time:
+    - time
+    - relative_time
+    - Time
+    - time_s
+    voltage:
+    - voltage_load
+    - voltage
+    - Voltage_measured
+    - voltage_battery
+    current:
+    - current_load
+    - current
+    - Current_measured
+    temperature:
+    - temperature_battery
+    - temperature
+    - Temperature_measured
+    mode:
+    - mode
+    mission_type:
+    - mission_type
+  time_scale_to_s: 1.0
+  voltage_scale: 0.5
+  discharge_current_sign: 1
+  pack_id_regex: (battery\d+)
+  cleaning:
+    spike_dv_cell: 0.1
+    v_cell_hard_max: 4.6
+    temp_invalid_values:
+    - 0.0
+    temp_max_valid_c: 150.0
+  reference:
+    use_mission_type: true
+    mission_type_value: 0
+  segmentation:
+    i_threshold_a: 1.0
+    max_gap_s: 60
+  full_discharge:
+    min_duration_s: 300
+    v_start_min: 3.5
+    v_end_max: 3.4
+    n_reference_cycles: 3
+  split:
+    test_fraction: 0.2
+    val_fraction: 0.2
+    n_cv_folds: 4
+rul:
+  soh_eol: 0.8
+  min_cycles_per_pack: 10
+temperature:
+  horizon_steps: 10
+  horizons:
+  - 60
+  - 300
+  lags: 5
+  stride: 5
+simulator:
+  dt_s: 10.0
+  q0_ah: 2.45
+  target_tolerance: 0.005
+  coulombic_eff: 0.995
+  r0_ohm: 0.04138119405602487
+  r1_ohm: 0.0014295418010836932
+  c1_f: 20987.67258379046
+  r_ea_k: 1032.6857133058475
+  t_ref_c: 25.0
+  thermal:
+    c_th_j_per_k: 53.8736844263592
+    h_w_per_k: 0.06798230206452074
+    cool_max_w: 1.0
+    cool_elec_w: 0.5
+  degradation:
+    k_per_eq_cycle: 1.7654e-4
+    ea_over_r_k: 4963.7
+    c_rate_coeff: 0.0
+    soc_stress_coeff: 0.0
+  ocv_soc:
+  - 0.0
+  - 0.05
+  - 0.1
+  - 0.15000000000000002
+  - 0.2
+  - 0.25
+  - 0.30000000000000004
+  - 0.35000000000000003
+  - 0.4
+  - 0.45
+  - 0.5
+  - 0.55
+  - 0.6000000000000001
+  - 0.65
+  - 0.7000000000000001
+  - 0.75
+  - 0.8
+  - 0.8500000000000001
+  - 0.9
+  - 0.9500000000000001
+  - 1.0
+  ocv_v:
+  - 2.6855438796616107
+  - 3.088135776550492
+  - 3.2541198524704495
+  - 3.3588452954578436
+  - 3.4345213571263966
+  - 3.4943390154789244
+  - 3.543620029836745
+  - 3.5875624246670026
+  - 3.6299630195673784
+  - 3.6719091468032294
+  - 3.713892789762426
+  - 3.754161398061981
+  - 3.7960121803964126
+  - 3.839562263890552
+  - 3.883513377588192
+  - 3.9276863616824698
+  - 3.9722529331166596
+  - 4.020126208496702
+  - 4.083658419893571
+  - 4.15686468076851
+  - 4.230402376305464
+  terminate_on_hard_violation: true
+  t_target_c: 35.0
+limits:
+  v_max: 4.2
+  v_hard: 4.3
+  v_min: 3.0
+  t_max_c: 45.0
+  t_derate_start_c: 40.0
+  t_hard_c: 60.0
+  soc_max: 1.0
+  i_max_c: 2.0
+  i_max_a: 4.9
+
+estimator:
+  adaptive_capacity: true
+  adapt_r0: true            # 4-state EKF [soc, v1, capacity ratio, resistance ratio]
+  p0_b: 0.0225
+  q_b: 1.0e-8
+  p0_rho: 0.09
+  q_rho: 1.0e-8
+
+safety:
+  v_margin: 0.02
+  r0_margin: 1.3
+  temp_monitor: {enabled: true, thr_c: 4.0, k: 3, gain: 0.002}
+noise:
+  v_sigma: 0.003
+  i_sigma: 0.01
+  t_sigma: 0.2
+  soh_sigma: 0.01
+agents:
+  conventional:
+    c_rate: 1.2
+    cool_on_c: 35.0
+    cool_off_c: 32.0
+  charging:
+    c_rate: 1.0
+    deadline_margin: 1.1
+    soc_stop_margin: 0.0
+    restart_hysteresis: 0.0
+  thermal:
+    kp: 0.25
+    ki: 0.002
+    setpoint_c: 35.0
+  health:
+    base_c_max: 1.5
+    min_c: 0.3
+    deadline_margin: 1.15
+    dv_health: 0.05
+    t_soft_c: 38.0
+  nominal_model:
+    r0_ohm: 0.04138119405602487
+    r1_ohm: 0.0014295418010836932
+    tau_s: 30.002755265986664
+    c_th_j_per_k: 53.8736844263592
+    h_w_per_k: 0.06798230206452074
+    cool_max_w: 1.0
+objective:
+  w_t: 1.0
+  w_d: 1.0
+  w_c: 0.5
+  w_v: 2.0
+  d_scale: auto
+  e_scale: auto
+  v_scale: 10.0
+  fail_penalty: 1.0
+compare:
+  tune_samples: 60
+  tune_scenarios: 12
+  n_eval_scenarios: 30
+  n_seeds: 3
+  alpha: 0.05

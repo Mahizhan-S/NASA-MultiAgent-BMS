@@ -1,0 +1,2895 @@
+{
+  "root": "data/raw",
+  "n_files": 31,
+  "files": {
+    "extracted/LICENSE.txt": {
+      "size_bytes": 1066,
+      "suffix": ".txt",
+      "parent": "extracted",
+      "error": "ParserError('\\' \\' expected after \\'\"\\'')"
+    },
+    "extracted/README.txt": {
+      "size_bytes": 3226,
+      "suffix": ".txt",
+      "parent": "extracted",
+      "error": "ParserError('Expected 19 fields in line 16, saw 24')"
+    },
+    "extracted/recommissioned_batteries/README.txt": {
+      "size_bytes": 1049,
+      "suffix": ".txt",
+      "parent": "extracted/recommissioned_batteries",
+      "error": "ParserError('Expected 21 fields in line 11, saw 22')"
+    },
+    "extracted/recommissioned_batteries/battery02.csv": {
+      "size_bytes": 129284701,
+      "suffix": ".csv",
+      "parent": "extracted/recommissioned_batteries",
+      "n_rows": 2069667,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 2095709.83,
+          "mean": 1047091.696262549,
+          "n_unique": 2069667
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.40019674662638965,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.0579999999999999,
+          "max": 12.17,
+          "mean": 7.5533777453087865,
+          "n_unique": 4825
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 78.924,
+          "mean": 35.263866400247,
+          "n_unique": 11934
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8741043849082969,
+          "min": -0.027,
+          "max": 8.737,
+          "mean": 6.529271908413353,
+          "n_unique": 4490
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8741043849082969,
+          "min": 0.15,
+          "max": 16.596952202492727,
+          "mean": 11.673754732661287,
+          "n_unique": 52924
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8741043849082969,
+          "min": 19.54,
+          "max": 34.13,
+          "mean": 29.082590093720494,
+          "n_unique": 1422
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8741043849082969,
+          "min": 19.75,
+          "max": 32.97,
+          "mean": 27.342487814800318,
+          "n_unique": 1321
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8741043849082969,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7712905181876099,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.006000000052154,
+        "min": 0.0020000000367872417,
+        "max": 1.4329999999608845,
+        "p99": 1.1160000000381842
+      },
+      "current_sign_fraction": {
+        "positive": 0.12589561509170316,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/recommissioned_batteries/battery03.csv": {
+      "size_bytes": 139015708,
+      "suffix": ".csv",
+      "parent": "extracted/recommissioned_batteries",
+      "n_rows": 2161444,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 2210055.058,
+          "mean": 1105173.2493726213,
+          "n_unique": 2161444
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3794107087669169,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 8.776,
+          "mean": 7.411954964829068,
+          "n_unique": 4775
+        },
+        "temperature_battery": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.84115850329687,
+          "min": -0.027,
+          "max": 9.058,
+          "mean": 6.638116335155696,
+          "n_unique": 4470
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.84115850329687,
+          "min": 0.15,
+          "max": 16.825215388997325,
+          "mean": 8.86395542599363,
+          "n_unique": 80239
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.84115850329687,
+          "min": 21.29,
+          "max": 34.12,
+          "mean": 28.320542107087416,
+          "n_unique": 1255
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.84115850329687,
+          "min": 21.77,
+          "max": 33.65,
+          "mean": 25.833105202911508,
+          "n_unique": 1176
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.84115850329687,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.8224608026750008,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0180000001564622,
+        "min": 0.05499999993480742,
+        "max": 1.4549999999871943,
+        "p99": 1.1230000001378357
+      },
+      "current_sign_fraction": {
+        "positive": 0.15884149670312994,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/recommissioned_batteries/battery12.csv": {
+      "size_bytes": 207850262,
+      "suffix": ".csv",
+      "parent": "extracted/recommissioned_batteries",
+      "n_rows": 3041084,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 3081638.5030000005,
+          "mean": 1533187.9723163128,
+          "n_unique": 3041084
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.37225903658037723,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 8.632,
+          "mean": 7.4775440928300565,
+          "n_unique": 4772
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 79.946,
+          "mean": 35.01954230169243,
+          "n_unique": 12157
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8386479952543238,
+          "min": -0.027,
+          "max": 8.75,
+          "mean": 6.628820442850302,
+          "n_unique": 4522
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8386479952543238,
+          "min": 0.15,
+          "max": 16.662537256349655,
+          "mean": 9.16372760063156,
+          "n_unique": 124574
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8386479952543238,
+          "min": 19.26,
+          "max": 34.16,
+          "mean": 28.39454690891305,
+          "n_unique": 1475
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8386479952543238,
+          "min": 19.5,
+          "max": 33.05,
+          "mean": 25.36013401673171,
+          "n_unique": 1351
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8386479952543238,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.812429562754109,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0059999999357387,
+        "min": 0.027000000001862645,
+        "max": 1.4139999999897555,
+        "p99": 1.1230000001378357
+      },
+      "current_sign_fraction": {
+        "positive": 0.1613520047456762,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/recommissioned_batteries/battery24.csv": {
+      "size_bytes": 209047971,
+      "suffix": ".csv",
+      "parent": "extracted/recommissioned_batteries",
+      "n_rows": 3285619,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 3315639.176000001,
+          "mean": 1657930.618214294,
+          "n_unique": 3285619
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3702882166191515,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.1169999999999999,
+          "max": 9.157,
+          "mean": 7.40792623307815,
+          "n_unique": 4802
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -70.458,
+          "max": 85.93,
+          "mean": 35.31075178923667,
+          "n_unique": 14479
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.850937981549291,
+          "min": -0.027,
+          "max": 8.743,
+          "mean": 6.595667049846761,
+          "n_unique": 4515
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.850937981549291,
+          "min": 0.15,
+          "max": 16.730898236210894,
+          "mean": 9.025868223204558,
+          "n_unique": 139297
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.850937981549291,
+          "min": 19.11,
+          "max": 33.88,
+          "mean": 28.36610287466744,
+          "n_unique": 1393
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.850937981549291,
+          "min": 19.38,
+          "max": 33.02,
+          "mean": 25.48706859059827,
+          "n_unique": 1342
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.850937981549291,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.8064627440731296,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0019999998621643,
+        "min": 0.05200000014156103,
+        "max": 1.4679999999934807,
+        "p99": 1.1119999999937136
+      },
+      "current_sign_fraction": {
+        "positive": 0.149062018450709,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/recommissioned_batteries/battery25.csv": {
+      "size_bytes": 141939272,
+      "suffix": ".csv",
+      "parent": "extracted/recommissioned_batteries",
+      "n_rows": 2169910,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 2218452.2270000004,
+          "mean": 1109500.2664299838,
+          "n_unique": 2169910
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.37087390721274155,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.117,
+          "max": 9.14,
+          "mean": 7.439440814595997,
+          "n_unique": 4781
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -116.103,
+          "max": 83.665,
+          "mean": 35.63421996257909,
+          "n_unique": 11778
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.842480102861409,
+          "min": -0.027,
+          "max": 8.742,
+          "mean": 6.701187376391148,
+          "n_unique": 4482
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.842480102861409,
+          "min": 0.15,
+          "max": 16.551042260215226,
+          "mean": 9.120571839159958,
+          "n_unique": 92078
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.842480102861409,
+          "min": 20.68,
+          "max": 33.26,
+          "mean": 28.422276743396797,
+          "n_unique": 1196
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.842480102861409,
+          "min": 21.72,
+          "max": 33.29,
+          "mean": 26.157163403588022,
+          "n_unique": 1149
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.842480102861409,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.8259528852792829,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0180000000400469,
+        "min": 0.11199999996460974,
+        "max": 1.399000000092201,
+        "p99": 1.1230000001378357
+      },
+      "current_sign_fraction": {
+        "positive": 0.157519897138591,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/recommissioned_batteries/battery32.csv": {
+      "size_bytes": 110525622,
+      "suffix": ".csv",
+      "parent": "extracted/recommissioned_batteries",
+      "n_rows": 1829938,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 1855799.859,
+          "mean": 930292.4199439232,
+          "n_unique": 1829938
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.38933176971023065,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.061,
+          "max": 9.171,
+          "mean": 7.516869058405257,
+          "n_unique": 4744
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 72.418,
+          "mean": 33.92438275777649,
+          "n_unique": 10466
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8834862164729078,
+          "min": -0.027,
+          "max": 8.718,
+          "mean": 6.489875420354294,
+          "n_unique": 4484
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8834862164729078,
+          "min": 0.15,
+          "max": 16.8035444377641,
+          "mean": 12.387609002153962,
+          "n_unique": 41117
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8834862164729078,
+          "min": 21.5,
+          "max": 34.31,
+          "mean": 30.010898960194737,
+          "n_unique": 1197
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8834862164729078,
+          "min": 21.67,
+          "max": 33.08,
+          "mean": 28.398745761280974,
+          "n_unique": 1078
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8834862164729078,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7634290592037071,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0069999999832362,
+        "min": 0.10299999988637865,
+        "max": 1.3940000000875443,
+        "p99": 1.114000000001397
+      },
+      "current_sign_fraction": {
+        "positive": 0.11651378352709217,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/recommissioned_batteries/battery33.csv": {
+      "size_bytes": 147433142,
+      "suffix": ".csv",
+      "parent": "extracted/recommissioned_batteries",
+      "n_rows": 2353426,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 2381766.9260000004,
+          "mean": 1187923.4577618628,
+          "n_unique": 2353426
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3907006211370147,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.06,
+          "max": 12.041,
+          "mean": 7.540065730131306,
+          "n_unique": 4768
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 75.809,
+          "mean": 33.989698228030115,
+          "n_unique": 11691
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8739773419686874,
+          "min": -0.027,
+          "max": 8.726,
+          "mean": 6.464384382217577,
+          "n_unique": 4483
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8739773419686874,
+          "min": 0.15,
+          "max": 16.6874565468388,
+          "mean": 11.561567817690333,
+          "n_unique": 53608
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8739773419686874,
+          "min": 19.34,
+          "max": 33.9,
+          "mean": 28.944629229394607,
+          "n_unique": 1381
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8739773419686874,
+          "min": 19.74,
+          "max": 33.1,
+          "mean": 27.14733934622452,
+          "n_unique": 1334
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8739773419686874,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7652275064484043,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0059999998193234,
+        "min": 0.07800000003771856,
+        "max": 1.4239999999990687,
+        "p99": 1.115999999921769
+      },
+      "current_sign_fraction": {
+        "positive": 0.12602265803131266,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/recommissioned_batteries/battery53.csv": {
+      "size_bytes": 70592469,
+      "suffix": ".csv",
+      "parent": "extracted/recommissioned_batteries",
+      "n_rows": 1139972,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 1157846.8619999995,
+          "mean": 579240.5843710986,
+          "n_unique": 1139972
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.45884109434266807,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.066,
+          "max": 9.133,
+          "mean": 7.553874129364579,
+          "n_unique": 4699
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 83.36,
+          "mean": 35.5206581065149,
+          "n_unique": 11812
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8796812553290783,
+          "min": -0.027,
+          "max": 8.826,
+          "mean": 6.577179666083406,
+          "n_unique": 4449
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8796812553290783,
+          "min": 0.152,
+          "max": 17.0011709096715,
+          "mean": 11.991901912955544,
+          "n_unique": 28797
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8796812553290783,
+          "min": 21.12,
+          "max": 34.28,
+          "mean": 29.602706838728494,
+          "n_unique": 1305
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8796812553290783,
+          "min": 21.31,
+          "max": 32.21,
+          "mean": 27.712507801108195,
+          "n_unique": 1088
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8796812553290783,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7426727909011374,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0089999998454005,
+        "min": 0.143999999971129,
+        "max": 1.3090000001247972,
+        "p99": 1.1159999999945285
+      },
+      "current_sign_fraction": {
+        "positive": 0.12031874467092174,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/README.txt": {
+      "size_bytes": 1327,
+      "suffix": ".txt",
+      "parent": "extracted/regular_alt_batteries",
+      "error": "ParserError('Expected 17 fields in line 16, saw 18')"
+    },
+    "extracted/regular_alt_batteries/battery00.csv": {
+      "size_bytes": 67604624,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 1101244,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 1079483.149,
+          "mean": 538453.0070826801,
+          "n_unique": 1101244
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.36062943362233985,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.06,
+          "max": 9.176,
+          "mean": 7.474417899212164,
+          "n_unique": 5034
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 102.308,
+          "mean": 36.77117851266386,
+          "n_unique": 12489
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9037397706593634,
+          "min": -0.027,
+          "max": 8.703,
+          "mean": 6.5081186630945425,
+          "n_unique": 4118
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9037397706593634,
+          "min": 0.15,
+          "max": 19.39103958783065,
+          "mean": 12.800680335395354,
+          "n_unique": 16194
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.9037397706593634,
+          "min": 18.22,
+          "max": 33.46,
+          "mean": 29.450785993245667,
+          "n_unique": 1233
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.9037397706593634,
+          "min": 22.01,
+          "max": 35.16,
+          "mean": 28.69261136162104,
+          "n_unique": 1218
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.9037397706593634,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7295813444522008,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9760000000242144,
+        "min": 0.008000000001629815,
+        "max": 2.0610000000015134,
+        "p99": 1.0669999999227002
+      },
+      "current_sign_fraction": {
+        "positive": 0.09626022934063659,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery01.csv": {
+      "size_bytes": 322570152,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 4918193,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 4951797.759000001,
+          "mean": 2470560.386108166,
+          "n_unique": 4918193
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.33824272451284443,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.06,
+          "max": 9.177,
+          "mean": 7.436094548343264,
+          "n_unique": 4780
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 72.733,
+          "mean": 34.66781102103964,
+          "n_unique": 11118
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.847714800944168,
+          "min": -0.027,
+          "max": 8.73,
+          "mean": 6.695055493692654,
+          "n_unique": 4509
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.847714800944168,
+          "min": 0.15,
+          "max": 10.373174551523428,
+          "mean": 8.465880092131986,
+          "n_unique": 152002
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.847714800944168,
+          "min": 21.52,
+          "max": 33.74,
+          "mean": 29.118427583020903,
+          "n_unique": 1173
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.847714800944168,
+          "min": 21.73,
+          "max": 32.46,
+          "mean": 25.55799781833136,
+          "n_unique": 991
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.847714800944168,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.8359849820019013,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0010000000474975,
+        "min": 0.027999999932944775,
+        "max": 1.5420000000158325,
+        "p99": 1.1129999994300306
+      },
+      "current_sign_fraction": {
+        "positive": 0.1522851990558321,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery10.csv": {
+      "size_bytes": 55478464,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 907341,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 888182.153,
+          "mean": 443320.80219650717,
+          "n_unique": 907341
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3714480002556922,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.073,
+          "max": 9.15,
+          "mean": 7.534913382069146,
+          "n_unique": 4558
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 96.12,
+          "mean": 36.424812133475726,
+          "n_unique": 12282
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9009809983236733,
+          "min": -0.027,
+          "max": 8.721,
+          "mean": 6.4889974400071235,
+          "n_unique": 4111
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9009809983236733,
+          "min": 0.15,
+          "max": 16.877017215505038,
+          "mean": 12.920632459661546,
+          "n_unique": 13482
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.9009809983236733,
+          "min": 21.15,
+          "max": 33.42,
+          "mean": 29.56669961266195,
+          "n_unique": 1148
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.9009809983236733,
+          "min": 22.2,
+          "max": 32.52,
+          "mean": 28.869239459507593,
+          "n_unique": 1032
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.9009809983236733,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.745136013534571,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9750000000058208,
+        "min": 0.030999999988125637,
+        "max": 1.4199999999982538,
+        "p99": 1.0639999999984866
+      },
+      "current_sign_fraction": {
+        "positive": 0.09901900167632677,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery11.csv": {
+      "size_bytes": 317704470,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 4914864,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 4951138.331,
+          "mean": 2466905.2566484166,
+          "n_unique": 4914864
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3299080096621188,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.072,
+          "max": 8.7,
+          "mean": 7.49993939893352,
+          "n_unique": 4873
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 64.02600000000001,
+          "mean": 32.33844220572532,
+          "n_unique": 9567
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8454235966651367,
+          "min": -0.027,
+          "max": 8.748,
+          "mean": 6.690558275263846,
+          "n_unique": 4513
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8454235966651367,
+          "min": 0.15,
+          "max": 10.47350300195046,
+          "mean": 8.45431286277482,
+          "n_unique": 171668
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8454235966651367,
+          "min": 21.46,
+          "max": 33.38,
+          "mean": 29.01165185423089,
+          "n_unique": 1137
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8454235966651367,
+          "min": 21.66,
+          "max": 30.41,
+          "mean": 25.38475980687673,
+          "n_unique": 788
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8454235966651367,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.8334653991854916,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0019999998621643,
+        "min": 0.05200000002514571,
+        "max": 1.4710000000195578,
+        "p99": 1.1140000000596046
+      },
+      "current_sign_fraction": {
+        "positive": 0.1545764033348634,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery20.csv": {
+      "size_bytes": 12386336,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 207391,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 203451.494,
+          "mean": 101473.30676522607,
+          "n_unique": 207391
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3836666007685965,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.115,
+          "max": 9.161,
+          "mean": 7.381258685285282,
+          "n_unique": 4456
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 109.165,
+          "mean": 34.613413026601926,
+          "n_unique": 12762
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9087376019210092,
+          "min": -0.026,
+          "max": 8.707,
+          "mean": 6.653622602631161,
+          "n_unique": 3671
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9087376019210092,
+          "min": 0.15,
+          "max": 19.78193797274949,
+          "mean": 13.079693534866891,
+          "n_unique": 6973
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.9087376019210092,
+          "min": 19.57,
+          "max": 33.61,
+          "mean": 28.831669572568288,
+          "n_unique": 918
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.9087376019210092,
+          "min": 22.59,
+          "max": 36.09,
+          "mean": 29.92549479579437,
+          "n_unique": 861
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.9087376019210092,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.6246631795847203,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9799999999991087,
+        "min": 0.13899999999966894,
+        "max": 2.094999999999345,
+        "p99": 1.062000000005355
+      },
+      "current_sign_fraction": {
+        "positive": 0.09126239807899089,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery21.csv": {
+      "size_bytes": 26143776,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 530718,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 519642.361,
+          "mean": 259143.00179055918,
+          "n_unique": 530718
+        },
+        "mode": {
+          "dtype": "int64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3615234455963431,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.118,
+          "max": 9.155,
+          "mean": 7.541401637027573,
+          "n_unique": 3931
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 65.965,
+          "mean": 29.35845411122291,
+          "n_unique": 8253
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9120436842164765,
+          "min": -0.026,
+          "max": 8.735,
+          "mean": 6.609433354755785,
+          "n_unique": 3485
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9120436842164765,
+          "min": 0.15,
+          "max": 20.04214987,
+          "mean": 14.592001774663837,
+          "n_unique": 16513
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.9120436842164765,
+          "min": 22.22,
+          "max": 34.81,
+          "mean": 30.029673736075406,
+          "n_unique": 1226
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.9120436842164765,
+          "min": 22.4,
+          "max": 36.19,
+          "mean": 30.48128620394173,
+          "n_unique": 1356
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.9120436842164765,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7074978577549271,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9749999999767169,
+        "min": 0.0659999999916181,
+        "max": 1.2669999999925494,
+        "p99": 1.0669999999809079
+      },
+      "current_sign_fraction": {
+        "positive": 0.08795631578352345,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery22.csv": {
+      "size_bytes": 172871662,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 2690545,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 2695259.1020000004,
+          "mean": 1346916.1270570883,
+          "n_unique": 2690545
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3522962819800449,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.119,
+          "max": 9.158,
+          "mean": 7.52341692259375,
+          "n_unique": 4109
+        },
+        "temperature_battery": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8838068123744446,
+          "min": -0.027,
+          "max": 8.741,
+          "mean": 6.6242179398188865,
+          "n_unique": 3680
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8838068123744446,
+          "min": 0.15,
+          "max": 13.881119742092062,
+          "mean": 10.964978191661308,
+          "n_unique": 58994
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8838068123744446,
+          "min": 21.83,
+          "max": 34.73,
+          "mean": 29.870130092795474,
+          "n_unique": 1256
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8838068123744446,
+          "min": 22.0,
+          "max": 31.58,
+          "mean": 27.121484983510484,
+          "n_unique": 954
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8838068123744446,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.778212095719125,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9949999999953434,
+        "min": 0.0779999999795109,
+        "max": 1.4170000001322478,
+        "p99": 1.115999999921769
+      },
+      "current_sign_fraction": {
+        "positive": 0.11619318762555542,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery23.csv": {
+      "size_bytes": 83642410,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 1344130,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 1353175.3760000002,
+          "mean": 673324.5658530864,
+          "n_unique": 1344130
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.4100972376183851,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.121,
+          "max": 9.161,
+          "mean": 7.415302133722185,
+          "n_unique": 4725
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -75.97399999999999,
+          "max": 73.162,
+          "mean": 33.67408704440791,
+          "n_unique": 11168
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8805167654914331,
+          "min": -0.027,
+          "max": 8.74,
+          "mean": 6.614485389256606,
+          "n_unique": 4451
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8805167654914331,
+          "min": 0.15,
+          "max": 15.349312335697588,
+          "mean": 12.036143436726462,
+          "n_unique": 48065
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8805167654914331,
+          "min": 21.48,
+          "max": 34.09,
+          "mean": 30.006504816283833,
+          "n_unique": 1159
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8805167654914331,
+          "min": 21.67,
+          "max": 31.64,
+          "mean": 28.28009912765176,
+          "n_unique": 918
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8805167654914331,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7641608707293229,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0010000000474975,
+        "min": 0.09700000006705523,
+        "max": 1.297000000020489,
+        "p99": 1.1089999999385327
+      },
+      "current_sign_fraction": {
+        "positive": 0.11948323450856688,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery30.csv": {
+      "size_bytes": 35773819,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 597316,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 582427.703,
+          "mean": 291663.84913290787,
+          "n_unique": 597316
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.3036131628819586,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.06,
+          "max": 9.17,
+          "mean": 7.672204955166109,
+          "n_unique": 4829
+        },
+        "temperature_battery": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9235396339625926,
+          "min": -0.027,
+          "max": 8.682,
+          "mean": 6.546412121477523,
+          "n_unique": 3940
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9235396339625926,
+          "min": 0.15,
+          "max": 20.004901699246776,
+          "mean": 14.535135655848489,
+          "n_unique": 16281
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.9235396339625926,
+          "min": 21.97,
+          "max": 34.42,
+          "mean": 29.672302993146637,
+          "n_unique": 1121
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.9235396339625926,
+          "min": 22.54,
+          "max": 36.17,
+          "mean": 31.02374657879179,
+          "n_unique": 1092
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.9235396339625926,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7058746250355805,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9720000000088476,
+        "min": 0.08100000000558794,
+        "max": 1.4870000000009895,
+        "p99": 1.0519999999960419
+      },
+      "current_sign_fraction": {
+        "positive": 0.07646036603740733,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery31.csv": {
+      "size_bytes": 209621575,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 3341603,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 3342336.574,
+          "mean": 1669591.9527447072,
+          "n_unique": 3341603
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.32802370598781483,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.06,
+          "max": 9.147,
+          "mean": 7.609010170867096,
+          "n_unique": 3905
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 73.492,
+          "mean": 32.89594160078262,
+          "n_unique": 9759
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8857323865222769,
+          "min": -0.027,
+          "max": 8.73,
+          "mean": 6.541972223749925,
+          "n_unique": 3680
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8857323865222769,
+          "min": 0.15,
+          "max": 13.907865832801168,
+          "mean": 10.980272731319541,
+          "n_unique": 89419
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8857323865222769,
+          "min": 21.93,
+          "max": 34.82,
+          "mean": 29.97984637423822,
+          "n_unique": 1259
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8857323865222769,
+          "min": 21.45,
+          "max": 34.39,
+          "mean": 27.30821075485089,
+          "n_unique": 1164
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8857323865222769,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.787888549302451,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9939999999478459,
+        "min": 0.10300000011920929,
+        "max": 1.3439999998081475,
+        "p99": 1.1129999998956919
+      },
+      "current_sign_fraction": {
+        "positive": 0.11426761347772312,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery40.csv": {
+      "size_bytes": 45316756,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 753257,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 737886.332,
+          "mean": 367785.5456442967,
+          "n_unique": 753257
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.31220021851771707,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 8.631,
+          "mean": 7.690217758348079,
+          "n_unique": 4512
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 105.856,
+          "mean": 35.626950530828125,
+          "n_unique": 12883
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9171836438293969,
+          "min": -0.027,
+          "max": 8.684,
+          "mean": 6.488484049886185,
+          "n_unique": 4018
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9171836438293969,
+          "min": 0.15,
+          "max": 19.88350126701117,
+          "mean": 13.608712776772647,
+          "n_unique": 27838
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.9171836438293969,
+          "min": 20.23,
+          "max": 34.02,
+          "mean": 29.654456253406433,
+          "n_unique": 1211
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.9171836438293969,
+          "min": 22.15,
+          "max": 35.2,
+          "mean": 29.738125420794457,
+          "n_unique": 1292
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.9171836438293969,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7333044788560803,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9769999999552965,
+        "min": 0.10500000001047738,
+        "max": 1.4529999999995198,
+        "p99": 1.065000000060536
+      },
+      "current_sign_fraction": {
+        "positive": 0.08281635617060312,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery41.csv": {
+      "size_bytes": 180906749,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 2926443,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 2928689.948,
+          "mean": 1465018.4876531719,
+          "n_unique": 2926443
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.30220851730240433,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.063,
+          "max": 9.194,
+          "mean": 7.636550806901075,
+          "n_unique": 3943
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 79.0,
+          "mean": 31.6180273680369,
+          "n_unique": 10423
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9116254784391836,
+          "min": -0.027,
+          "max": 8.774,
+          "mean": 6.525351681791642,
+          "n_unique": 3647
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9116254784391836,
+          "min": 0.15,
+          "max": 17.313629282459573,
+          "mean": 12.030698985456503,
+          "n_unique": 114335
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.9116254784391836,
+          "min": 22.06,
+          "max": 35.05,
+          "mean": 30.115448664658594,
+          "n_unique": 1287
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.9116254784391836,
+          "min": 20.2,
+          "max": 33.71,
+          "mean": 28.186093541564365,
+          "n_unique": 1346
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.9116254784391836,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7670895473333772,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9939999999478459,
+        "min": 0.12899999995715916,
+        "max": 1.4269999999087304,
+        "p99": 1.1140000000596046
+      },
+      "current_sign_fraction": {
+        "positive": 0.08837452156081632,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery50.csv": {
+      "size_bytes": 48817789,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 791869,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 775296.242,
+          "mean": 386745.6901850255,
+          "n_unique": 791869
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.43846393784830573,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.065,
+          "max": 9.113,
+          "mean": 7.604312878771615,
+          "n_unique": 4690
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 108.031,
+          "mean": 37.854389846047766,
+          "n_unique": 12717
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9012803885491161,
+          "min": -0.026,
+          "max": 8.746,
+          "mean": 6.513363795683931,
+          "n_unique": 4024
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.9012803885491161,
+          "min": 0.15,
+          "max": 24.269487749261337,
+          "mean": 13.28435950051613,
+          "n_unique": 33144
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.9012803885491161,
+          "min": 15.67,
+          "max": 33.86,
+          "mean": 29.417179077174985,
+          "n_unique": 1295
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.9012803885491161,
+          "min": 20.92,
+          "max": 36.11,
+          "mean": 29.04356785590933,
+          "n_unique": 1379
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.9012803885491161,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7084799099433308,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9759999999951106,
+        "min": 0.1309999999939464,
+        "max": 1.4820000000036089,
+        "p99": 1.0649999999634747
+      },
+      "current_sign_fraction": {
+        "positive": 0.09871961145088393,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery51.csv": {
+      "size_bytes": 116587113,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 1822787,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 1828969.36,
+          "mean": 911239.1278053715,
+          "n_unique": 1822787
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.4608097380549675,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.065,
+          "max": 9.009,
+          "mean": 7.579035553797564,
+          "n_unique": 3898
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 85.65899999999999,
+          "mean": 34.75178397914841,
+          "n_unique": 10811
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.891996157532394,
+          "min": -0.027,
+          "max": 8.818999999999999,
+          "mean": 6.5664987656703975,
+          "n_unique": 3669
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.891996157532394,
+          "min": 0.15,
+          "max": 16.957324318299797,
+          "mean": 11.798232765407286,
+          "n_unique": 87376
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.891996157532394,
+          "min": 22.01,
+          "max": 34.75,
+          "mean": 29.899564378162015,
+          "n_unique": 1265
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.891996157532394,
+          "min": 22.13,
+          "max": 33.52,
+          "mean": 27.84390388483654,
+          "n_unique": 1138
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.891996157532394,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7609362618607391,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9959999999991851,
+        "min": 0.1559999999590218,
+        "max": 1.4830000000074506,
+        "p99": 1.118999999947846
+      },
+      "current_sign_fraction": {
+        "positive": 0.10800384246760593,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/regular_alt_batteries/battery52.csv": {
+      "size_bytes": 94338955,
+      "suffix": ".csv",
+      "parent": "extracted/regular_alt_batteries",
+      "n_rows": 1510563,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 1507637.802,
+          "mean": 755092.7450491685,
+          "n_unique": 1510563
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.46175763606019743,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.065,
+          "max": 9.114,
+          "mean": 7.575426883883692,
+          "n_unique": 4500
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 92.907,
+          "mean": 37.48805274060069,
+          "n_unique": 11223
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8858637474901742,
+          "min": -0.027,
+          "max": 8.817,
+          "mean": 6.55400549272084,
+          "n_unique": 3659
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8858637474901742,
+          "min": 0.15,
+          "max": 15.989720755954927,
+          "mean": 11.813651087913472,
+          "n_unique": 37532
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8858637474901742,
+          "min": 21.77,
+          "max": 33.83,
+          "mean": 29.94722092686039,
+          "n_unique": 1169
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8858637474901742,
+          "min": 21.98,
+          "max": 31.42,
+          "mean": 27.87622110086422,
+          "n_unique": 939
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8858637474901742,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.7549910098022157,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.9930000000167638,
+        "min": 0.143999999971129,
+        "max": 1.2809999999881256,
+        "p99": 1.1019999999989523
+      },
+      "current_sign_fraction": {
+        "positive": 0.1141362525098258,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/second_life_batteries/README.txt": {
+      "size_bytes": 828,
+      "suffix": ".txt",
+      "parent": "extracted/second_life_batteries",
+      "n_rows": 9,
+      "n_cols": 7,
+      "columns": {
+        "Second": {
+          "dtype": "str",
+          "nan_frac": 0.6666666666666666
+        },
+        "life": {
+          "dtype": "str",
+          "nan_frac": 0.6666666666666666
+        },
+        "batteries": {
+          "dtype": "str",
+          "nan_frac": 0.7777777777777778
+        },
+        "(second": {
+          "dtype": "str",
+          "nan_frac": 0.7777777777777778
+        },
+        "life.1": {
+          "dtype": "str",
+          "nan_frac": 0.7777777777777778
+        },
+        "batteries.1": {
+          "dtype": "str",
+          "nan_frac": 0.7777777777777778
+        },
+        "folder):": {
+          "dtype": "float64",
+          "nan_frac": 1.0,
+          "min": NaN,
+          "max": NaN,
+          "mean": NaN,
+          "n_unique": 0,
+          "unique_values": []
+        }
+      }
+    },
+    "extracted/second_life_batteries/battery13.csv": {
+      "size_bytes": 109056812,
+      "suffix": ".csv",
+      "parent": "extracted/second_life_batteries",
+      "n_rows": 1736149,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 1747329.6909999996,
+          "mean": 871306.5145821889,
+          "n_unique": 1736149
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.28977063604563896,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.069,
+          "max": 8.958,
+          "mean": 7.610182426738718,
+          "n_unique": 4842
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 65.737,
+          "mean": 33.639644296082885,
+          "n_unique": 9673
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8616253558882331,
+          "min": -0.027,
+          "max": 8.726,
+          "mean": 6.486917602887124,
+          "n_unique": 4262
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8616253558882331,
+          "min": 0.15,
+          "max": 10.570936917139155,
+          "mean": 8.563160643511065,
+          "n_unique": 75696
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8616253558882331,
+          "min": 21.15,
+          "max": 30.92,
+          "mean": 28.44473307830952,
+          "n_unique": 921
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8616253558882331,
+          "min": 21.62,
+          "max": 27.2,
+          "mean": 25.23316884435916,
+          "n_unique": 556
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8616253558882331,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.8208200999837661,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.0040000000153668,
+        "min": 0.09200000000419095,
+        "max": 1.3619999999937136,
+        "p99": 1.0840000000025611
+      },
+      "current_sign_fraction": {
+        "positive": 0.1383746441117669,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/second_life_batteries/battery36.csv": {
+      "size_bytes": 218643697,
+      "suffix": ".csv",
+      "parent": "extracted/second_life_batteries",
+      "n_rows": 3394365,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 3382891.374000001,
+          "mean": 1703386.6134478825,
+          "n_unique": 3394365
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.26477470749315407,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.062,
+          "max": 12.024,
+          "mean": 7.5323710128403984,
+          "n_unique": 4825
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 62.158,
+          "mean": 35.363754768270354,
+          "n_unique": 9149
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8143576191717744,
+          "min": -0.027,
+          "max": 8.528,
+          "mean": 6.488150049671659,
+          "n_unique": 4238
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.8143576191717744,
+          "min": 0.15,
+          "max": 8.279041065563911,
+          "mean": 6.840882506166251,
+          "n_unique": 122678
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.8143576191717744,
+          "min": 21.53,
+          "max": 30.15,
+          "mean": 27.624973212217007,
+          "n_unique": 825
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.8143576191717744,
+          "min": 21.74,
+          "max": 26.79,
+          "mean": 24.28063346441573,
+          "n_unique": 495
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.8143576191717744,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.8653501296541393,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 0.996999999973923,
+        "min": 0.16199999999662396,
+        "max": 1.4020000000018626,
+        "p99": 1.0769999999320135
+      },
+      "current_sign_fraction": {
+        "positive": 0.1856423808282256,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    },
+    "extracted/second_life_batteries/battery54.csv": {
+      "size_bytes": 128263460,
+      "suffix": ".csv",
+      "parent": "extracted/second_life_batteries",
+      "n_rows": 1989458,
+      "n_cols": 10,
+      "columns": {
+        "start_time": {
+          "dtype": "str",
+          "nan_frac": 0.0
+        },
+        "time": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 2002671.594,
+          "mean": 998042.5862466419,
+          "n_unique": 1989458
+        },
+        "mode": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.2779792285134946,
+          "n_unique": 3,
+          "unique_values": [
+            0.0,
+            -1.0,
+            1.0
+          ]
+        },
+        "voltage_charger": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": -0.067,
+          "max": 9.142,
+          "mean": 7.48282592796631,
+          "n_unique": 4787
+        },
+        "temperature_battery": {
+          "dtype": "float64",
+          "nan_frac": 0.0,
+          "min": 0.0,
+          "max": 58.92,
+          "mean": 34.612521913506086,
+          "n_unique": 8478
+        },
+        "voltage_load": {
+          "dtype": "float64",
+          "nan_frac": 0.7591273603162269,
+          "min": -0.026,
+          "max": 8.703,
+          "mean": 6.585576036193203,
+          "n_unique": 4238
+        },
+        "current_load": {
+          "dtype": "float64",
+          "nan_frac": 0.7591273603162269,
+          "min": 0.15,
+          "max": 4.945185088671561,
+          "mean": 4.667869251478706,
+          "n_unique": 31211
+        },
+        "temperature_mosfet": {
+          "dtype": "float64",
+          "nan_frac": 0.7591273603162269,
+          "min": 21.53,
+          "max": 28.2,
+          "mean": 26.52111676398042,
+          "n_unique": 652
+        },
+        "temperature_resistor": {
+          "dtype": "float64",
+          "nan_frac": 0.7591273603162269,
+          "min": 21.69,
+          "max": 24.92,
+          "mean": 23.359527134468266,
+          "n_unique": 317
+        },
+        "mission_type": {
+          "dtype": "float64",
+          "nan_frac": 0.7591273603162269,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.9060174538716126,
+          "n_unique": 2,
+          "unique_values": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "time_col_guess": "time",
+      "time_monotonic": true,
+      "dt_stats": {
+        "median": 1.004000000000815,
+        "min": 0.16099999999278225,
+        "max": 1.346000000135973,
+        "p99": 1.0829999999841675
+      },
+      "current_sign_fraction": {
+        "positive": 0.24087263968377318,
+        "negative": 0.0,
+        "near_zero": 0.0
+      }
+    }
+  },
+  "all_columns": [
+    "(second",
+    "Second",
+    "batteries",
+    "batteries.1",
+    "current_load",
+    "folder):",
+    "life",
+    "life.1",
+    "mission_type",
+    "mode",
+    "start_time",
+    "temperature_battery",
+    "temperature_mosfet",
+    "temperature_resistor",
+    "time",
+    "voltage_charger",
+    "voltage_load"
+  ],
+  "variable_support": {
+    "time": [
+      "time",
+      "start_time"
+    ],
+    "voltage": [
+      "voltage_load",
+      "voltage_charger"
+    ],
+    "current": [
+      "current_load"
+    ],
+    "temperature": [
+      "temperature_battery",
+      "temperature_mosfet",
+      "temperature_resistor"
+    ],
+    "mode": [
+      "mode"
+    ],
+    "mission": [
+      "mission_type"
+    ],
+    "soc": [],
+    "capacity": [],
+    "soh": [],
+    "cooling": []
+  },
+  "files_by_parent": {
+    "extracted/regular_alt_batteries": 16,
+    "extracted/recommissioned_batteries": 9,
+    "extracted/second_life_batteries": 4,
+    "extracted": 2
+  }
+}

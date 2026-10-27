@@ -1,0 +1,3 @@
+pack_id,status,n_refs,min_soh,last_throughput_ah
+battery13,censored,17,0.8992522390669473,565.6829717334557
+battery50,censored,7,0.8669241943553309,277.5999193643106

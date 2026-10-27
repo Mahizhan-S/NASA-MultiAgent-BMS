@@ -1,0 +1,50 @@
+[battery02] clean_signals dropped 572 samples
+[battery03] clean_signals dropped 405 samples
+[battery12] clean_signals dropped 770 samples
+[battery24] clean_signals dropped 1251 samples
+[battery25] clean_signals dropped 987 samples
+[battery32] clean_signals dropped 376 samples
+[battery33] clean_signals dropped 586 samples
+[battery53] clean_signals dropped 260 samples
+[battery00] clean_signals dropped 161 samples
+[battery01] clean_signals dropped 863 samples
+[battery10] clean_signals dropped 138 samples
+[battery11] clean_signals dropped 1032 samples
+[battery20] clean_signals dropped 27 samples
+[battery21] clean_signals dropped 79 samples
+[battery22] clean_signals dropped 938 samples
+[battery23] clean_signals dropped 233 samples
+[battery30] clean_signals dropped 77 samples
+[battery31] clean_signals dropped 826 samples
+[battery40] clean_signals dropped 85 samples
+[battery41] clean_signals dropped 533 samples
+[battery50] clean_signals dropped 121 samples
+[battery51] clean_signals dropped 547 samples
+[battery52] clean_signals dropped 326 samples
+[battery13] clean_signals dropped 702 samples
+[battery36] clean_signals dropped 707 samples
+[battery54] clean_signals dropped 337 samples
+train segments=185  val segments=58  (charger-voltage charge segs: train=0)
+iter 0: VoltParams(r0=np.float64(0.04031154124392252), r_ea_k=np.float64(1023.6884800592728), r1=np.float64(0.0010000058408695105), tau_s=np.float64(30.003982455253453), r_cable=np.float64(1e-09))  tau=30.0s  C1=30003.8F
+iter 1: VoltParams(r0=np.float64(0.04138119405602487), r_ea_k=np.float64(1032.6857133058475), r1=np.float64(0.0014295418010836932), tau_s=np.float64(30.002755265986664), r_cable=np.float64(1e-09))  tau=30.0s  C1=20987.7F
+thermal: C_th=53.87 J/K  h=0.0680 W/K
+
+VAL voltage RMSE [before_placeholder] by kind:
+                  mean  median     max
+kind                                 
+alt_discharge  0.1246  0.0980  0.2278
+ref_discharge  0.1704  0.1778  0.2729
+
+VAL voltage RMSE [after] by kind:
+                  mean  median     max
+kind                                 
+alt_discharge  0.1534  0.1520  0.2581
+ref_discharge  0.1093  0.1172  0.1767
+
+VAL temperature RMSE by kind:
+                  mean  median     max
+kind                                 
+alt_discharge  10.330   5.310  34.785
+ref_discharge   2.616   2.542   5.627
+
+Wrote results/sim_calibration.json and configs/calibrated.yaml  (use: export MABMS_CONFIG=configs/calibrated.yaml)

@@ -1,0 +1,16 @@
+[dev] packs total=21  reached EOL=8  censored/too-few=13
+
+Dev, EOL packs (RUL in Ah of throughput; leave-pack-group-out):
+           model    mae   rmse   r2   n
+          ridge 122.44 153.85 0.79 172
+            hgb 137.64 190.76 0.67 172
+mean_eol_lookup 226.15 286.37 0.26 172
+  global_linear 249.72 319.77 0.08 172
+
+Censored packs: lower-bound violation rate by model:
+ model
+global_linear      0.222
+hgb                0.000
+mean_eol_lookup    0.111
+ridge              0.000
+[test] packs total=5  reached EOL=3  censored/too-few=2

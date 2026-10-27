@@ -1,0 +1,11 @@
+A: SOH<=0.8 only: events 12/23 (main cohort), median throughput 777.7400443531136
+B: first of SOH<=0.8 / failure: events 20/23 (main cohort), median throughput 630.4556132486214
+C: abrupt failure only: events 13/23 (main cohort), median throughput 833.2115903435674
+
+LOPO RUL MAE (Ah) over 12 packs, 193 ref checks
+  pop     all=  187.0   rul<=200:    96.5
+  linear  all=  133.9   rul<=200:    46.6
+  ridge   all=  113.0   rul<=200:    58.8
+  per-pack ridge MAE: {'battery01': 144.0, 'battery02': 71.0, 'battery03': 97.0, 'battery11': 154.0, 'battery12': 62.0, 'battery22': 117.0, 'battery24': 114.0, 'battery25': 74.0, 'battery31': 91.0, 'battery32': 79.0, 'battery33': 126.0, 'battery41': 163.0}
+
+split keys: ['test', 'val', 'train'] -> use for dev/test reporting (format not assumed)

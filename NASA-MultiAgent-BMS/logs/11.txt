@@ -1,0 +1,50 @@
+[battery02] clean_signals dropped 572 samples
+[battery03] clean_signals dropped 405 samples
+[battery12] clean_signals dropped 770 samples
+[battery24] clean_signals dropped 1251 samples
+[battery25] clean_signals dropped 987 samples
+[battery32] clean_signals dropped 376 samples
+[battery33] clean_signals dropped 586 samples
+[battery53] clean_signals dropped 260 samples
+[battery00] clean_signals dropped 161 samples
+[battery01] clean_signals dropped 863 samples
+[battery10] clean_signals dropped 138 samples
+[battery11] clean_signals dropped 1032 samples
+[battery20] clean_signals dropped 27 samples
+[battery21] clean_signals dropped 79 samples
+[battery22] clean_signals dropped 938 samples
+[battery23] clean_signals dropped 233 samples
+[battery30] clean_signals dropped 77 samples
+[battery31] clean_signals dropped 826 samples
+[battery40] clean_signals dropped 85 samples
+[battery41] clean_signals dropped 533 samples
+[battery50] clean_signals dropped 121 samples
+[battery51] clean_signals dropped 547 samples
+[battery52] clean_signals dropped 326 samples
+[battery13] clean_signals dropped 702 samples
+[battery36] clean_signals dropped 707 samples
+[battery54] clean_signals dropped 337 samples
+
+--- horizon 60 samples: grouped-CV (dev) ---
+       model    mae   rmse     r2      n  delta_mae  delta_rmse  delta_r2
+        hgb 0.5698 0.9914 0.9951 186202     0.5698      0.9914    0.8378
+      ridge 0.6360 1.0609 0.9944 186202     0.6360      1.0609    0.8143
+persistence 2.8697 3.7759 0.9285 186202     2.8697      3.7759   -1.3528
+--- held-out test packs ---
+       model    mae   rmse     r2     n  delta_mae  delta_rmse  delta_r2
+persistence 3.8380 4.6840 0.9102 37565     3.8380      4.6840   -2.0379
+      ridge 0.6186 0.9424 0.9964 37565     0.6186      0.9424    0.8770
+        hgb 0.4650 0.6991 0.9980 37565     0.4650      0.6991    0.9323
+
+--- horizon 300 samples: grouped-CV (dev) ---
+       model     mae    rmse      r2      n  delta_mae  delta_rmse  delta_r2
+      ridge  1.8368  2.8396  0.9649 124573     1.8368      2.8396    0.9231
+        hgb  1.8733  2.9224  0.9629 124573     1.8733      2.9224    0.9185
+persistence 11.2777 15.2184 -0.0070 124573    11.2777     15.2184   -1.2098
+--- held-out test packs ---
+       model     mae    rmse      r2     n  delta_mae  delta_rmse  delta_r2
+persistence 15.1751 19.6192 -0.2047 22359    15.1751     19.6192   -1.4870
+      ridge  1.7671  2.4705  0.9809 22359     1.7671      2.4705    0.9606
+        hgb  1.2288  1.9352  0.9883 22359     1.2288      1.9352    0.9758
+
+Note: delta_r2 > 0 means skill beyond persistence; absolute R2 is inflated by autocorrelation.

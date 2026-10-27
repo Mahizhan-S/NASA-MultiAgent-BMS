@@ -1,0 +1,36 @@
+absolute current limit = 4.900 A
+
+(A) executed current-limit violation steps (safety ON), mean per episode:
+label                   adaptive_ekf  fixed_ekf
+method                                         
+conventional                     0.0        0.0
+independent                      0.0        0.0
+independent_health_cap           0.0        0.0
+single_agent                     0.0        0.0
+
+(B) fixed vs adaptive EKF:
+                                      success  shortfall  abs_final_soc_err  final_err_bias  soc_mae  time_pen_s  unsafe_exec
+method                 label                                                                                                
+conventional           adaptive_ekf   0.8778     0.0048             0.0137         -0.0104   0.0188   2391.3099       0.1778
+                       fixed_ekf      0.7000     0.0071             0.0258         -0.0167   0.0228   2482.5735       0.1667
+independent            adaptive_ekf   0.9333     0.0038             0.0139         -0.0109   0.0189   2371.2832       0.1444
+                       fixed_ekf      0.7222     0.0063             0.0260         -0.0171   0.0228   2471.0253       0.1333
+independent_health_cap adaptive_ekf   0.7000     0.0136             0.0080         -0.0012   0.0112   3952.3106       0.0000
+                       fixed_ekf      0.6333     0.0157             0.0205         -0.0084   0.0164   3867.9409       0.0000
+single_agent           adaptive_ekf   1.0000     0.0034             0.0270         -0.0250   0.0338   1398.0000       0.0000
+                       fixed_ekf      0.9000     0.0043             0.0350         -0.0300   0.0339   1776.6871       0.1222
+
+Paired (adaptive - fixed; negative => adaptive better):
+             controller                     metric  mean_diff   ci95_lo   ci95_hi  wilcoxon_p
+          conventional              abs_final_err    -0.0122   -0.0175   -0.0068      0.0001
+          conventional                  shortfall    -0.0022   -0.0043   -0.0006      0.0159
+          conventional time_to_target_penalized_s   -91.2636 -258.5720   67.8456      0.2477
+           independent              abs_final_err    -0.0121   -0.0174   -0.0068      0.0001
+           independent                  shortfall    -0.0025   -0.0046   -0.0009      0.0110
+           independent time_to_target_penalized_s   -99.7422 -256.8201   49.9599      0.2213
+independent_health_cap              abs_final_err    -0.0125   -0.0176   -0.0075      0.0001
+independent_health_cap                  shortfall    -0.0021   -0.0047    0.0001      0.3930
+independent_health_cap time_to_target_penalized_s    84.3696   36.2140  133.7074      0.0078
+          single_agent              abs_final_err    -0.0080   -0.0139   -0.0023      0.0221
+          single_agent                  shortfall    -0.0009   -0.0021   -0.0002      0.0308
+          single_agent time_to_target_penalized_s  -378.6871 -606.7514 -172.7874      0.0070

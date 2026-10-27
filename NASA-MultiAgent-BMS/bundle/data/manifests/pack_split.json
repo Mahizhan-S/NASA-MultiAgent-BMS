@@ -1,0 +1,34 @@
+{
+  "test": [
+    "battery13",
+    "battery31",
+    "battery33",
+    "battery41",
+    "battery50"
+  ],
+  "val": [
+    "battery11",
+    "battery21",
+    "battery22",
+    "battery36",
+    "battery54"
+  ],
+  "train": [
+    "battery00",
+    "battery01",
+    "battery02",
+    "battery03",
+    "battery10",
+    "battery12",
+    "battery20",
+    "battery23",
+    "battery24",
+    "battery25",
+    "battery30",
+    "battery32",
+    "battery40",
+    "battery51",
+    "battery52",
+    "battery53"
+  ]
+}

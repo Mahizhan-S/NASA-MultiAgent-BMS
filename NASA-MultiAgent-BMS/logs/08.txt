@@ -1,0 +1,72 @@
+dev packs=21, test packs=5  (small n => wide uncertainty; interpret p-values cautiously)
+
+SOH grouped-CV (dev):
+                config    mae   rmse      r2   n
+          xgboost|all 0.0291 0.0487  0.5550 386
+              hgb|all 0.0304 0.0507  0.5182 386
+        xgboost|early 0.0307 0.0489  0.5517 386
+            hgb|early 0.0318 0.0498  0.5354 386
+ridge|throughput_only 0.0330 0.0382  0.7260 386
+            ridge|all 0.0396 0.0584  0.3602 386
+          ridge|early 0.0472 0.0616  0.2890 386
+             mean|all 0.0611 0.0735 -0.0130 386 
+best by CV: xgboost|all
+
+SOH held-out TEST packs:
+                config    mae   rmse      r2  n
+             mean|all 0.0622 0.0729 -0.0030 95
+            ridge|all 0.0346 0.0510  0.5093 95
+              hgb|all 0.0405 0.0614  0.2903 95
+          xgboost|all 0.0402 0.0614  0.2885 95
+          ridge|early 0.0453 0.0541  0.4474 95
+            hgb|early 0.0443 0.0631  0.2500 95
+        xgboost|early 0.0426 0.0608  0.3029 95
+ridge|throughput_only 0.0284 0.0347  0.7731 95
+
+Pairwise (per-pack MAE):
+         ref                   alt  n_packs  mean_mae_increase_alt  ci95_lo  ci95_hi  frac_packs_ref_better  wilcoxon_p  p_holm
+xgboost|all              mean|all       21                 0.0389   0.0232   0.0521                 0.9048      0.0014  0.0069
+xgboost|all             ridge|all       21                 0.0101   0.0063   0.0141                 0.9048      0.0000  0.0001
+xgboost|all               hgb|all       21                -0.0001  -0.0031   0.0022                 0.5238      0.3926  0.3926
+xgboost|all           ridge|early       21                 0.0209   0.0150   0.0271                 0.9524      0.0000  0.0001
+xgboost|all             hgb|early       21                 0.0031  -0.0006   0.0065                 0.7619      0.1111  0.3332
+xgboost|all         xgboost|early       21                 0.0022  -0.0015   0.0055                 0.7143      0.1373  0.3332
+xgboost|all ridge|throughput_only       21                 0.0059  -0.0082   0.0170                 0.8095      0.0175  0.0702
+[battery02] clean_signals dropped 572 samples
+[battery03] clean_signals dropped 405 samples
+[battery12] clean_signals dropped 770 samples
+[battery24] clean_signals dropped 1251 samples
+[battery25] clean_signals dropped 987 samples
+[battery32] clean_signals dropped 376 samples
+[battery33] clean_signals dropped 586 samples
+[battery53] clean_signals dropped 260 samples
+[battery00] clean_signals dropped 161 samples
+[battery01] clean_signals dropped 863 samples
+[battery10] clean_signals dropped 138 samples
+[battery11] clean_signals dropped 1032 samples
+[battery20] clean_signals dropped 27 samples
+[battery21] clean_signals dropped 79 samples
+[battery22] clean_signals dropped 938 samples
+[battery23] clean_signals dropped 233 samples
+[battery30] clean_signals dropped 77 samples
+[battery31] clean_signals dropped 826 samples
+[battery40] clean_signals dropped 85 samples
+[battery41] clean_signals dropped 533 samples
+[battery50] clean_signals dropped 121 samples
+[battery51] clean_signals dropped 547 samples
+[battery52] clean_signals dropped 326 samples
+[battery13] clean_signals dropped 702 samples
+[battery36] clean_signals dropped 707 samples
+[battery54] clean_signals dropped 337 samples
+
+Temperature grouped-CV (dev):
+       model    mae   rmse     r2       n  delta_mae  delta_rmse  delta_r2
+        hgb 0.1576 0.3186 0.9995 1194475     0.1576      0.3186    0.6034
+      ridge 0.1705 0.3278 0.9995 1194475     0.1705      0.3278    0.5801
+persistence 0.5134 0.7109 0.9975 1194475     0.5134      0.7109   -0.9744
+
+Temperature TEST packs:
+       model    mae   rmse     r2      n  delta_mae  delta_rmse  delta_r2
+persistence 0.6711 0.8375 0.9972 244389     0.6711      0.8375   -1.7192
+      ridge 0.1674 0.2530 0.9997 244389     0.1674      0.2530    0.7518
+        hgb 0.1488 0.2313 0.9998 244389     0.1488      0.2313    0.7926

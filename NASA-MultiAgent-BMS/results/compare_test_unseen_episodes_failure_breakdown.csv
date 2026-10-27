@@ -1,0 +1,5 @@
+method,episodes,failed,fail_rate,near_miss_lt_0.01,median_shortfall,p90_shortfall,max_shortfall,near_miss_rate,starvation_rate
+conventional,90,0,0.0,,,,,0.0,0.0
+independent,90,0,0.0,,,,,0.0,0.0
+independent_health_cap,90,6,0.06666666666666667,0.5,0.0654841587206606,0.1252792190109471,0.1261883814888419,0.03333333333333333,0.03333333333333333
+single_agent,90,0,0.0,,,,,0.0,0.0

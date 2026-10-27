@@ -1,0 +1,33 @@
+  pack_id  last_rel_dur  min_rel_dur_last6  v_first_last               label  charge_cap_ret_last5  near_80pct
+battery00         0.568              0.568         8.427           ambiguous                 0.813        True
+battery10         0.465              0.465         8.486           ambiguous                 0.821        True
+battery41         0.578              0.578         8.443           ambiguous                 0.746        True
+battery30         0.418              0.418         8.504           ambiguous                 0.864        True
+battery51         0.355              0.355         8.599           ambiguous                 0.878        True
+battery23         0.982              0.959         8.474  event_charger_dead                 0.819        True
+battery50         0.007              0.007         8.635        event_strong                 1.010       False
+battery32         0.005              0.005        -0.026        event_strong                 0.770        True
+battery52         0.177              0.177         8.606        event_strong                 0.883       False
+battery13         0.003              0.003         0.802        event_strong                 0.917       False
+battery11         0.003              0.003        -0.026        event_strong                 0.779        True
+battery36         0.003              0.003        -0.026        event_strong                 0.811        True
+battery21         0.060              0.060         8.516        event_strong                 0.885       False
+battery22         0.123              0.123         8.454        event_strong                 0.801        True
+battery02         0.143              0.143         8.469        event_strong                 0.768        True
+battery40         0.979              0.975         8.484 no_failure_evidence                 0.838        True
+battery31         0.920              0.920         8.452 no_failure_evidence                 0.764        True
+battery20         0.888              0.888         8.569 no_failure_evidence                 0.957       False
+battery53         0.950              0.950         8.613 no_failure_evidence                 0.881       False
+battery33         0.908              0.908         8.456 no_failure_evidence                 0.754        True
+battery25         0.981              0.981         8.404 no_failure_evidence                 0.780        True
+battery24         0.924              0.924         8.459 no_failure_evidence                 0.762        True
+battery12         0.993              0.993         8.462 no_failure_evidence                 0.780        True
+battery03         1.152              0.992         8.657 no_failure_evidence                 0.770        True
+battery01         0.895              0.895         8.477 no_failure_evidence                 0.772        True
+battery54         0.988              0.002         8.507  transient_collapse                 0.951       False
+label
+no_failure_evidence    10
+event_strong            9
+ambiguous               5
+event_charger_dead      1
+transient_collapse      1

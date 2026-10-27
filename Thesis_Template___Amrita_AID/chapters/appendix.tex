@@ -1,0 +1,201 @@
+\label{chap.appendix}
+
+\section{Overview and Reproducibility Commitment}
+
+This appendix provides a comprehensive reproducibility guide for all
+computational experiments, data processing pipelines, simulator
+calibrations, controller benchmarks, and statistical evaluations presented
+in this thesis. All code, configuration files, processed manifests, and
+results are managed within the \texttt{NASA-MultiAgent-BMS} software
+repository.
+
+\section{Software Environment and Dependencies}
+
+All scripts were implemented in Python~3.10 and executed on macOS (Darwin
+arm64 / x86\_64) and Linux (Ubuntu 22.04 LTS). Table~\ref{tab:dependencies}
+details the primary Python library dependencies and verified version pins.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Primary software dependencies and package versions.}
+  \label{tab:dependencies}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Package} & \textbf{Pinned Version} & \textbf{Primary Purpose in Pipeline} \\
+    \midrule
+    \texttt{numpy}        & $\ge 1.24.3$ & Numerical array manipulations, vector algebra \\
+    \texttt{scipy}        & $\ge 1.10.1$ & Statistical distributions, parameter optimisation \\
+    \texttt{pandas}       & $\ge 2.0.2$  & Telemetry tables, block segmentation, metrics aggregation \\
+    \texttt{scikit-learn} & $\ge 1.2.2$  & Ridge regression, LOPO cross-validation, metrics \\
+    \texttt{matplotlib}   & $\ge 3.7.1$  & Scientific visualisation, survival and Pareto plots \\
+    \texttt{pyyaml}       & $\ge 6.0$    & Central configuration parsing (\texttt{calibrated.yaml}) \\
+    \texttt{pytest}       & $\ge 7.3.1$  & Automated unit and integration testing suite \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+The clean environment can be recreated via the project root:
+\begin{verbatim}
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+\end{verbatim}
+
+\section{Comprehensive Script Inventory}
+
+The data processing, modeling, and evaluation workflow is divided into
+25 dedicated scripts located in \texttt{scripts/}. Table~\ref{tab:script_inventory}
+provides the complete functional inventory and execution order.
+
+\begin{center}
+\small
+\begin{longtable}{>{\raggedright\footnotesize}p{4.4cm} >{\centering\arraybackslash}p{2.0cm} >{\raggedright\arraybackslash}p{7.4cm}}
+  \caption{Inventory of project execution scripts in chronological sequence.}
+  \label{tab:script_inventory} \\
+  \toprule
+  \textbf{Script Identifier} & \textbf{Category} & \textbf{Functional Description and Outputs} \\
+  \midrule
+  \endfirsthead
+  \multicolumn{3}{c}{\tablename\ \thetable\ -- \textit{Continued}}\\
+  \toprule
+  \textbf{Script Identifier} & \textbf{Category} & \textbf{Functional Description and Outputs} \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  \texttt{00\_download.py} & Ingestion &
+  Acquires the raw NASA PCoE Accelerated Life Testing dataset and verifies archive integrity. \\
+  \texttt{01\_data\_audit.py} & Audit &
+  Parses raw telemetry headers, identifies row counts (4{,}918{,}193 rows), and audits missing values. \\
+  \texttt{02\_preprocess.py} & Pipeline &
+  Segments time-series telemetry into cycles and blocks; generates \texttt{cycle\_table.csv}. \\
+  \texttt{03\_train\_estimators.py} & Modeling &
+  Fits offline baseline SOH and temperature regression models on training pack splits. \\
+  \texttt{04\_validate\_sim.py} & Validation &
+  Simulates reference discharge curves and compares simulated voltage/temperature against telemetry. \\
+  \texttt{05\_run\_independent.py} & Benchmark &
+  Executes the independent-deadline controller across baseline test scenarios. \\
+  \texttt{06\_compare\_controllers.py} & Benchmark &
+  Executes the 4-way controller benchmark across test episodes; outputs \texttt{compare\_test\_unseen\_summary.csv}. \\
+  \texttt{07\_ablations\_robustness.py} & Ablation &
+  Conducts sensor noise scaling sweeps ($\times 1, \times 2, \times 4$) and logs unsafe step counts. \\
+  \texttt{08\_compare\_estimators.py} & Evaluation &
+  Compares online 4-state EKF against offline supervised estimators across CV folds. \\
+  \texttt{10\_failure\_analysis.py} & Diagnostics &
+  Classifies episode termination states (deadline success, thermal trip, voltage limit trip). \\
+  \texttt{11\_temperature\_horizons.py} & Modeling &
+  Evaluates multi-step predictive temperature forecasting at \SI{60}{s} and \SI{300}{s} horizons. \\
+  \texttt{12\_rul\_study.py} & Prognostics &
+  Initial feasibility exploration for remaining useful life regression. \\
+  \texttt{13\_calibrate\_sim.py} & Calibration &
+  Nonlinear least-squares fitting of ECM parameters ($R_0, R_1, C_1$) and thermal model ($C_{\mathrm{th}}, h$). \\
+  \texttt{14\_fit\_degradation.py} & Calibration &
+  Fits Arrhenius degradation coefficient ($k_{\mathrm{deg}}$) and activation energy ratio ($E_a/R$). \\
+  \texttt{16\_limit\_check.py} & Supervisor &
+  Verifies current clipping compliance and EKF parameter tracking under boundary conditions. \\
+  \texttt{17\_rq3\_stress.py} & Robustness &
+  Injects 7 sensor fault regimes across nominal and 3.5C stress loads with supervisor On/Off. \\
+  \texttt{18\_mode\_audit.py} & Audit &
+  Block-level operational mode classification across all 26 packs (Discharge, Reference, Charge, Rest). \\
+  \texttt{19\_stop\_sweep.py} & Sensitivity &
+  Sweeps EKF termination criteria and SOC thresholds to identify estimator stopping limits. \\
+  \texttt{20\_temp\_monitor\_eval.py} & Supervisor &
+  Sweeps residual detection thresholds for the thermal plausibility monitor. \\
+  \texttt{21\_charge\_checks.py} & Audit &
+  Audits charging telemetry; confirms CC protocol (\SI{3.0}{A}) and verifies plateau fraction $\le 4\%$. \\
+  \texttt{22\_block\_filter.py} & Cleaning &
+  Applies physical validity filters ($V_{c,\max} \ge \SI{8.4}{V}$, duration $\ge \SI{1000}{s}$) to charge blocks. \\
+  \texttt{23\_eol\_classify.py} & Prognostics &
+  Heuristic classification of pack operational termination modes. \\
+  \texttt{24\_pack\_endpoints.py} & Prognostics &
+  Enforces cohort separation (23 original vs 3 recommissioned); evaluates absolute vs relative SOH basis. \\
+  \texttt{25\_survival\_rul.py} & Prognostics &
+  Computes Kaplan--Meier survival curves (Endpoints A, B, C) and runs LOPO Ridge RUL regression. \\
+  \texttt{26\_report\_tables.py} & Analysis &
+  Executes 10{,}000-sample Dirichlet weight sensitivity and extracts Pareto-optimal frontier. \\
+\end{longtable}
+\end{center}
+
+\section{Calibrated Simulator Configuration Reference}
+
+All environmental, plant, estimator, and supervisory parameters are
+centralised in \texttt{configs/calibrated.yaml}. Table~\ref{tab:calibrated_params}
+lists the verified numerical constants used throughout all experiments.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Primary calibrated parameters in \texttt{configs/calibrated.yaml}.}
+  \label{tab:calibrated_params}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{llcl}
+    \toprule
+    \textbf{Subsystem} & \textbf{Parameter Name} & \textbf{Value} & \textbf{Physical Units} \\
+    \midrule
+    \multirow{4}{*}{Cell / Pack} & Nominal Capacity ($Q_{\mathrm{nom}}$) & 2.45 & \si{Ah} \\
+                                 & Upper Voltage Cutoff ($V_{\max}$)      & 8.40 & \si{V} (2S pack) \\
+                                 & Lower Voltage Cutoff ($V_{\min}$)      & 5.00 & \si{V} (2S pack) \\
+                                 & Maximum Safe Current ($I_{\max}$)      & 8.575 & \si{A} (3.5C limit) \\
+    \midrule
+    \multirow{5}{*}{Electrical ECM} & Fresh Resistance ($R_0^{\mathrm{new}}$) & 0.0342 & \si{\ohm} \\
+                                    & Aging Resistance Coefficient ($k_{R_0}$) & $\mathcal{U}(1.5, 4.5)$ & -- \\
+                                    & Diffusion Resistance ($R_1$)           & 0.00162 & \si{\ohm} \\
+                                    & Diffusion Capacitance ($C_1$)          & 18{,}532 & \si{F} \\
+                                    & Diffusion Time Constant ($\tau_1$)     & 30.0 & \si{s} \\
+    \midrule
+    \multirow{4}{*}{Thermal Model}  & Thermal Capacitance ($C_{\mathrm{th}}$) & 54.49 & \si{J/K} \\
+                                    & Heat Transfer Coefficient ($h$)         & 0.0687 & \si{W/K} \\
+                                    & Thermal Time Constant ($\tau_{\mathrm{th}}$) & 791.0 & \si{s} \\
+                                    & Max Active Cooling Power ($P_{\mathrm{cool}}$) & 1.0 & \si{W} \\
+    \midrule
+    \multirow{3}{*}{Safety Supervisor} & Voltage Margin ($\Delta V_{\mathrm{margin}}$) & 0.050 & \si{V} \\
+                                       & Thermal Trip Threshold ($T_{\mathrm{set}}$)  & 35.0 & \si{\degreeCelsius} \\
+                                       & Thermal Residual Threshold ($\Delta T_{\mathrm{thresh}}$) & 3.0 & \si{\degreeCelsius} \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+\section{Execution and Verification Procedure}
+
+To reproduce the primary empirical findings from a fresh clone:
+
+\begin{enumerate}
+  \item \textbf{Data Preprocessing and Telemetry Audit}:
+\begin{verbatim}
+python scripts/00_download.py
+python scripts/01_data_audit.py
+python scripts/18_mode_audit.py
+python scripts/21_charge_protocol_checks.py
+\end{verbatim}
+
+  \item \textbf{Simulator Parameter Calibration}:
+\begin{verbatim}
+python scripts/13_calibrate_sim.py
+python scripts/14_fit_degradation.py
+python scripts/04_validate_sim.py
+\end{verbatim}
+
+  \item \textbf{Controller Benchmarking and Robustness Evaluation}:
+\begin{verbatim}
+python scripts/06_compare_controllers.py
+python scripts/07_ablations_robustness.py
+python scripts/17_rq3_stress.py
+\end{verbatim}
+
+  \item \textbf{Survival Analysis and RUL Prognostics}:
+\begin{verbatim}
+python scripts/24_pack_endpoints.py
+python scripts/25_survival_rul.py
+python scripts/26_report_tables.py results/compare_test_unseen_episodes.csv
+\end{verbatim}
+\end{enumerate}
+
+All test suites can be executed via \texttt{pytest}:
+\begin{verbatim}
+pytest tests/ -v
+\end{verbatim}
+which executes 47 unit and integration tests covering the EKF equations,
+voltage safety boundary clipping, thermal residual logic, and dataset
+loaders.

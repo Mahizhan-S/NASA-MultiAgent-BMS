@@ -1,0 +1,5 @@
+                method  episodes  failed  fail_rate  near_miss_lt_0.01  median_shortfall  p90_shortfall  max_shortfall  near_miss_rate  starvation_rate
+          conventional        90       0     0.0000                NaN               NaN            NaN            NaN          0.0000           0.0000
+           independent        90       0     0.0000                NaN               NaN            NaN            NaN          0.0000           0.0000
+independent_health_cap        90       6     0.0667                0.5            0.0655         0.1253         0.1262          0.0333           0.0333
+          single_agent        90       0     0.0000                NaN               NaN            NaN            NaN          0.0000           0.0000

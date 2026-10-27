@@ -1,0 +1,204 @@
+\label{chap.8}
+
+\section{Summary of Research Work}
+
+This thesis has investigated a modular Multi-Agent Battery Management
+System (MA-BMS) framework designed to decouple and optimise the competing
+demands of lithium-ion battery fast charging: minimisation of charging
+duration, mitigation of thermal excursion, reduction of capacity degradation,
+and enforcement of absolute electrochemical safety boundaries.
+Unlike traditional monolithic or scalarised deep reinforcement learning
+formulations, the proposed architecture separates charging speed, thermal
+regulation, and health preservation into autonomous proposer agents, with
+an analytical, non-learning safety supervisor acting as the deterministic
+final authority.
+
+The investigation was grounded in a comprehensive empirical audit of the
+NASA Prognostics Center of Excellence (PCoE) Accelerated Life Testing (ALT)
+dataset, comprising 26 two-cell series Samsung INR18650-25R packs cycled
+across 4{,}918{,}193 raw telemetry rows. Key findings and contributions
+of this thesis include:
+
+\begin{enumerate}
+  \item \textbf{Dataset Audit and Protocol Characterisation}:
+  A rigorous block-level audit established that the NASA charging protocol
+  is constant-current (CC) at \SI{3.0}{A} (1.2C) with a negligible
+  constant-voltage (CV) plateau fraction ($\le 4\%$). The audit resolved
+  ambiguities in the literature by separating three recommissioned packs
+  ($\mathrm{baseline} < \SI{2.0}{Ah}$) from the 23 fresh packs, and
+  identified that 10 of the 15 terminal failure events occurred while
+  pack capacity was strictly above 0.80 SOH.
+
+  \item \textbf{Calibrated Ageing-Aware Battery Simulator}:
+  An equivalent circuit model (ECM) coupled with a lumped first-order
+  thermal model was calibrated against empirical telemetry. A novel
+  ageing-dependent series resistance law,
+  $R_0(\mathrm{SOH}) = R_0^{\mathrm{new}}(1 + k_{R_0}(1-\mathrm{SOH}))$,
+  was incorporated with stochastic coefficient sampling
+  $k_{R_0} \sim \mathcal{U}(1.5, 4.5)$ based on cross-pack calibration
+  ($r = 0.54$). Thermal response was validated against 5{,}479 physical
+  rest cooling blocks ($\tau_{\mathrm{th}} = \SI{791}{s}$).
+
+  \item \textbf{Four-State Adaptive State Estimation}:
+  A four-state Extended Kalman Filter (EKF) tracking SOC, diffusion voltage
+  $V_1$, capacity scaling $b$, and resistance scaling $\rho$ was developed
+  with an ageing-aware initialisation: $\rho_0 = 1 + 3.0(1 - \mathrm{SOH}_0)$.
+  The adaptive filter eliminated systematic voltage underprediction and
+  reduced unsafe executed steps to zero across nominal and noisy episodes.
+
+  \item \textbf{Rigorous Empirical Benchmarking}:
+  Across nine unseen test episodes, a tuned single-agent policy reduced
+  charging duration by 20.1\% relative to conventional CC-CV ($1{,}435\,\mathrm{s}$
+  vs $1{,}796\,\mathrm{s}$) with zero safety violations. A 10{,}000-sample
+  symmetric Dirichlet weight sensitivity analysis demonstrated that the
+  single-agent controller achieved the lowest composite objective in
+  84.78\% of random preference configurations.
+
+  \item \textbf{Deterministic Safety Enforcement Under Faults}:
+  Under seven injected sensor fault regimes (including stuck readings,
+  noise dropouts, and calibration biases), the analytical supervisor
+  completely eliminated hard voltage and temperature violations, reducing
+  unsafe operation from 70--100\% (without supervisor) to 0.0\%.
+
+  \item \textbf{Survival Analysis and LOPO RUL Prediction}:
+  An interval-censored Kaplan--Meier analysis demonstrated that composite
+  operational lifetime (Endpoint B: median \SI{630.5}{Ah}) is nearly
+  19\% shorter than indicated by capacity fade alone (Endpoint A: median
+  \SI{777.7}{Ah}). A Leave-One-Pack-Out (LOPO) Ridge regression model
+  achieved an RUL MAE of \SI{113.0}{Ah} ($R^2 = 0.732$), outperforming
+  population and linear baselines.
+\end{enumerate}
+
+\section{Resolution of Research Questions}
+
+The formal hypotheses formulated at the outset of this research are
+resolved as follows:
+
+\subsection*{Research Question 1 (RQ1: Health-Cap Degradation Benefit)}
+\begin{quote}
+  \emph{Does an explicit health-cap proposer agent produce a statistically
+  significant reduction in capacity degradation relative to an independent-deadline
+  baseline?}
+\end{quote}
+\textbf{Status: Rejected / Not Supported.}
+Empirical evaluation in the calibrated simulator revealed that the capacity
+loss reduction achieved by the health-cap controller ($\Delta Q = 0.000143$)
+compared to the independent baseline ($\Delta Q = 0.000151$) is negligible
+and within the stochastic noise of the simulation. More importantly, when
+the ageing resistance mechanism $R_0(\mathrm{SOH})$ was introduced, the
+health-cap controller suffered severe deadline failure: its target success
+rate dropped from 93.3\% to 65.6\% when initial SOH was sampled from
+$\mathcal{U}(0.75, 0.80)$. Because internal resistance surges in aged cells,
+the health cap triggers premature thermal throttling, massively prolonging
+charge time without delivering meaningful electrochemical life extension.
+Consequently, RQ1 is formally not supported under realistic aged cell dynamics.
+
+\subsection*{Research Question 2 (RQ2: Multi-Agent Coordination Superiority)}
+\begin{quote}
+  \emph{Does dynamic arbitration between decoupled proposer agents outperform
+  a tuned single-agent policy across diverse multi-objective weighting regimes?}
+\end{quote}
+\textbf{Status: Qualified / Open Horizon.}
+In the static and Dirichlet weight benchmark, the Bayesian-tuned single-agent
+policy dominated composite performance, securing 84.78\% best-weight share
+due to its simultaneous minimisation of charging duration and cooling energy.
+While all four controllers are Pareto-nondominated across the three-dimensional
+objective surface (time, degradation, energy), dynamic arbitration between
+competing agents requires a game-theoretic or priority-negotiating coordinator.
+Without an active dynamic coordinator, the single-agent tuned policy remains
+the most practical and high-performing controller.
+
+\subsection*{Research Question 3 (RQ3: Deterministic Supervisor Robustness)}
+\begin{quote}
+  \emph{Can an analytical, non-learning safety supervisor enforce zero hard
+  electrochemical and thermal violations under sensor corruption and fault regimes?}
+\end{quote}
+\textbf{Status: Strongly Supported.}
+The deterministic safety supervisor achieved a 0\% hard violation rate across
+all evaluated fault modes: voltage dropout (5\%), voltage positive bias
+($+0.1\,\mathrm{V}$), temperature stuck, temperature dropout (5\%), and
+moderate thermal disturbance. In contrast, unconstrained neural or heuristic
+proposers suffered 70\% to 100\% hard violation rates, with up to 111 unsafe
+seconds per episode. The supervisor successfully decouples performance
+optimisation from safety preservation.
+
+\section{Limitations of the Study}
+
+In accordance with principles of scientific rigor and reproducibility,
+several critical limitations must be explicitly acknowledged:
+
+\begin{enumerate}
+  \item \textbf{Sensor Bias Detection Horizon}:
+  Under a constant negative temperature bias of $-5\,^\circ\mathrm{C}$
+  (sensor permanently reads $5\,^\circ\mathrm{C}$ cooler than truth),
+  the thermal plausibility monitor cannot detect the fault because the
+  instantaneous thermal residual $|T_{\mathrm{meas}} - \hat{T}|$ remains
+  bounded within the detection threshold. Consequently, a small residual
+  of 4.2 unsafe executed steps per episode persisted under this specific fault.
+  A single-channel residual monitor is mathematically incapable of distinguishing
+  a constant sensor bias from unmodelled convective boundary variations.
+
+  \item \textbf{Charge Telemetry Observability}:
+  The NASA ALT dataset did not record charging current telemetry; charging
+  current (\SI{3.0}{A}) is documented in the accompanying published papers
+  and verified by integrating Ah between rests. Only the thermal cooling
+  response during rest blocks is physically validated against raw charge data.
+  Voltage dynamics and impedance during the charge phase are simulated from
+  discharge-calibrated parameters rather than directly fitted to charge telemetry.
+
+  \item \textbf{Absence of Early Failure Precursors}:
+  Extensive statistical screening of heating amplitudes, thermal time
+  constants, and voltage residuals revealed no detectable precursor signals
+  prior to catastrophic electrical collapse. For the 10 packs that failed
+  above 0.80 SOH, terminal collapse occurred abruptly, indicating that
+  purely surface-level thermal and voltage monitoring cannot anticipate
+  internal mechanical fracture or separator puncture.
+\end{enumerate}
+
+\section{Scope for Future Research}
+
+The findings, methodologies, and limitations identified in this thesis
+point directly toward several promising avenues for future research:
+
+\begin{enumerate}
+  \item \textbf{Multi-Sensor Analytical Redundancy and Voting}:
+  To overcome the vulnerability of the single thermal monitor to constant
+  sensor biases, future BMS designs should incorporate dual-thermistor
+  configurations with a parity-space voting algorithm. Comparing differential
+  spatial heat flux across cell terminals allows rapid isolation of sensor
+  bias versus true electrochemical heating.
+
+  \item \textbf{Dynamic Multi-Agent Coordination via Bargaining Games}:
+  Rather than relying on static weight vectors, a higher-level coordinator
+  can be formulated as a Nash bargaining game or constrained Markov decision
+  process. Under this framework, the coordinator dynamically shifts bargaining
+  power to the thermal agent when ambient temperatures surge, and to the
+  charging speed agent when approaching critical delivery deadlines.
+
+  \item \textbf{Hardware-in-the-Loop (HIL) Embedded Implementation}:
+  The algorithms developed in this thesis are computationally lightweight:
+  the 4-state adaptive EKF requires only $4 \times 4$ matrix operations,
+  and the safety supervisor evaluates closed-form analytical equations.
+  Deploying and benchmarking the compiled C/C++ firmware on an automotive-grade
+  microcontroller (e.g., ARM Cortex-M7 or Infineon AURIX) connected to a
+  real-time battery pack cycler is the logical next step toward commercialisation.
+
+  \item \textbf{Physics-Informed Neural Network (PINN) State Observers}:
+  While equivalent circuit models offer real-time execution, they cannot
+  track lithium concentration gradients or solid-electrolyte interphase (SEI)
+  film growth directly. Developing reduced-order PINNs that approximate the
+  Doyle-Fuller-Newman electrochemical model in sub-millisecond execution times
+  could enable direct observation of lithium plating overpotential.
+\end{enumerate}
+
+\section{Concluding Remarks}
+
+As battery-powered systems assume an increasingly ubiquitous role in modern
+infrastructure, the tension between fast charging performance, pack longevity,
+and operational safety will only intensify. This thesis has demonstrated
+that safety must not be left to empirical neural network training or soft
+penalty tuning; instead, safety must be guaranteed deterministically by an
+analytical supervisory boundary. By pairing an adaptive multi-state observer
+with decoupled proposers and a hard safety projection, the Multi-Agent BMS
+architecture achieves fast, energy-efficient charging while maintaining
+bulletproof safety guarantees across the entire lifecycle of the battery.

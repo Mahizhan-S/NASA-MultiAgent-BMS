@@ -1,0 +1,54 @@
+[battery02] clean_signals dropped 572 samples
+[battery03] clean_signals dropped 405 samples
+[battery12] clean_signals dropped 770 samples
+[battery24] clean_signals dropped 1251 samples
+[battery25] clean_signals dropped 987 samples
+[battery32] clean_signals dropped 376 samples
+[battery33] clean_signals dropped 586 samples
+[battery53] clean_signals dropped 260 samples
+[battery00] clean_signals dropped 161 samples
+[battery01] clean_signals dropped 863 samples
+[battery10] clean_signals dropped 138 samples
+[battery11] clean_signals dropped 1032 samples
+[battery20] clean_signals dropped 27 samples
+[battery21] clean_signals dropped 79 samples
+[battery22] clean_signals dropped 938 samples
+[battery23] clean_signals dropped 233 samples
+[battery30] clean_signals dropped 77 samples
+[battery31] clean_signals dropped 826 samples
+[battery40] clean_signals dropped 85 samples
+[battery41] clean_signals dropped 533 samples
+[battery50] clean_signals dropped 121 samples
+[battery51] clean_signals dropped 547 samples
+[battery52] clean_signals dropped 326 samples
+[battery13] clean_signals dropped 702 samples
+[battery36] clean_signals dropped 707 samples
+[battery54] clean_signals dropped 337 samples
+packs loaded: 26
+battery02: rows=259572 reference checks=20
+battery03: rows=342435 reference checks=21
+battery12: rows=489276 reference checks=32
+battery24: rows=487794 reference checks=33
+battery25: rows=340345 reference checks=20
+battery32: rows=212478 reference checks=17
+battery33: rows=295507 reference checks=24
+battery53: rows=136690 reference checks=11
+battery00: rows=105658 reference checks=9
+battery01: rows=747154 reference checks=42
+battery10: rows=89553 reference checks=7
+battery11: rows=757765 reference checks=43
+battery20: rows=18867 reference checks=2
+battery21: rows=46518 reference checks=4
+battery22: rows=311208 reference checks=23
+battery23: rows=160098 reference checks=12
+battery30: rows=45513 reference checks=4
+battery31: rows=380448 reference checks=27
+battery40: rows=62100 reference checks=5
+battery41: rows=257369 reference checks=20
+battery50: rows=77913 reference checks=7
+battery51: rows=195989 reference checks=15
+battery52: rows=171814 reference checks=13
+battery13: rows=239211 reference checks=17
+battery36: rows=628698 reference checks=35
+battery54: rows=478498 reference checks=18
+REUSING existing split: {'test': 5, 'val': 5, 'train': 16} | packs without reference cycles: none

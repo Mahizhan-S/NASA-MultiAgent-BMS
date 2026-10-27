@@ -1,0 +1,161 @@
+\section{Background and Motivation}
+
+The global transition towards electrified transportation, renewable
+energy integration, and grid-scale storage has made the lithium-ion
+battery one of the most strategically important technologies of the
+twenty-first century.  Despite decades of engineering progress,
+lithium-ion cells remain intrinsically fragile: their electrochemical
+stability depends on maintaining terminal voltage, current, and
+temperature within narrow operating windows.  Violations of these
+limits---even momentary---accelerate solid-electrolyte interphase
+(SEI) growth, lithium plating, mechanical particle cracking, and, in
+severe cases, thermal runaway \cite{vetter2005ageing}.
+
+A \emph{Battery Management System} (BMS) is the firmware and hardware
+subsystem responsible for enforcing these limits in real time while
+simultaneously optimising competing objectives: charging as fast as
+possible (to minimise user inconvenience), maintaining cell
+temperature within acceptable bounds (to extend cycle life), limiting
+degradation-inducing high-current and high-SOC exposure (to maximise
+capacity retention), and guaranteeing hard electrochemical safety
+constraints (to prevent cell failure or fire).
+
+These four objectives are fundamentally in tension.  Faster charging
+requires higher current, which generates more Joule heat and
+accelerates resistance-mediated degradation.  Aggressive active
+cooling consumes additional energy.  A purely safety-focused strategy
+derate current so conservatively that deadline requirements are
+missed.  Classical constant-current / constant-voltage (CC-CV)
+protocols resolve this tension through fixed schedules, ignoring both
+real-time cell state and the substantial cell-to-cell variability that
+emerges as packs age.
+
+\section{Problem Statement}
+
+Modern BMS research has explored three broad paradigms: rule-based
+classical control (CC-CV, multi-stage constant current), Model
+Predictive Control (MPC) using Equivalent Circuit Models or
+electrochemical models, and single-agent Deep Reinforcement Learning
+(DRL) \cite{park2020fastcharging, torchio2016lionsimba, wu2021dqn}.
+Each suffers from a fundamental shortcoming.
+
+\begin{enumerate}
+  \item \textbf{Classical methods} are static: they cannot adapt to
+  individual cell ageing trajectories or dynamic thermal environments.
+
+  \item \textbf{MPC methods} suffer from computational overhead and
+  critical sensitivity to model mismatch: as $R_0$ rises with
+  degradation, MPC controllers calibrated on fresh cells generate
+  systematically incorrect voltage predictions.
+
+  \item \textbf{Single-agent DRL} entangles all objectives into a
+  single scalarised reward.  The resulting policy is highly sensitive
+  to objective weight selection; small weight perturbations can cause
+  policy collapse---catastrophically missing deadlines or violating
+  soft voltage boundaries \cite{achiam2017cpo}.
+\end{enumerate}
+
+A fourth gap, common to all paradigms, is the absence of
+\emph{deterministic} hard safety guarantees: purely neural or
+optimisation-based policies have no provable mechanism to
+prevent unsafe actions when sensors are faulty or cell parameters
+deviate from nominal.
+
+\section{Research Questions}
+
+This thesis addresses four specific research questions derived from
+the identified gaps:
+
+\begin{description}
+  \item[RQ1.] Does a dedicated health-cap agent, limiting peak current
+  to reduce degradation-inducing high-current exposure, produce
+  statistically significant capacity-fade reduction compared to an
+  independent-deadline baseline under realistic aged-resistance
+  variability?
+
+  \item[RQ2.] Can a deterministic analytical safety supervisor
+  maintain zero hard voltage and temperature violations across diverse
+  sensor fault types (bias, dropout, stuck sensor) at multiple
+  charging aggressiveness levels?
+
+  \item[RQ3.] Does a multi-agent functional decomposition
+  (with separate proposers for charging speed, thermal regulation, and
+  health) outperform single-agent and conventional alternatives across
+  a broad range of Dirichlet-sampled objective weights?
+
+  \item[RQ4.] What is the empirically grounded survival distribution
+  and Leave-One-Pack-Out (LOPO) RUL prediction accuracy achievable
+  from the NASA PCoE ALT dataset, given proper interval-censored
+  failure classification?
+\end{description}
+
+\section{Contributions}
+
+The principal contributions of this thesis are:
+
+\begin{enumerate}
+  \item \textbf{Rigorous empirical dataset audit} of the NASA PCoE
+  26-pack ALT dataset, clarifying the CC-only charging protocol
+  (3.0\,A, negligible CV taper), correcting the EOL classification
+  (9 hard collapses, 5 probable shutoffs, 3 recommissioned, 10
+  right-censored), and demonstrating that 67\% of genuine failures
+  occur above 0.80 SOH --- invalidating capacity-threshold-only
+  prognostic systems.
+
+  \item \textbf{Physics-based simulator calibration} from real
+  telemetry: OCV curve, $R_0 = 0.034\,\Omega$ (fresh), thermal
+  parameters ($C_\mathrm{th} = 54.5$\,J/K, $h = 0.069$\,W/K,
+  $\tau_\mathrm{th} = 791$\,s), and aging-dependent
+  $R_0(\mathrm{SOH})$ growth verified across 5{,}479 rest cooling
+  blocks.
+
+  \item \textbf{Four-state Adaptive EKF} with state vector
+  $[{\rm SOC}, V_1, b, \rho]^\top$, reducing terminal SOC error by
+  72.3\% compared to a fixed-parameter EKF and eliminating unsafe
+  executed steps on the single-agent tuned policy.
+
+  \item \textbf{MA-BMS architecture} with three cooperative proposer
+  agents and a deterministic analytical safety supervisor, achieving
+  zero unsafe executed steps under $4\times$ sensor noise and zero
+  hard violations across all seven injected sensor fault regimes.
+
+  \item \textbf{Dirichlet weight sensitivity analysis} over
+  10{,}000 samples showing that the tuned single-agent policy holds
+  an 84.78\% best-weight share, while demonstrating that all four
+  methods are Pareto-nondominated, formally qualifying the ranking.
+
+  \item \textbf{Interval-censored survival analysis} and
+  Leave-One-Pack-Out RUL study, obtaining Kaplan-Meier median
+  throughputs of 630--833\,Ah and Ridge MAE of 122.4\,Ah
+  ($R^2 = 0.787$).
+\end{enumerate}
+
+\section{Scope and Limitations}
+
+The scope of this work is bounded to the control and prognostics of a
+single two-cell in-series pack operating under laboratory accelerated
+ageing conditions.  Key limitations are:
+
+\begin{itemize}
+  \item Charge-phase current and voltage are not independently logged
+  in the NASA dataset; only thermal response during charging is
+  validated.  Current dynamics are inferred from the paper (pure CC
+  at 3.0\,A).
+  \item The RUL sample is small (10 crosser packs in regression);
+  LOPO estimates have wide confidence intervals.
+  \item The multi-agent coordination layer (coordinator agent) is
+  designed but not benchmarked in this thesis; only single-agent and
+  independent-baseline variants are fully evaluated.
+\end{itemize}
+
+\section{Thesis Organisation}
+
+The remainder of the thesis is organised as follows.
+Chapter~\ref{chap.2} reviews the relevant literature.
+Chapter~\ref{chap.3} presents the dataset audit.
+Chapter~\ref{chap.4} describes simulator calibration and thermal
+validation.  Chapter~\ref{chap.5} details the MA-BMS architecture and
+EKF design.  Chapter~\ref{chap.6} presents the controller
+benchmarking and robustness results.  Chapter~\ref{chap.7} covers
+survival analysis and RUL prediction.  Chapter~8 concludes and
+outlines future work.

@@ -1,0 +1,17 @@
+method,noise_scale,J,unsafe_executed_steps,soc_est_mae,target_reached,max_v_overshoot_v
+conventional,0.0,3.8262,0.0,0.0107,1.0,0.0
+conventional,1.0,3.8558,0.0,0.0106,1.0,0.0
+conventional,2.0,3.9219,0.0,0.0112,1.0,0.0
+conventional,4.0,4.1831,0.0,0.0133,1.0,0.0
+independent,0.0,3.1179,0.0,0.0105,1.0,0.0
+independent,1.0,3.1293,0.0,0.0104,1.0,0.0
+independent,2.0,3.1669,0.0,0.0111,1.0,0.0
+independent,4.0,3.3185,0.0,0.0133,1.0,0.0
+independent_health_cap,0.0,3.279,0.0,0.0065,0.9,0.0
+independent_health_cap,1.0,3.3095,0.0,0.0065,0.875,0.0
+independent_health_cap,2.0,3.3928,0.0,0.0069,0.825,0.0
+independent_health_cap,4.0,3.5771,0.0,0.0089,0.8,0.0
+single_agent,0.0,2.2752,0.0,0.0132,1.0,0.0
+single_agent,1.0,2.3106,0.0,0.0134,1.0,0.0
+single_agent,2.0,2.3389,0.0,0.0139,1.0,0.0
+single_agent,4.0,2.4057,0.0,0.0171,1.0,0.0
