@@ -43,3 +43,33 @@ def test_adaptive_ekf_removes_capacity_bias():
 def test_ensure_scales_sets_positive_numbers():
     c2 = copy.deepcopy(cfg); c2["objective"]["d_scale"] = "auto"; c2["objective"]["e_scale"] = "auto"
     s = ensure_scales(c2, n=3); assert s["d_scale"] > 0 and s["e_scale"] > 0 and c2["objective"]["d_scale"] == s["d_scale"]
+
+
+def test_adaptive_health_agent_derates_and_preserves_deadline():
+    from mabms.agents.health_agent import HealthAgent
+    from mabms.agents.base import StateEstimate, Task
+
+    ha = HealthAgent(cfg)
+    # Case A: Ample time (relaxed deadline)
+    # Fresh cell:
+    est_fresh = StateEstimate(soc=0.3, soh=1.0, v1=0.0, v_meas=3.7, i_meas=1.0,
+                              temp_meas=25.0, temp_pred=25.0, time_s=0.0, q_nom_ah=2.0, r0_scale=1.0)
+    task_relaxed = Task(target_soc=0.8, deadline_s=7200.0) # 2 hours
+    hp_fresh = ha.propose(est_fresh, task_relaxed)
+
+    # Aged, hot, high resistance cell:
+    est_aged = StateEstimate(soc=0.3, soh=0.75, v1=0.0, v_meas=3.7, i_meas=1.0,
+                             temp_meas=40.0, temp_pred=40.5, time_s=0.0, q_nom_ah=2.0, r0_scale=1.8)
+    hp_aged = ha.propose(est_aged, task_relaxed)
+
+    # Health agent must derate or stay gentle for the aged/hot cell
+    assert hp_aged.max_c_rate <= hp_fresh.max_c_rate
+    # Both must respect min_c
+    assert hp_aged.max_c_rate >= cfg["agents"]["health"]["min_c"]
+
+    # Case B: Urgent deadline on aged cell (avoid starvation)
+    task_urgent = Task(target_soc=0.8, deadline_s=1200.0) # 20 mins for 50% SOC -> ~1.5 C required
+    hp_urgent = ha.propose(est_aged, task_urgent)
+    # Must expand to meet deadline rather than starving the cell
+    assert hp_urgent.max_c_rate > hp_aged.max_c_rate
+    assert hp_urgent.max_c_rate <= cfg["limits"]["i_max_c"]
