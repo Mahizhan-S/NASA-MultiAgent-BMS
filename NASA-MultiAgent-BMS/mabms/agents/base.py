@@ -25,7 +25,7 @@ class Task:
 @dataclass
 class HealthProposal:
     max_c_rate: float
-    v_cv: float
+    v_cv: float = 4.20
     note: str = ""
     feasibility_status: str = "FEASIBLE"   # "FEASIBLE", "AT_RISK", "INFEASIBLE"
     predicted_dloss: float = 0.0
@@ -35,7 +35,7 @@ class HealthProposal:
 
 @dataclass
 class ThermalProposal:
-    cool_cmd: float; temp_setpoint_c: float
+    cool_cmd: float; temp_setpoint_c: float = 35.0
 
 
 @dataclass

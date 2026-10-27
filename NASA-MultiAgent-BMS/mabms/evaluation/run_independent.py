@@ -84,7 +84,14 @@ def run_episode(cfg: Dict[str, Any], scenario: Scenario, method: str, seed: int,
                 h_mode = options.get("health_mode", "adaptive")
             hp = health.propose(est, task, mode=h_mode)
             cp = charger.propose(est, task, v_cv=hp.v_cv if use_h else None, max_c_rate=hp.max_c_rate if use_h else None)
-            i_p = cp.current_a; cool_p = thermal.propose(est).cool_cmd
+            tp = thermal.propose(est)
+
+            coord = options.get("coordinator")
+            if coord is not None:
+                dec = coord.coordinate(est, task, cp, hp, tp)
+                i_p, cool_p = dec.current_a, dec.cool_cmd
+            else:
+                i_p, cool_p = cp.current_a, tp.cool_cmd
         if options.get("no_thermal", False):
             cool_p = 0.0
         act = safety.filter(est, i_p, cool_p)
