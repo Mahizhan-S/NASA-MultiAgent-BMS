@@ -103,6 +103,42 @@ To prevent policy exploitation, [`mabms/agents/health_agent.py`](file:///Users/m
 
 ## 7. Model-Validity Limitations & Caveats
 
-1. **Cycle Aging vs Calendar Aging:** The model focuses on dynamic charge-throughput degradation. It does not model prolonged calendar aging (e.g. multi-month open-circuit rest at elevated SOC).
-2. **Phase Changes & Knee-Point Transition:** The empirical law captures gradual SEI accumulation and cathode degradation accurately down to $75\%\text{--}80\%$ SOH. It does not model sudden internal separator collapse or short-circuit thermal runaway.
-3. **Simulation Boundary:** All reported degradation improvements are validated against empirical NASA PCoE reference runs and calibrated 1-RC ECM models; they should not be extrapolated to unvalidated cell chemistries (e.g., LFP, solid-state) without recalibration.
+1. **Cycle Aging vs Calendar Aging:** The model focuses on dynamic charge-throughput degradation during active charging. It does not model prolonged calendar aging (e.g. multi-month open-circuit rest at elevated SOC and ambient temperature).
+2. **Phase Changes & Knee-Point Transition:** The empirical law captures gradual SEI accumulation and cathode surface degradation accurately down to $75\%\text{--}80\%$ SOH. It does not model sudden internal separator collapse or catastrophic short-circuit thermal runaway.
+3. **Simulation Boundary:** All reported degradation improvements are validated against empirical NASA PCoE reference runs and calibrated 1-RC ECM models; they should not be extrapolated to unvalidated cell chemistries without dedicated recalibration.
+
+---
+
+## 8. Critical Scientific Caveats: Chemistries, Activation Energy, and Stress Decoupling
+
+### 8.1. Generalization Across Battery Chemistries
+The validation cohort evaluated in Phase C (Battery 11, Battery 21, Battery 22) consists exclusively of commercial cylindrical 18650 cells utilizing a **lithium cobalt oxide ($\mathrm{LiCoO}_2$ / LCO) cathode and a mesocarbon microbead (MCMB) graphite anode**. Consequently, the calibrated model parameters ($k_{\mathrm{deg}}, E_a, \beta_C, \beta_S$) reflect LCO/graphite degradation dynamics and cannot be assumed to generalize across distinct cell chemistries:
+
+- **Lithium Iron Phosphate ($\mathrm{LiFePO}_4$ / LFP):** LFP cells operate at a lower nominal potential ($3.2\,\text{V}$) with a remarkably flat two-phase open-circuit voltage profile. Degradation is predominantly governed by iron dissolution and continuous SEI growth on the graphite anode, with virtually zero high-voltage phase transition stress. Applying an LCO-calibrated high-SOC penalty ($f_S$) with a $0.80$ threshold would misrepresent LFP aging.
+- **Nickel Manganese Cobalt ($\mathrm{LiNi}_{1-x-y}\mathrm{Mn}_x\mathrm{Co}_y\mathrm{O}_2$ / NMC) and NCA:** High-nickel layered oxides (e.g., NMC622, NMC811) suffer severe anisotropic lattice volume changes during deep delithiation ($\mathrm{SOC} > 0.85$), triggering intergranular microcracking, transition metal dissolution, and continuous fresh surface exposure. While high-SOC stress is pronounced, its functional onset and kinetic acceleration rate differ substantially from LCO.
+- **Silicon-Alloy / Silicon-Graphite Anodes:** Silicon-dominant anodes undergo massive volumetric expansion ($> 300\%$) during lithiation, causing mechanical pulverization, repeated SEI fracturing, and continuous electrolyte consumption. In silicon chemistries, degradation correlates with mechanical breathing and state-of-charge swing ($\Delta\mathrm{SOC}$) rather than cumulative Coulombic throughput.
+
+### 8.2. Physical Interpretation of Activation Energy ($E_a / R$)
+The apparent activation temperature $E_a / R \approx 4{,}067.7\,\text{K}$ ($E_a \approx 33.82\,\mathrm{kJ/mol}$) estimated from the NASA cohort must be interpreted with thermodynamic caution:
+
+1. **Apparent Lumped Parameter vs. Elementary Barrier:** In real lithium-ion cells, capacity degradation is the convoluted superposition of several concurrent degradation pathways, each characterized by its own distinct activation barrier:
+   - Solvent diffusion through the existing SEI layer: $E_a \approx 30\text{--}40\,\mathrm{kJ/mol}$
+   - Electrolyte solvent oxidation at high electrode potentials: $E_a \approx 50\text{--}70\,\mathrm{kJ/mol}$
+   - Cathode transition metal dissolution and phase reconstruction: $E_a \approx 60\text{--}80\,\mathrm{kJ/mol}$
+   - Charge-transfer resistance at the solid-liquid interface ($R_{\mathrm{ct}}$): $E_a \approx 50\text{--}65\,\mathrm{kJ/mol}$
+2. **Phenomenological Lumping:** The fitted $E_a$ is an *effective macroscopic activation energy* that lumps these parallel mechanisms across the $24^\circ\text{C}\text{--}44^\circ\text{C}$ NASA test envelope. While its numerical alignment with SEI solvent diffusion suggests SEI growth dominates under standard ambient conditions, $E_a$ cannot be treated as an invariant physical constant across wider thermal or chemical regimes.
+
+### 8.3. Limits of Multiplicative Stress Decoupling ($f_T \cdot f_C \cdot f_{\mathrm{SOC}}$)
+The empirical surrogate assumes complete mathematical separability:
+$$d\mathrm{Loss} \propto f_T(T) \cdot f_C(C_{\mathrm{rate}}) \cdot f_S(\mathrm{SOC})$$
+While this multiplicative decomposition is a widely accepted engineering formulation (e.g., Bloom et al., Safari et al., Schmalstieg et al.), physical degradation in real cells involves strong non-linear cross-couplings:
+
+- **Coupled $(T, C_{\mathrm{rate}})$ Stress & Lithium Plating:** At high temperatures ($> 35^\circ\text{C}$), charging at $1.5\,\text{C}$ primarily accelerates SEI growth via Arrhenius kinetics. However, charging at the same $1.5\,\text{C}$ at low temperatures ($< 15^\circ\text{C}$) dramatically elevates anode overpotentials, driving the graphite potential below $0\,\text{V}$ vs $\mathrm{Li/Li}^+$ and triggering **metallic lithium plating**. Plating exhibits an *inverse* temperature dependence (colder is worse), a physical transition that a separable $f_T \cdot f_C$ model completely reverses if extrapolated below $15^\circ\text{C}$.
+- **Coupled $(T, \mathrm{SOC})$ Degradation:** Holding or cycling a battery at high SOC ($\mathrm{SOC} > 0.85$) under elevated temperatures ($> 40^\circ\text{C}$) accelerates electrolyte decomposition and transition metal leaching far beyond the linear product of $f_T(T)$ and $f_S(\mathrm{SOC})$.
+
+### 8.4. Architectural Mitigation in MA-BMS
+Because empirical degradation surrogates cannot be guaranteed to remain physically valid outside their calibration regimes, the Multi-Agent BMS explicitly enforces protective boundaries:
+1. **Hard Operational Envelope:** The deterministic [Safety Supervisor](file:///Users/mahizhan/Documents/Final_project/NASA-MultiAgent-BMS/mabms/agents/safety_agent.py) strictly enforces $T_{\mathrm{max}} = 45.0^\circ\text{C}$ and $T_{\mathrm{derate}} = 40.0^\circ\text{C}$, preventing the controller from ever driving the cell into regimes where high-temperature cross-coupling accelerates catastrophically.
+2. **Conservative Temperature Window:** The [Adaptive Health Agent](file:///Users/mahizhan/Documents/Final_project/NASA-MultiAgent-BMS/mabms/agents/health_agent.py) operates exclusively within the validated $15^\circ\text{C}\text{--}40^\circ\text{C}$ window, avoiding unmodeled sub-zero lithium plating zones.
+3. **Safety-Guarded Optimization:** Degradation predictions are used *only* to shape proactive current derating proposals; all proposals remain subject to independent, hard deterministic voltage and current limits that are completely decoupled from the degradation surrogate.
+

@@ -182,7 +182,42 @@ Table~\ref{tab:degradation_ci}.
 \end{table}
 
 The saturation of $a$ and $b$ at their upper bounds indicates that
-the C-rate and SOC-stress coefficients cannot be identified from
-the available discharge-only throughput data.  Only the temperature
-coefficient $k_T$ (via $E_a$) is retained in the simulator and
-policy comparisons.
+the C-rate and SOC-stress coefficients cannot be fully isolated from
+discharge-only throughput data without controlled matrix cycling.
+Only the temperature coefficient $k_T$ (via $E_a$) is retained as
+identifiable in the baseline simulator and policy comparisons.
+
+\subsection{Physical Interpretation and Generalization Limitations}
+
+While the fitted apparent activation energy $E_a / R \approx 4{,}068\,\mathrm{K}$
+($E_a \approx 33.8\,\mathrm{kJ/mol}$) numerically aligns with literature
+ranges for solvent molecule diffusion through the solid-electrolyte
+interphase (SEI) layer in commercial $\mathrm{LiCoO}_2$/graphite cells
+under moderate temperatures ($25\text{--}45\,^\circ\mathrm{C}$), several
+essential scientific caveats must be maintained:
+\begin{enumerate}
+  \item \textbf{Apparent vs.\ Elementary Activation Energy:} The fitted
+  $E_a$ is an effective macroscopic parameter that lumps multiple concurrent
+  physicochemical degradation modes---including SEI growth, electrolyte solvent
+  oxidation, and transition metal dissolution---into a single thermal factor.
+  It does not constitute an invariant single-step chemical rate constant.
+  \item \textbf{Chemistry and Operating Regime Specificity:} These results
+  support improved tracking on the evaluated NASA 18650 cohort, but do not
+  establish universal validity across alternative battery chemistries.
+  Chemistries such as $\mathrm{LiFePO}_4$ (LFP) exhibit distinct flat-plateau
+  thermodynamics, while high-nickel NMC811 suffers pronounced mechanical
+  microcracking, and silicon-dominant anodes experience continuous SEI
+  pulverization due to large volumetric expansion.  Furthermore, at sub-zero
+  temperatures, degradation is governed by metallic lithium plating rather
+  than Arrhenius SEI growth.
+  \item \textbf{Separability of Stress Factors:} The multiplicative
+  formulation $f_T \cdot f_C \cdot f_{\mathrm{SOC}}$ treats environmental and
+  electrical stresses as mathematically orthogonal.  In reality, real-world
+  battery degradation involves strong non-linear cross-couplings (e.g., high
+  current at low temperature triggers plating, whereas elevated temperature
+  at high SOC accelerates cathode phase transitions).
+\end{enumerate}
+These physical boundaries explain why the Multi-Agent BMS treats the
+degradation surrogate as an advisory shaping term, while relying on the
+independent deterministic safety supervisor and feasibility bounds to
+guarantee physical integrity across operating regimes.
